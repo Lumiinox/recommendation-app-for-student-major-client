@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import AdminCreateQuestion from './page/admin/create_questions';
 import StudentHome from './page/student/student-home';
 import StudentTest from './page/student/student-test';
+import ViewQuestionsPage from './page/admin/admin-view-questions';
+import ListOfTestResult from './page/admin/admin-list-of-test-result';
 
 function App() {
   const loginStatus = useSelector((state: State) => state.userData.loginStatus)
@@ -26,6 +28,12 @@ function App() {
           
           <Route path='/admin/create-question' 
             element={loginStatus && status === "admin" ? <AdminCreateQuestion/> : <Navigate replace to="/"/>}/>
+
+          <Route path='/admin/view-question' 
+            element={loginStatus && status === "admin" ? <ViewQuestionsPage/> : <Navigate replace to="/"/>}/>
+
+          <Route path='/admin/view-test-result' 
+            element={loginStatus && status === "admin" ? <ListOfTestResult/> : <Navigate replace to="/"/>}/>
 
           <Route path='/student/home' 
             element={loginStatus && status === "student" ? <StudentHome/> : <Navigate replace to="/"/>}/>

@@ -25,7 +25,7 @@ export default function StudentLogin (){
         }).then((response)=>{
             console.log(response.data[0]);
             const userData = response.data[0];
-            updateProfileData(userData.Nama, userData.email, userData.status, userData.NIM);
+            updateProfileData(userData.Name, userData.email, userData.status, userData.NIM);
             navigate('/student/home');
           })
     }

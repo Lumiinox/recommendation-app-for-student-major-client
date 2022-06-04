@@ -1,5 +1,4 @@
 import axios from "axios"
-import { resolve } from "node:path/win32";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +25,7 @@ export default function StudentTest () {
     const [questionsData, setQuestionsData] = useState<QuestionsData[]>([]);
     const [answerData, setAnswerData] = useState<AnswerData[]>([]);
     const [score, setScore] = useState<Number>();
-    const [codeType, setCodeType] = useState<String>("Personality");
+    const [codeType, setCodeType] = useState<string>("");
     const navigate = useNavigate();
 
     const nim = useSelector((state: State) => state.userData.nim);
@@ -40,7 +39,8 @@ export default function StudentTest () {
     }
 
     const GetQuestion = async () =>{
-        await axios.get("http://localhost:3001/api/get/questions-random")
+        console.log(codeType)
+        await axios.get(`http://localhost:3001/api/get/questions-random/${codeType}`,)
         .then((response) => {
             console.log(response.data);
             setQuestionsData(response.data);
@@ -116,8 +116,15 @@ export default function StudentTest () {
         })
     }
     
+
+    const RadioButtonQuestionType = (choice: number) => {
+        if (choice == 1) setCodeType("Personality");
+        else if (choice == 2) setCodeType("KemampuanDasar");
+    }
     return(
         <>
+            <input type='radio' value="personality" name="question_type" onChange={() => RadioButtonQuestionType(1)}/>Personality
+            <input type='radio' value="kemampuanDasar" name="question_type" onChange={() => RadioButtonQuestionType(2)}/>Kemampuan Dasar
             <button onClick={GetQuestion}>Get Questions</button>
             {questionsData.map((value, index) =>
                     <ShowQuestion
