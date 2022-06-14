@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiGetTestResultData } from '../../../database-api';
 
 interface TestResultDataProps {
     NIM: string,
@@ -16,11 +17,8 @@ export default function ListOfTestResult(){
     const navigate = useNavigate();
     
     const GetTestResultData = async () => {
-        await axios.get('http://localhost:3001/api/get/test_result')
-        .then((response) => {
-            console.log(response.data);
-            setTestResultData(response.data);
-        })
+        const data = await apiGetTestResultData();
+        setTestResultData(data);
     }
 
     const HomeBtnHandler = () => {

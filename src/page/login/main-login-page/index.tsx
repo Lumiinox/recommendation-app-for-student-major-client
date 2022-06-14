@@ -1,11 +1,9 @@
 import { ChildProcess } from "child_process";
 import { useEffect, useState } from "react"
-import AdminLogin from "../admin-login";
-import StudentLogin from "../student-login";
 import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
 
 
-import "./index.css";
+import "./MainLoginStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { updateProfileData } from "../../../redux/action-creators";
@@ -13,24 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 export default function MainLoginPage(){
-    // const [loginType, setLoginType] = useState("none");
-
-    // const ChangeToStudent = () => {
-    //         console.log("login type changed to student");
-    //         setLoginType("student");
-    //         console.log(loginType);
-    // }
-
-    // const ChangeToAdmin = () => {
-    //         console.log("login type changed to admin");
-    //         setLoginType("admin");
-    // }
-
-    // const ChangeToNone = () => {
-    //     console.log("login type changed to none");
-    //         setLoginType("none");
-    // }
-
     const [usernameIn, setUsernameIn] = useState<string>("");
     const [passwordIn, setPasswordIn] = useState<string>("");
 
@@ -45,6 +25,7 @@ export default function MainLoginPage(){
     const {updateProfileData} = bindActionCreators(actionCreators, dispatch);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         container = document.getElementById('container')!;
       }, []);
 
@@ -65,13 +46,13 @@ export default function MainLoginPage(){
         switch(choice){                                      
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
                     console.log(data);
-                    await updateProfileData(data[0].name, data[0].email, data[0].status, "");
+                    updateProfileData(data[0].name, data[0].email, data[0].status, "");
                     navigate('/admin/home');
                     break;
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
                     console.log(data);
-                    await updateProfileData(data[0].name, data[0].email, data[0].status, data[0].NIM);
+                    updateProfileData(data[0].name, data[0].email, data[0].status, data[0].NIM);
                     navigate('/student/home');
                     break;
         }
@@ -89,52 +70,23 @@ export default function MainLoginPage(){
     
     return(
         <>
-            {/* <div className="mainLoginPageWrapper">
-                {loginType === "none" && 
-                <>
-                    <h1>Select Login Type</h1>
-                    <button onClick={ChangeToStudent}>Student</button>
-                    <button onClick={ChangeToAdmin}>Admin</button>
-                </>}
-                {loginType === "student" && 
-                <>
-                    <StudentLogin/>
-                    <button onClick={ChangeToNone}>Back</button>
-                </>}
-                {loginType === "admin" && 
-                <>
-                    <AdminLogin/>
-                    <button onClick={ChangeToNone}>Back</button>
-                </>}
-            </div> */}
-
             <div className="container" id="container">
                 <div className="form-container staff-container">
-
                     <form action="#">
                         <h1>Staff</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
                         <button className="btn" onClick={(event) => signInHandler(event, 1)}>Sign In</button>
-
-                        {/* <a href="#">Forgot your password?</a> */}  
-                        {/* <a href="admin-home.html" button className="btn">Sign In</a> */}
                     </form>
-
                 </div>
 
                 <div className="form-container student-container">
-
                     <form action="#">
                         <h1>Student</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
                         <button className="btn" onClick={(event) => signInHandler(event, 2)}>Sign In</button>
-
-                        {/* <a href="#">Forgot your password?</a> */}
-                        {/* <a href="student-home.html" button className="btn">Sign In</a> */}
                     </form>
-
                 </div>
 
                 <div className="overlay-container">

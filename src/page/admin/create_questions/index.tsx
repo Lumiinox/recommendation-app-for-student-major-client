@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { apiSubmitQuestion } from '../../../database-api';
 
 interface DataPertanyaan {
   question_id: number;
@@ -30,25 +31,12 @@ export default function AdminCreateQuestion (){
 
   const SubmitQuestion = async () => {
     console.log("test")
-    await axios.post('http://localhost:3001/api/insert/question/', {
-      code_type      : code_type,
-      questionText    : questionText, 
-      choice_1      : choice_1,
-      choice_2      : choice_2, 
-      choice_3      : choice_3,
-      choice_4      : choice_4, 
-      answer  : answer,
-    }).then((res)=>{
-      alert("Successful Insert");
-    })
+    await apiSubmitQuestion(code_type, questionText, choice_1, choice_2, choice_3, choice_4, answer)
   }
 
   const ShowQuestion = async () => {
-    axios.get('http://localhost:3001/api/get/questions')
-    .then((response) => {
-      console.log(response.data)
-      setDataPertanyaan(response.data);
-    })
+    const response = await axios.get('http://localhost:3001/api/get/questions')
+    setDataPertanyaan(response.data);
   }
 
   const HomeBtnHandler = () => {

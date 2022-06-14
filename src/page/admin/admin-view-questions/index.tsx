@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiGetQuestionWithStats } from "../../../database-api";
 
 interface QuestionWithStatProps {
     code_type: string,
@@ -16,11 +17,8 @@ export default function ViewQuestionsPage(){
     const navigate = useNavigate();
     
     const GetQuestionWithStats = async () => {
-        await axios.get('http://localhost:3001/api/get/questions_stat')
-        .then((response) => {
-            console.log(response.data);
-            setQuestionWithStat(response.data);
-        })
+        const data = await apiGetQuestionWithStats();
+        setQuestionWithStat(data);
     }
 
     const HomeBtnHandler = () => {
