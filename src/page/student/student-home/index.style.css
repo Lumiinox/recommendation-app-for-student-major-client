@@ -1,0 +1,96 @@
+@font-face {
+	font-family: 'Poppins';
+	src: url(../../../assets/font/Poppins/Poppins-Regular.ttf);
+}
+
+.adminHomePageWrapper{
+    font-family: 'Poppins';
+}
+
+.parentGrid {
+    display: grid;
+    grid-template-rows: 60px auto auto;
+}
+
+.childGrid {
+    border: 5px solid;
+}
+
+.headWrapper {
+    padding: 15px;
+    display:flex;
+    justify-content: space-between;
+    background-color: rgb(68, 149, 255);
+    color: white;
+}
+
+.profileWrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.profileCardStyle {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px 0;
+    width: 160vh;
+    height: 20vh;
+    border-radius: 30px;
+    box-shadow: 0px 5px 10px rgb(150, 150, 150);
+}
+
+.profileCardStyle:hover{
+    transition-duration: 0.2s;
+    box-shadow: 0px 10px 13px rgb(150, 150, 150);
+}
+
+.contentWrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.contentList{
+    display: flex;
+    flex-wrap: wrap;
+    width: 170vh;
+    justify-content:space-evenly; 
+}
+
+.contentCard {
+    text-align: center;
+    padding: 20px;
+    width: 50vh;
+    height: 20vh;
+    border-radius: 30px;
+    box-shadow: 0px 5px 10px rgb(150, 150, 150);
+}
+
+.contentCard:hover{
+    transition-duration: 0.2s;
+    cursor: pointer;
+    box-shadow: 0px 10px 13px rgb(150, 150, 150);
+}
+
+.logoutButtonStyle{
+    border: 1px solid white;
+    text-align: center;
+    width: 80px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.logoutButtonStyle:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.logoutButtonStyle:active{
+    background-color: rgb(68, 149, 255);
+    color: white;
+    -webkit-user-select: none;       
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+
+}

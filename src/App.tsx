@@ -1,14 +1,15 @@
 
 import MainLoginPage from './page/login/main-login-page';
-import AdminHome from './page/admin/admin-home';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import { State } from './redux';
 import { useSelector } from 'react-redux';
 import AdminCreateQuestion from './page/admin/create_questions';
-import StudentHome from './page/student/student-home';
+
 import StudentTest from './page/student/student-test';
 import ViewQuestionsPage from './page/admin/admin-view-questions';
 import ListOfTestResult from './page/admin/admin-list-of-test-result';
+import AdminHome from './page/admin/admin-home/index.view';
+import StudentHome from './page/student/student-home/index.view';
 
 function App() {
   const loginStatus = useSelector((state: State) => state.userData.loginStatus)

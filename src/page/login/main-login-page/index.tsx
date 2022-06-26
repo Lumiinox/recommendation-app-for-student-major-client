@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
 
 
-import "./MainLoginStyle.css";
+import "./index.style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { updateProfileData } from "../../../redux/action-creators";
@@ -69,7 +69,7 @@ export default function MainLoginPage(){
     }
     
     return(
-        <>
+        <div className="pageWrapper">
             <div className="container" id="container">
                 <div className="form-container staff-container">
                     <form action="#">
@@ -103,7 +103,7 @@ export default function MainLoginPage(){
                 </div>
                 
             </div>
-        </>
+        </div>
 
     )
 }
