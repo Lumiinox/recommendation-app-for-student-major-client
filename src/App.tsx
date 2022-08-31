@@ -1,22 +1,24 @@
-
-import MainLoginPage from './page/login/main-login-page';
+/** @jsxImportSource @emotion/react */
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import { State } from './redux';
 import { useSelector } from 'react-redux';
-import AdminCreateQuestion from './page/admin/create_questions';
+import { GlobalAppStyle } from './App.style';
 
 import StudentTest from './page/student/student-test';
 import ViewQuestionsPage from './page/admin/admin-view-questions';
 import ListOfTestResult from './page/admin/admin-list-of-test-result';
 import AdminHome from './page/admin/admin-home/index.view';
 import StudentHome from './page/student/student-home/index.view';
+import AdminCreateQuestion from './page/admin/create_questions/index.view';
+import MainLoginPage from './page/login/main-login-page/index.view';
+
 
 function App() {
   const loginStatus = useSelector((state: State) => state.userData.loginStatus)
   const status = useSelector((state: State) => state.userData.status)
 
   return (
-    <div className="App">
+    <div className="App" css={GlobalAppStyle}>
       
       <BrowserRouter>
 

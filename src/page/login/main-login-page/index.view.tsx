@@ -1,14 +1,14 @@
 import { ChildProcess } from "child_process";
 import { useEffect, useState } from "react"
-import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
-
+import { useNavigate } from "react-router-dom";
+import { bindActionCreators } from "redux";
 
 import "./index.style.css";
+import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { updateProfileData } from "../../../redux/action-creators";
-import { useNavigate } from "react-router-dom";
-import { bindActionCreators } from "redux";
+import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");

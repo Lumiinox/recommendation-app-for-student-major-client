@@ -1,9 +1,11 @@
-import axios from "axios"
+import React from "react";
+import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ShowQuestion } from "../../../component/question";
 import { State } from "../../../redux";
+import { InitAnswerData } from "./type";
 
 interface QuestionsData {
     question_id: number;
@@ -44,7 +46,7 @@ export default function StudentTest () {
         .then((response) => {
             console.log(response.data);
             setQuestionsData(response.data);
-            const initAnswerData = [];
+            const initAnswerData = [] as Array<InitAnswerData>;
             for (let i = 0; i < response.data.length; i++){
                 initAnswerData.push({
                     answer: 0,
