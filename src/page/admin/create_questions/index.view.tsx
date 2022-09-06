@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { apiSubmitQuestion } from '../../../database-api';
@@ -7,9 +7,11 @@ import '../../styles/index.style.ts';
 import {
   CreateQuestionFormWrapperStyle,
   CreateQuestionFormStyle,
-  FormSubmitButtonStyle
+  CreateQuestionContentWrapper,
+  QuestionListWrapperStyle
 } from './index.style';
-import { ButtonStyle, ContentListStyle, ContentWrapperStyle, HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
+import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
+import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 interface DataPertanyaan {
   question_id: number;
   code_type: string;
@@ -31,80 +33,103 @@ export default function AdminCreateQuestion (){
   const [choice_3, setChoice3] = useState('');
   const [choice_4, setChoice4] = useState('');
   const [answer, setAnswer] = useState('');
-
-  const [dataPertanyaan, setDataPertanyaan] = useState<DataPertanyaan[]>([]);
+  const [displayForm, setDisplayForm] = useState(false);
+  const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
+  const [pageHeight, setPageHeight] = useState(0);
+  const [pageWidth, setPageWidth] = useState(0);
 
   const navigate = useNavigate();
+  const divRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get('http://localhost:3001/api/get/questions');
+      setDataPertanyaan(response.data);
+    }
+    fetchData();
+  }, [])
 
   const SubmitQuestion = async () => {
     console.log("test")
     await apiSubmitQuestion(code_type, questionText, choice_1, choice_2, choice_3, choice_4, answer)
   }
 
-  const ShowQuestion = async () => {
-    const response = await axios.get('http://localhost:3001/api/get/questions')
-    setDataPertanyaan(response.data);
+  const ShowFormHandler = () => {
+    const tempPageHeight = divRef.current?.clientHeight as number;
+    const tempPageWidth = divRef.current?.clientWidth as number;
+    console.log(tempPageHeight);
+    setPageHeight(tempPageHeight);
+    setPageWidth(tempPageWidth);
+    setDisplayForm(!displayForm);
+  }
+
+  const ShowForm = () => {
+    return(
+      <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
+        <div>
+          <div css={CreateQuestionFormStyle}>
+            <h2>Create Question</h2>
+            <div className="form">
+              <label>Kode Tipe</label>
+              <input type="text" name="kodeTipe" onChange={(e) => {setCode_type(e.target.value)}}></input>
+              <label>Pertanyaan</label>
+              <input type="text" name="pertanyaan" onChange={(e) => {setQuestionText(e.target.value)}}></input>
+              <label>Pilihan 1</label>
+              <input type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
+              <label>Pilihan 2</label>
+              <input type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
+              <label>Pilihan 3</label>
+              <input type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
+              <label>Pilihan 4</label>
+              <input type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
+              <label>Kunci Jawaban</label>
+              <input type="text" name="kunciJawaban" onChange={(e) => {setAnswer(e.target.value)}}></input>
+              <button css={RegularButtonStyle} onClick={SubmitQuestion}>Submit</button>
+              <button css={RegularButtonStyle} onClick={ShowFormHandler}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const HomeBtnHandler = () => {
     navigate('/admin/home');
   }
-
   return(
-      <div>
-          <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                    <div>BINUS</div>
-                    <div><b>Create Question</b></div>
-                    <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
-                </div>
+      <div ref={divRef}>
+        <div css={ParentGridStyle}>
+          <div css={HeadWrapperStyle}>
+              <div>BINUS</div>
+              <div><b>Create Question</b></div>
+              <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
+          </div>
+          <div>
+            {displayForm && ShowForm()}
+          </div>
+          <div css={CreateQuestionContentWrapper}>
+            <div css={QuestionListWrapperStyle}>
 
-                <div css={CreateQuestionFormWrapperStyle}>
-                  <div css={CreateQuestionFormStyle}>
-                    <div className="form">
-                      <label>Kode Tipe</label>
-                      <input type="text" name="kodeTipe" onChange={(e) => {setCode_type(e.target.value)}}></input>
-                      <label>Pertanyaan</label>
-                      <input type="text" name="pertanyaan" onChange={(e) => {setQuestionText(e.target.value)}}></input>
-                      <label>Pilihan 1</label>
-                      <input type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
-                      <label>Pilihan 2</label>
-                      <input type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
-                      <label>Pilihan 3</label>
-                      <input type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
-                      <label>Pilihan 4</label>
-                      <input type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
-                      <label>Kunci Jawaban</label>
-                      <input type="text" name="kunciJawaban" onChange={(e) => {setAnswer(e.target.value)}}></input>
-                      <button css={FormSubmitButtonStyle} onClick={SubmitQuestion}>Submit</button>
-                    </div>
-                  </div>
-                </div>
-                <div css={ContentWrapperStyle}>
-                    <div css={ContentListStyle}>
-                    <button css={ButtonStyle} onClick={ShowQuestion}>Show Question</button>
-                    </div>
-                </div>
+              <button css={RegularButtonStyle} onClick={ShowFormHandler}>Add Question</button>
+              {dataPertanyaan.map((value, index) => {
+                return (
+                    <QuestionViewComponent 
+                      key={index}
+                      questionId={value.question_id}
+                      codeType={value.code_type}
+                      questionText={value.questionText}
+                      choice1={value.choice_1}
+                      choice2={value.choice_2}
+                      choice3={value.choice_3}
+                      choice4={value.choice_4}
+                      answer={value.answer}          
+                    />
+                  )
+              })}
+
             </div>
-        
-        <br/>
-        <br/>
-        {dataPertanyaan.map((value) => {
-            return (
-            <>
-                <br/>
-                <br/>
-                <div>
-                <p>{`${value.question_id}. ${value.questionText}`}</p>
-                <p>{`A. ${value.choice_1}`}</p>
-                <p>{`B. ${value.choice_2}`}</p>
-                <p>{`C. ${value.choice_3}`}</p>
-                <p>{`D. ${value.choice_4}`}</p>
-                <p>{`Kode Soal: ${value.code_type}`}</p>
-                </div>
-            </>
-            )
-        })}
+          </div>
+        </div>
       </div>
   )
 }

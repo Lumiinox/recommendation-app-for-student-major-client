@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiGetQuestionWithStats } from "../../../database-api";

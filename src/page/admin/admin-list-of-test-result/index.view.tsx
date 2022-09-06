@@ -7,7 +7,7 @@ import { ButtonStyle, HeaderButtonStyle, HeaderOneStyle, HeadWrapperStyle, Paren
 
 interface TestResultDataProps {
     NIM: string,
-    Name: string,
+    name: string,
     code_type: string,
     score: string,
     test_date: string
@@ -45,7 +45,7 @@ export default function ListOfTestResult(){
                                 <br/>
                                 <br/>
                                 <p>{`${data.NIM}`}</p>
-                                <p>{`${data.Name}`}</p>
+                                <p>{`${data.name}`}</p>
                                 <p>{`${data.code_type}`}</p>
                                 <p>{`${data.score}`}</p>
                                 <p>{`${data.test_date}`}</p>

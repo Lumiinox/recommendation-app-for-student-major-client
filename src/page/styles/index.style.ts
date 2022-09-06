@@ -116,3 +116,9 @@ export const ContentListStyle = css`
     width: 170vh;
     justify-content:space-evenly; 
 `;
+
+export const RegularButtonStyle = css`
+	padding: 10px 0px;
+	margin: 10px 0px;
+	min-width: 20vh;
+`;
