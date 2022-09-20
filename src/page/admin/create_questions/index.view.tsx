@@ -8,7 +8,13 @@ import {
   CreateQuestionFormWrapperStyle,
   CreateQuestionFormStyle,
   CreateQuestionContentWrapper,
-  QuestionListWrapperStyle
+  QuestionListWrapperStyle,
+  AnswerChoiceLabelStyle,
+  QuestionLabelStyle,
+  FormTitleStle,
+  FormSectionStyle,
+  FormTextAreaStyle,
+  FormInputTextStyle
 } from './index.style';
 import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
@@ -70,20 +76,36 @@ export default function AdminCreateQuestion (){
           <div css={CreateQuestionFormStyle}>
             <h2>Create Question</h2>
             <div className="form">
-              <label>Kode Tipe</label>
-              <input type="text" name="kodeTipe" onChange={(e) => {setCode_type(e.target.value)}}></input>
-              <label>Pertanyaan</label>
-              <input type="text" name="pertanyaan" onChange={(e) => {setQuestionText(e.target.value)}}></input>
-              <label>Pilihan 1</label>
-              <input type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
-              <label>Pilihan 2</label>
-              <input type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
-              <label>Pilihan 3</label>
-              <input type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
-              <label>Pilihan 4</label>
-              <input type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
-              <label>Kunci Jawaban</label>
-              <input type="text" name="kunciJawaban" onChange={(e) => {setAnswer(e.target.value)}}></input>
+
+              <div css={FormSectionStyle}>
+                <div css={FormTitleStle}>Question Type</div>
+                <input css={FormInputTextStyle} type="text" name="kodeTipe" onChange={(e) => {setCode_type(e.target.value)}}></input>
+              </div>
+
+              <div css={FormSectionStyle}>
+                <div css={FormTitleStle}>Question</div>
+                <textarea css={FormTextAreaStyle} name="pertanyaan" onChange={(e) => {setQuestionText(e.target.value)}}></textarea>
+              </div>
+
+              <div css={FormSectionStyle}>
+                <div css={FormTitleStle}>Answer Choice</div>
+                <div css={AnswerChoiceLabelStyle}>
+                  <div css={QuestionLabelStyle}>A</div>
+                  <input css={FormInputTextStyle}  type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
+                  <div css={QuestionLabelStyle}>B</div>
+                  <input css={FormInputTextStyle}  type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
+                  <div css={QuestionLabelStyle}>C</div>
+                  <input css={FormInputTextStyle}  type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
+                  <div css={QuestionLabelStyle}>D</div>
+                  <input css={FormInputTextStyle}  type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
+                </div>
+              </div>
+
+              <div css={FormSectionStyle}>
+                <div css={FormTitleStle}>Correct Answer</div>
+                <input type="text" name="kunciJawaban" onChange={(e) => {setAnswer(e.target.value)}}></input>
+              </div>
+
               <button css={RegularButtonStyle} onClick={SubmitQuestion}>Submit</button>
               <button css={RegularButtonStyle} onClick={ShowFormHandler}>Cancel</button>
             </div>

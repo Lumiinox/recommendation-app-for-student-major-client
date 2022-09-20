@@ -31,3 +31,18 @@ export const TextMargin = css`
 export const MgrnTop20px = css`
     margin-top: 20px;
 `;
+
+export const QuestionLetterStyle = (correct: boolean) => css`
+    background-color: ${correct ? "#50fc8f" : "#fc5555"};
+    font-size: 14px;
+    text-align: center;
+    width: 20px;
+    float: left;
+    margin-right: 5px;
+    border-radius:5px;
+`;
+
+export const QuestionTextContainer = css`
+    height: 20px;
+    font-size: 14px;
+`;

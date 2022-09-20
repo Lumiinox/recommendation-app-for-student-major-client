@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import {QuestionViewWrapperStyle, QuestionViewHeaderWrapperStyle, QuestionViewContentStyle, TextMargin, MgrnTop20px } from './index.style';
+import {QuestionViewHeaderWrapperStyle, QuestionViewContentStyle, TextMargin, MgrnTop20px, QuestionLetterStyle, QuestionTextContainer } from './index.style';
 
-interface QuestionViewComponent{
+interface QuestionViewComponentTypes{
     questionId: number;
     codeType: string;
     questionText: string;
@@ -22,7 +22,7 @@ export const QuestionViewComponent = ({
     choice3, 
     choice4, 
     answer
-    }: QuestionViewComponent) => {
+    }: QuestionViewComponentTypes) => {
     return(
         <div>
             <div css={QuestionViewHeaderWrapperStyle}> 
@@ -36,10 +36,18 @@ export const QuestionViewComponent = ({
                 <div css={MgrnTop20px}>
                     <div css={TextMargin}><b>{questionText}</b></div>
                     <div css={TextMargin}>
-                        <div css={TextMargin}>A. {choice1}</div>
-                        <div css={TextMargin}>B. {choice2}</div>
-                        <div css={TextMargin}>C. {choice3}</div>
-                        <div css={TextMargin}>D. {choice4}</div>
+                        <div>
+                            <span css={QuestionLetterStyle(Number(answer) === 1 ? true : false)}>A</span> <span css={QuestionTextContainer}>{choice1}</span>
+                        </div>
+                        <div>
+                            <span css={QuestionLetterStyle(Number(answer) === 2 ? true : false)}>B</span> <span css={QuestionTextContainer}>{choice2}</span>
+                        </div>
+                        <div>
+                            <span css={QuestionLetterStyle(Number(answer) === 3 ? true : false)}>C</span> <span css={QuestionTextContainer}>{choice3}</span>
+                        </div>
+                        <div>
+                            <span css={QuestionLetterStyle(Number(answer) === 4 ? true : false)}>D</span> <span css={QuestionTextContainer}>{choice4}</span>
+                        </div>
                     </div>
                 </div>
 

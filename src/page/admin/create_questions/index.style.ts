@@ -32,9 +32,46 @@ export const CreateQuestionFormStyle = css`
     width: 100vh;
     padding: 30px;
     border-radius: 50px;
-    box-shadow: 0px 5px 10px rgb(150, 150, 150);
-    &:hover{
-        transition-duration: 0.2s;
-        box-shadow: 0px 10px 13px rgb(150, 150, 150);
-    };
+`;
+
+export const AnswerChoiceLabelStyle = css`
+    display: grid;
+    grid-template-columns: 50px auto;
+`;
+
+export const QuestionLabelStyle = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+`; 
+
+export const FormTitleStle = css`
+    font-weight: bold;
+    font-size: 20px;
+`;
+
+export const FormSectionStyle = css`
+    padding: 20px 0;
+`;
+
+export const FormTextAreaStyle = css`
+    width: 100%;
+    background-color: #eee;
+    border-radius: 30px;
+    border: 0;
+    resize: none;
+    padding: 10px 25px;
+    font-size: 20px;
+    margin-top: 10px;
+`;
+
+export const FormInputTextStyle = css`
+    width: 100%;
+    background-color: #eee;
+    border-radius: 30px;
+    border: 0;
+    resize: none;
+    font-size: 20px;
+    margin-top: 10px;
 `;
