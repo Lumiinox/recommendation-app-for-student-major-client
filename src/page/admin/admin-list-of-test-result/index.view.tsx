@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiGetTestResultData } from '../../../database-api';
 import { ButtonStyle, HeaderButtonStyle, HeaderOneStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
+import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
 interface TestResultDataProps {
     NIM: string,
@@ -16,12 +17,15 @@ interface TestResultDataProps {
 export default function ListOfTestResult(){
     const [testResultData, setTestResultData] = useState<TestResultDataProps[]>([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await apiGetTestResultData();
+            setTestResultData(data);
+        }
+        fetchData();
+      }, [])
+
     const navigate = useNavigate();
-    
-    const GetTestResultData = async () => {
-        const data = await apiGetTestResultData();
-        setTestResultData(data);
-    }
 
     const HomeBtnHandler = () => {
         navigate('/admin/home');
@@ -31,27 +35,37 @@ export default function ListOfTestResult(){
             <div css={ParentGridStyle}>
                 <div css={HeadWrapperStyle}>
                     <div>BINUS</div>
-                    <div><b>Create Question</b></div>
+                    <div><b>Test Result</b></div>
                     <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
                 </div>
-                
-                <h1 css={HeaderOneStyle}>List of Test Result</h1>
-                <button css={ButtonStyle} onClick={HomeBtnHandler}>Home</button>
-                <button css={ButtonStyle} onClick={GetTestResultData}>Get Test Result</button>
-                <div>
-                    {testResultData.map((data) => {
-                        return (
-                            <>
-                                <br/>
-                                <br/>
-                                <p>{`${data.NIM}`}</p>
-                                <p>{`${data.name}`}</p>
-                                <p>{`${data.code_type}`}</p>
-                                <p>{`${data.score}`}</p>
-                                <p>{`${data.test_date}`}</p>
-                            </>
-                        )
-                    })}
+
+                <div css={wholeContentWrapperStyle}>
+                    <div>
+                        <div css={tableContainer}>
+                            <table css={tableHead}>
+                                <tr css={tableHeadRow}>
+                                    <td css={nimColumnStyle}>NIM</td>
+                                    <td css={nameColumnStyle}>Name</td>
+                                    <td css={typeColumnStyle}>Type</td>
+                                    <td css={scoreColumnStyle}>Score</td>
+                                    <td css={dateColumnStyle}>Date</td>
+                                </tr>
+                            </table>
+                            <table css={tableContent}>
+                                {testResultData.map((data, index) => {
+                                    return (
+                                        <tr css={mainContentRow}>
+                                            <td css={nimColumnStyle}>{data.NIM}</td>
+                                            <td css={nameColumnStyle}>{data.name}</td>
+                                            <td css={typeColumnStyle}>{data.code_type}</td>
+                                            <td css={scoreColumnStyle}>{data.score}</td>
+                                            <td css={dateColumnStyle}>{data.test_date.slice(0,16).replace('T', ' | ')}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div> 
