@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiGetQuestionWithStats } from "../../../database-api";
-import { ButtonStyle, HeaderButtonStyle, HeaderOneStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
+import { ButtonStyle, HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
+import { falseColumnStyle, mainContentRow, noColumnStyle, questionColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, trueColumnStyle, typeColumnStyle, wholeContentWrapperStyle } from "./index.style";
 
 interface QuestionWithStatProps {
     code_type: string,
@@ -13,14 +15,17 @@ interface QuestionWithStatProps {
 }
 
 export default function ViewQuestionsPage(){
-    const [questionWithStat, setQuestionWithStat] = useState<QuestionWithStatProps[]>([])
+    const [questionWithStat, setQuestionWithStat] = useState<Array<QuestionWithStatProps>>([])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await apiGetQuestionWithStats();
+            setQuestionWithStat(data);
+        }
+        fetchData();
+      }, [])
+      
     const navigate = useNavigate();
-    
-    const GetQuestionWithStats = async () => {
-        const data = await apiGetQuestionWithStats();
-        setQuestionWithStat(data);
-    }
 
     const HomeBtnHandler = () => {
         navigate('/admin/home');
@@ -30,27 +35,37 @@ export default function ViewQuestionsPage(){
             <div css={ParentGridStyle}>
                 <div css={HeadWrapperStyle}>
                         <div>BINUS</div>
-                        <div><b>Create Question</b></div>
+                        <div><b>View Question</b></div>
                         <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
                 </div>
-                
-                <h1 css={HeaderOneStyle}>View Question</h1>
-                <button css={ButtonStyle} onClick={HomeBtnHandler}>Home</button>
-                <button css={ButtonStyle} onClick={GetQuestionWithStats}>Get Questions With Stats</button>
-                <div>
-                    {questionWithStat.map((data) => {
-                        return (
-                            <>
-                                <br/>
-                                <br/>
-                                <p>{`${data.question_id}`}</p>
-                                <p>{`${data.code_type}`}</p>
-                                <p>{`${data.questionText}`}</p>
-                                <p>{`Correct Answer: ${data.true_answer}`}</p>
-                                <p>{`Wrong Answer: ${data.false_answer}`}</p>
-                            </>
-                        )
-                    })}
+
+                <div css={wholeContentWrapperStyle}>
+                    <div>
+                        <div css={tableContainer}>
+                            <table css={tableHead}>
+                                <tr css={tableHeadRow}>
+                                    <td css={noColumnStyle}>No</td>
+                                    <td css={typeColumnStyle}>Type</td>
+                                    <td css={questionColumnStyle}>Question</td>
+                                    <td css={trueColumnStyle}>True</td>
+                                    <td css={falseColumnStyle}>False</td>
+                                </tr>
+                            </table>
+                            <table css={tableContent}>
+                                {questionWithStat.map((data, index) => {
+                                    return (
+                                        <tr css={mainContentRow}>
+                                            <td css={noColumnStyle}>{index+1}</td>
+                                            <td css={typeColumnStyle}>{data.code_type}</td>
+                                            <td css={questionColumnStyle}>{data.questionText}</td>
+                                            <td css={trueColumnStyle}>{data.true_answer}</td>
+                                            <td css={falseColumnStyle}>{data.false_answer}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
