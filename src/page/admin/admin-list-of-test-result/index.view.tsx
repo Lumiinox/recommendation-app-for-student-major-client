@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiGetTestResultData } from '../../../database-api';
-import { ButtonStyle, HeaderButtonStyle, HeaderOneStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
+import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
 interface TestResultDataProps {

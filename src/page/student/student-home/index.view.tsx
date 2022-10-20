@@ -1,11 +1,13 @@
+/** @jsxImportSource @emotion/react */
+
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../../redux";
+import { ContentListStyle, HeadTitleStyle, ContentCardStyle, ContentWrapperStyle, ProfileCardStyle, ProfileWrapperStyle, LogOutButtonStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
 
 export default function StudentHome (){
-    const [shownContent, setShownContent] = useState<number>(1);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,23 +28,24 @@ export default function StudentHome (){
         }
     }
     return(
-        <div className="adminHomePageWrapper">
-            <div className="parentGrid">
-                <div className="headWrapper">
-                        <div>BINUS</div>
-                        <div>Hi, Admin</div>
-                        <div className="logoutButtonStyle" onClick={() => menuBtnHandler(2)}>Log Out</div>
+        <div>
+            <div css={ParentGridStyle}>
+                <div css={HeadWrapperStyle}>
+                    <div>BINUS</div>
+                    <div css={HeadTitleStyle}>Hi, Student</div>
+                    <div css={LogOutButtonStyle} onClick={() => menuBtnHandler(2)}>Log Out</div>
                 </div>
-                <div className="profileWrapper">
-                    <div className="profileCardStyle">
+                <div css={ProfileWrapperStyle}>
+                    <div css={ProfileCardStyle}>
                         <div></div>
                         <div>{name}</div>
                         <div>{status}</div>
+                        <div>{nim}</div>
                     </div>
                 </div>
-                <div className="contentWrapper">
-                    <div className="contentList">
-                        <div className="contentCard" onClick={() => menuBtnHandler(1)}> Do Test </div>
+                <div css={ContentWrapperStyle}>
+                    <div css={ContentListStyle}>
+                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}> Do Test </div>
                     </div>
                 </div>
             </div>

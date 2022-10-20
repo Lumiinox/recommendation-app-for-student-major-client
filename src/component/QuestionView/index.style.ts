@@ -42,6 +42,17 @@ export const QuestionLetterStyle = (correct: boolean) => css`
     border-radius:5px;
 `;
 
+export const QuestionTestLetterStyle = (selected: boolean) => css`
+    background-color: ${selected ? "blue" : "#ffffff"};
+    font-size: 14px;
+    text-align: center;
+    width: 20px;
+    float: left;
+    margin-right: 5px;
+    border-radius:5px;
+`;
+
+
 export const QuestionTextContainer = css`
     height: 20px;
     font-size: 14px;

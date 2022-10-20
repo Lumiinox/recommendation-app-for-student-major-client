@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
-import {QuestionViewHeaderWrapperStyle, QuestionViewContentStyle, TextMargin, MgrnTop20px, QuestionLetterStyle, QuestionTextContainer } from './index.style';
+import React, { useState } from 'react';
+import {QuestionViewHeaderWrapperStyle, QuestionViewContentStyle, TextMargin, MgrnTop20px, QuestionLetterStyle, QuestionTextContainer, QuestionTestLetterStyle } from './index.style';
 
 interface QuestionViewComponentTypes{
     questionId: number;
@@ -11,6 +11,9 @@ interface QuestionViewComponentTypes{
     choice3: string;
     choice4: string;
     answer: string;
+    isATest?: boolean;
+    index?: number;
+    answerDataHandler?: (index: number, answer: number) => void;
 }
 
 export const QuestionViewComponent = ({    
@@ -21,8 +24,56 @@ export const QuestionViewComponent = ({
     choice2, 
     choice3, 
     choice4, 
-    answer
+    answer,
+    index,
+    isATest,
+    answerDataHandler,
     }: QuestionViewComponentTypes) => {
+    const [choiceStatus1, setChoiceStatus1] = useState<boolean>(false);
+    const [choiceStatus2, setChoiceStatus2] = useState<boolean>(false);
+    const [choiceStatus3, setChoiceStatus3] = useState<boolean>(false);
+    const [choiceStatus4, setChoiceStatus4] = useState<boolean>(false);
+    
+    const choiceHandler1 = () => {
+        if (isATest && index !== undefined && answerDataHandler){
+            setChoiceStatus1(true);
+            setChoiceStatus2(false);
+            setChoiceStatus3(false);
+            setChoiceStatus4(false);
+            answerDataHandler(index, 1);
+        }
+    }
+
+    const choiceHandler2 = () => {
+        if (isATest && index !== undefined && answerDataHandler){
+            setChoiceStatus1(false);
+            setChoiceStatus2(true);
+            setChoiceStatus3(false);
+            setChoiceStatus4(false);
+            answerDataHandler(index, 2);
+        }
+    }
+
+    const choiceHandler3 = () => {
+        if (isATest && index !== undefined && answerDataHandler){
+            setChoiceStatus1(false);
+            setChoiceStatus2(false);
+            setChoiceStatus3(true);
+            setChoiceStatus4(false);
+            answerDataHandler(index, 3);
+        }
+    }
+
+    const choiceHandler4 = () => {
+        if (isATest && index !== undefined && answerDataHandler){
+            setChoiceStatus1(false);
+            setChoiceStatus2(false);
+            setChoiceStatus3(false);
+            setChoiceStatus4(true);
+            answerDataHandler(index, 4);
+        }
+    }
+
     return(
         <div>
             <div css={QuestionViewHeaderWrapperStyle}> 
@@ -37,16 +88,20 @@ export const QuestionViewComponent = ({
                     <div css={TextMargin}><b>{questionText}</b></div>
                     <div css={TextMargin}>
                         <div>
-                            <span css={QuestionLetterStyle(Number(answer) === 1 ? true : false)}>A</span> <span css={QuestionTextContainer}>{choice1}</span>
+                            <div css={isATest ? QuestionTestLetterStyle(choiceStatus1) : QuestionLetterStyle(Number(answer) === 1 ? true : false)}>A</div> 
+                            <div css={QuestionTextContainer} onClick={choiceHandler1}>{choice1}</div>
                         </div>
-                        <div>
-                            <span css={QuestionLetterStyle(Number(answer) === 2 ? true : false)}>B</span> <span css={QuestionTextContainer}>{choice2}</span>
+                        <div onClick={choiceHandler2}>
+                            <div css={isATest ? QuestionTestLetterStyle(choiceStatus2) : QuestionLetterStyle(Number(answer) === 1 ? true : false)}>B</div> 
+                            <div css={QuestionTextContainer}>{choice2}</div>
                         </div>
-                        <div>
-                            <span css={QuestionLetterStyle(Number(answer) === 3 ? true : false)}>C</span> <span css={QuestionTextContainer}>{choice3}</span>
+                        <div onClick={choiceHandler3}>
+                            <div css={isATest ? QuestionTestLetterStyle(choiceStatus3) : QuestionLetterStyle(Number(answer) === 1 ? true : false)}>C</div> 
+                            <div css={QuestionTextContainer}>{choice3}</div>
                         </div>
-                        <div>
-                            <span css={QuestionLetterStyle(Number(answer) === 4 ? true : false)}>D</span> <span css={QuestionTextContainer}>{choice4}</span>
+                        <div onClick={choiceHandler4}>
+                            <div css={isATest ? QuestionTestLetterStyle(choiceStatus4) : QuestionLetterStyle(Number(answer) === 1 ? true : false)}>D</div> 
+                            <div css={QuestionTextContainer}>{choice4}</div>
                         </div>
                     </div>
                 </div>

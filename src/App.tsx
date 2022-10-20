@@ -5,7 +5,7 @@ import { State } from './redux';
 import { useSelector } from 'react-redux';
 import { GlobalAppStyle } from './App.style';
 
-import StudentTest from './page/student/student-test';
+import StudentTest from './page/student/student-test/index.view';
 import ViewQuestionsPage from './page/admin/admin-view-questions/index.view';
 import ListOfTestResult from './page/admin/admin-list-of-test-result/index.view';
 import AdminHome from './page/admin/admin-home/index.view';

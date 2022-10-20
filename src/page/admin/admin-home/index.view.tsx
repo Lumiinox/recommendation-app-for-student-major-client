@@ -1,17 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import { actionCreators, State } from "../../../redux";
-import { ContentListStyle, ContentWrapperStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
-import { AdminHeadTitleStyle, ContentCardStyle, LogOutButtonStyle, ProfileCardStyle, ProfileWrapperStyle } from "./index.style";
+import HeaderComp from "../../../component/HeaderComponent/index.view";
+import { State } from "../../../redux";
+import { ADMIN_HOME_TITLE } from "../../constants/index.constants";
+import { 
+    ContentListStyle,  
+    ContentCardStyle, 
+    ContentWrapperStyle, 
+    ProfileCardStyle, 
+    ProfileWrapperStyle, 
+    ParentGridStyle 
+    } from "../../styles/index.style";
 
-export default function AdminHome (){    
-    const dispatch = useDispatch();
+export default function AdminHome (){   
     const navigate = useNavigate();
 
-    const {removeProfileData} = bindActionCreators(actionCreators, dispatch);
     
     const name = useSelector((state: State) => state.userData.name)
     const status = useSelector((state: State) => state.userData.status)
@@ -24,20 +29,13 @@ export default function AdminHome (){
                     break;
             case 3: navigate(`/admin/view-test-result`);
                     break;
-            case 4: removeProfileData();
-                    navigate('/');
-                    break;
         }
     }
 
     return(
         <div>
             <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                    <div>BINUS</div>
-                    <div css={AdminHeadTitleStyle}>Hi, Admin</div>
-                    <div css={LogOutButtonStyle} onClick={() => menuBtnHandler(4)}>Log Out</div>
-                </div>
+                <HeaderComp headerTitle={ADMIN_HOME_TITLE} headerButtonMode={1}/>
                 <div css={ProfileWrapperStyle}>
                     <div css={ProfileCardStyle}>
                         <div></div>
