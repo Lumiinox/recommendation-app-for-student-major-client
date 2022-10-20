@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { State } from "../../../redux";
 import { InitAnswerData } from "./type";
 import { QuestionViewComponent } from "../../../component/QuestionView/index.view";
-import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
+import { ParentGridStyle } from '../../styles/index.style';
+import HeaderComp from "../../../component/HeaderComponent/index.view";
+import { HOME_MODE, TEST_TITLE } from "../../constants/index.constants";
 
 interface QuestionsData {
     question_id: number;
@@ -126,40 +128,35 @@ export default function StudentTest () {
         else if (choice === 2) setCodeType("KemampuanDasar");
     }
 
-    const HomeBtnHandler = () => {
-        navigate('/admin/home');
-    }
-
     return(
         <div>
             <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                    <div>BINUS</div>
-                    <div><b>Create Question</b></div>
-                    <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
+                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE}/>
+                
+                <div>
+                    <input type='radio' value="personality" name="question_type" onChange={() => RadioButtonQuestionType(1)}/>Personality
+                    <input type='radio' value="kemampuanDasar" name="question_type" onChange={() => RadioButtonQuestionType(2)}/>Kemampuan Dasar
+                    <button onClick={GetQuestion}>Get Questions</button>
+                    {questionsData.map((value, index) => {
+                        return (
+                            <QuestionViewComponent 
+                            key={index}
+                            questionId={value.question_id}
+                            codeType={value.code_type}
+                            questionText={value.questionText}
+                            choice1={value.choice_1}
+                            choice2={value.choice_2}
+                            choice3={value.choice_3}
+                            choice4={value.choice_4}
+                            answer={value.answer}
+                            index = {index}
+                            answerDataHandler = {answerDataHandler}   
+                            isATest={true}       
+                            />
+                        )
+                    })}
+                    <button onClick={SubmitHandler}>Submit</button>
                 </div>
-                <input type='radio' value="personality" name="question_type" onChange={() => RadioButtonQuestionType(1)}/>Personality
-                <input type='radio' value="kemampuanDasar" name="question_type" onChange={() => RadioButtonQuestionType(2)}/>Kemampuan Dasar
-                <button onClick={GetQuestion}>Get Questions</button>
-                {questionsData.map((value, index) => {
-                    return (
-                        <QuestionViewComponent 
-                          key={index}
-                          questionId={value.question_id}
-                          codeType={value.code_type}
-                          questionText={value.questionText}
-                          choice1={value.choice_1}
-                          choice2={value.choice_2}
-                          choice3={value.choice_3}
-                          choice4={value.choice_4}
-                          answer={value.answer}
-                          index = {index}
-                          answerDataHandler = {answerDataHandler}   
-                          isATest={true}       
-                        />
-                      )
-                  })}
-                <button onClick={SubmitHandler}>Submit</button>
             </div>
       </div>
     )

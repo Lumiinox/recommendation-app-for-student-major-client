@@ -5,8 +5,15 @@ export const apiLoginStaff = async (emailInput: string, passwordInput: string) =
     const response = await axios.post('http://localhost:3001/api/login-admin',{
         email: emailInput,
         password: passwordInput,
-    })
-    return response.data;
+    });
+    console.log(response.data[0].name);
+    const formatedData = {
+        name: response.data[0].name, 
+        email: response.data[0].email, 
+        status: response.data[0].status, 
+        nim: ""
+    }
+    return formatedData;
 }
 
 export const apiLoginStudent = async (emailInput: string, passwordInput: string) => {
@@ -14,8 +21,14 @@ export const apiLoginStudent = async (emailInput: string, passwordInput: string)
     const response = await axios.post('http://localhost:3001/api/login-student',{
         email: emailInput,
         password: passwordInput,
-    })
-    return response.data;
+    });
+    const formatedData = {
+        name: response.data[0].name, 
+        email: response.data[0].email, 
+        status: response.data[0].status, 
+        nim: response.data[0].NIM,
+    }
+    return formatedData;
 }
 
 export const apiSubmitQuestion = async (code_type: string, questionText: string, choice_1: string, choice_2: string, choice_3: string, choice_4: string, answer: string) => {

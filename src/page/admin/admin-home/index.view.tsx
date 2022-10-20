@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { State } from "../../../redux";
-import { ADMIN_HOME_TITLE } from "../../constants/index.constants";
+import { ADMIN_HOME_TITLE, LOGOUT_MODE } from "../../constants/index.constants";
 import { 
     ContentListStyle,  
     ContentCardStyle, 
@@ -35,7 +35,8 @@ export default function AdminHome (){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={ADMIN_HOME_TITLE} headerButtonMode={1}/>
+                <HeaderComp headerTitle={ADMIN_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
+                
                 <div css={ProfileWrapperStyle}>
                     <div css={ProfileCardStyle}>
                         <div></div>

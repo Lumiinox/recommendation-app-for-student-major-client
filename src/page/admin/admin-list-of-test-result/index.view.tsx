@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { apiGetTestResultData } from '../../../database-api';
-import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from '../../styles/index.style';
+import { HOME_MODE, TEST_RESULT_TITLE } from '../../constants/index.constants';
+import { ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
 interface TestResultDataProps {
@@ -24,19 +26,10 @@ export default function ListOfTestResult(){
         fetchData();
       }, [])
 
-    const navigate = useNavigate();
-
-    const HomeBtnHandler = () => {
-        navigate('/admin/home');
-    }
     return(
         <div>
             <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                    <div>BINUS</div>
-                    <div><b>Test Result</b></div>
-                    <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
-                </div>
+                <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE}/>
 
                 <div css={wholeContentWrapperStyle}>
                     <div>

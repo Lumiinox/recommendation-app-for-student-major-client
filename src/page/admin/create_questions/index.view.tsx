@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { apiSubmitQuestion } from '../../../database-api';
 import '../../styles/index.style.ts';
 import {
@@ -16,8 +15,10 @@ import {
   FormTextAreaStyle,
   FormInputTextStyle
 } from './index.style';
-import { HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
+import { ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
+import HeaderComp from '../../../component/HeaderComponent/index.view';
+import { CREATE_QUESTION_TITLE, HOME_MODE } from '../../constants/index.constants';
 interface DataPertanyaan {
   question_id: number;
   code_type: string;
@@ -44,7 +45,6 @@ export default function AdminCreateQuestion (){
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
 
-  const navigate = useNavigate();
   const divRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -115,17 +115,11 @@ export default function AdminCreateQuestion (){
     )
   }
 
-  const HomeBtnHandler = () => {
-    navigate('/admin/home');
-  }
   return(
       <div ref={divRef}>
         <div css={ParentGridStyle}>
-          <div css={HeadWrapperStyle}>
-              <div>BINUS</div>
-              <div><b>Create Question</b></div>
-              <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
-          </div>
+          <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE}/>
+
           <div>
             {displayForm && ShowForm()}
           </div>

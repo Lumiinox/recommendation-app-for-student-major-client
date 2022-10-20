@@ -1,11 +1,20 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState } from "react"
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { actionCreators, State } from "../../../redux";
-import { ContentListStyle, HeadTitleStyle, ContentCardStyle, ContentWrapperStyle, ProfileCardStyle, ProfileWrapperStyle, LogOutButtonStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
+import { LOGOUT_MODE, TEST_TITLE } from "../../constants/index.constants";
+import { 
+    ContentListStyle, 
+    ContentCardStyle, 
+    ContentWrapperStyle, 
+    ProfileCardStyle, 
+    ProfileWrapperStyle, 
+    ParentGridStyle 
+} from "../../styles/index.style";
 
 export default function StudentHome (){
     
@@ -30,11 +39,7 @@ export default function StudentHome (){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                    <div>BINUS</div>
-                    <div css={HeadTitleStyle}>Hi, Student</div>
-                    <div css={LogOutButtonStyle} onClick={() => menuBtnHandler(2)}>Log Out</div>
-                </div>
+                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={LOGOUT_MODE}/>
                 <div css={ProfileWrapperStyle}>
                     <div css={ProfileCardStyle}>
                         <div></div>

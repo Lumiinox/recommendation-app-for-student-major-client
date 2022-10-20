@@ -29,6 +29,23 @@ export default function MainLoginPage(){
         container = document.getElementById('container')!;
       }, []);
 
+    useEffect(() => {
+        const userData = localStorage.getItem('loginUser');
+        console.log("FROM LOCAL STORAGE");
+        console.log(userData);
+        if(userData){
+            const parsedUserData = JSON.parse(userData);
+            console.log(parsedUserData);
+            if(parsedUserData.status === "admin"){
+                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, "");
+                navigate('/admin/home');
+            } else if (parsedUserData.status === "student"){
+                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.nim);
+                navigate('/student/home');
+            }
+        }
+    })
+    
     const staffSignInHandler = () => {
       console.log(container);
       container.classList.toggle("right-panel-active");
@@ -41,18 +58,19 @@ export default function MainLoginPage(){
     
     const signInHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, choice: number) => {
         event.preventDefault();
-        console.log("hello");
         let data;
         switch(choice){                                      
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
-                    console.log(data);
-                    updateProfileData(data[0].name, data[0].email, data[0].status, "");
+                    // console.log(data);
+                    updateProfileData(data.name, data.email, data.status, "");
+                    localStorage.setItem('loginUser', JSON.stringify(data));
                     navigate('/admin/home');
                     break;
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
-                    console.log(data);
-                    updateProfileData(data[0].name, data[0].email, data[0].status, data[0].NIM);
+                    // console.log(data);
+                    updateProfileData(data.name, data.email, data.status, data.nim);
+                    localStorage.setItem('loginUser', JSON.stringify(data));
                     navigate('/student/home');
                     break;
         }

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { apiGetQuestionWithStats } from "../../../database-api";
-import { ButtonStyle, HeaderButtonStyle, HeadWrapperStyle, ParentGridStyle } from "../../styles/index.style";
+import { HOME_MODE, VIEW_QUESTION_TITLE } from "../../constants/index.constants";
+import { ParentGridStyle } from "../../styles/index.style";
 import { falseColumnStyle, mainContentRow, noColumnStyle, questionColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, trueColumnStyle, typeColumnStyle, wholeContentWrapperStyle } from "./index.style";
 
 interface QuestionWithStatProps {
@@ -25,19 +25,10 @@ export default function ViewQuestionsPage(){
         fetchData();
       }, [])
       
-    const navigate = useNavigate();
-
-    const HomeBtnHandler = () => {
-        navigate('/admin/home');
-    }
     return(
         <div>
             <div css={ParentGridStyle}>
-                <div css={HeadWrapperStyle}>
-                        <div>BINUS</div>
-                        <div><b>View Question</b></div>
-                        <div css={HeaderButtonStyle} onClick={HomeBtnHandler}>Home</div>
-                </div>
+                <HeaderComp headerTitle={VIEW_QUESTION_TITLE} headerButtonMode={HOME_MODE}/>
 
                 <div css={wholeContentWrapperStyle}>
                     <div>
