@@ -3,17 +3,17 @@ import { Action } from '../actions';
 
 interface StateProps{
     name: string;
-    nim: string;
+    nim: number;
     email: string;
-    status: string; 
+    status: number; 
     loginStatus: boolean;
 }
 
 const initialState = {
     name: "",
-    nim: "",
+    nim: 0,
     email: "",
-    status: "",
+    status: 0,
     loginStatus: false,
 };
 
@@ -31,9 +31,9 @@ const reducer = (state: StateProps = initialState, action: Action) => {
         case ActionType.REMOVE_ACC_DATA:
             return{
                 name: "",
-                nim: "",
+                nim: 0,
                 email: "",
-                status: "",
+                status: 0,
                 loginStatus: false,
             }
         default:

@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { apiGetTestResultData } from '../../../database-api';
 import { HOME_MODE, TEST_RESULT_TITLE } from '../../constants/index.constants';

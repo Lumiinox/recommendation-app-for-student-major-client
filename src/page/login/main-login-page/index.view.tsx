@@ -37,7 +37,7 @@ export default function MainLoginPage(){
             const parsedUserData = JSON.parse(userData);
             console.log(parsedUserData);
             if(parsedUserData.status === "admin"){
-                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, "");
+                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, 0);
                 navigate('/admin/home');
             } else if (parsedUserData.status === "student"){
                 updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.nim);
@@ -61,8 +61,9 @@ export default function MainLoginPage(){
         let data;
         switch(choice){                                      
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
-                    // console.log(data);
-                    updateProfileData(data.name, data.email, data.status, "");
+                    console.log("DATA IS BELLOW HERE");
+                    console.log(data);
+                    updateProfileData(data.name, data.email, data.status, 0);
                     localStorage.setItem('loginUser', JSON.stringify(data));
                     navigate('/admin/home');
                     break;
@@ -75,10 +76,10 @@ export default function MainLoginPage(){
                     break;
         }
 
-        if (status === "admin"){
+        if (status === 1){
             console.log("Hi Admin");
         }
-        else if (status === "student"){
+        else if (status === 2){
             console.log("Hi Student");
         }
         else{

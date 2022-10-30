@@ -28,22 +28,22 @@ function App() {
           <Route path="" element={<MainLoginPage/>}/>
 
           <Route path='/admin/home' 
-            element={loginStatus && status === "admin" ? <AdminHome/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 1 ? <AdminHome/> : <Navigate replace to="/"/>}/>
           
           <Route path='/admin/create-question' 
-            element={loginStatus && status === "admin" ? <AdminCreateQuestion/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 1 ? <AdminCreateQuestion/> : <Navigate replace to="/"/>}/>
 
           <Route path='/admin/view-question' 
-            element={loginStatus && status === "admin" ? <ViewQuestionsPage/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 1 ? <ViewQuestionsPage/> : <Navigate replace to="/"/>}/>
 
           <Route path='/admin/view-test-result' 
-            element={loginStatus && status === "admin" ? <ListOfTestResult/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 1 ? <ListOfTestResult/> : <Navigate replace to="/"/>}/>
 
           <Route path='/student/home' 
-            element={loginStatus && status === "student" ? <StudentHome/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 2 ? <StudentHome/> : <Navigate replace to="/"/>}/>
           
           <Route path='/student/do-test' 
-            element={loginStatus && status === "student" ? <StudentTest/> : <Navigate replace to="/"/>}/>
+            element={loginStatus && status === 2 ? <StudentTest/> : <Navigate replace to="/"/>}/>
 
         </Routes>
 

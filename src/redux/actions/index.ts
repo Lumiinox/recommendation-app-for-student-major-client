@@ -1,8 +1,8 @@
 interface Payload{
     name: string;
     email: string;
-    status: string;
-    nim: string;
+    status: number;
+    nim: number;
 }
 
 interface UpdateAccountData{
