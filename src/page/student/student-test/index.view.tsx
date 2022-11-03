@@ -30,6 +30,7 @@ interface AnswerData {
 export default function StudentTest () {
     const [questionsData, setQuestionsData] = useState<QuestionsData[]>([]);
     const [answerData, setAnswerData] = useState<AnswerData[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [score, setScore] = useState<Number>();
     const [codeType, setCodeType] = useState<string>("");
     const navigate = useNavigate();

@@ -1,4 +1,3 @@
-import { ChildProcess } from "child_process";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -7,7 +6,6 @@ import "./index.style.css";
 import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
-import { updateProfileData } from "../../../redux/action-creators";
 import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
 
 export default function MainLoginPage(){
@@ -16,6 +14,7 @@ export default function MainLoginPage(){
 
     let container: HTMLElement;
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const loginStatus = useSelector((state: State) => state.userData.loginStatus)
     const status = useSelector((state: State) => state.userData.status)
 
