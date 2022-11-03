@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { apiAddQuestionCategory, apiGetAllQuestion, apiGetAllQuestionCategory, apiSubmitQuestion } from '../../../database-api';
 import '../../styles/index.style.ts';
 import {
@@ -40,6 +39,7 @@ interface DataCategoryType{
 
 export default function AdminCreateQuestion (){
     
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [code_type, setCode_type] = useState('');
   const [questionText, setQuestionText] = useState('');
   const [choice_1, setChoice1] = useState('');
