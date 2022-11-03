@@ -1,10 +1,9 @@
 import axios from 'axios';
-
-const hostName = 'https://recommendation-app-for-student.herokuapp.com/';
+import { HOST_NAME } from '../page/constants/index.constants';
 
 export const apiLoginStaff = async (emailInput: string, passwordInput: string) => {
     console.log('api called');
-    const response = await axios.post(`${hostName}api/login-admin`,{
+    const response = await axios.post(`${HOST_NAME}api/login_admin`,{
         email: emailInput,
         password: passwordInput,
     });
@@ -21,7 +20,7 @@ export const apiLoginStaff = async (emailInput: string, passwordInput: string) =
 
 export const apiLoginStudent = async (emailInput: string, passwordInput: string) => {
     console.log('api called');
-    const response = await axios.post(`${hostName}api/login-student`,{
+    const response = await axios.post(`${HOST_NAME}api/login_student`,{
         email: emailInput,
         password: passwordInput,
     });
@@ -36,7 +35,7 @@ export const apiLoginStudent = async (emailInput: string, passwordInput: string)
 
 export const apiSubmitQuestion = async (code_type: string, questionText: string, choice_1: string, choice_2: string, choice_3: string, choice_4: string, answer: string) => {
     console.log('test')
-    const response = await axios.post(`${hostName}api/insert/question/`, {
+    const response = await axios.post(`${HOST_NAME}api/insert/question/`, {
       code_type      : code_type,
       questionText    : questionText, 
       choice_1      : choice_1,
@@ -48,18 +47,41 @@ export const apiSubmitQuestion = async (code_type: string, questionText: string,
     return response.data;
 }
 
-export const apiGetTestResultData = async () => {
-    console.log('api called');
-    const response = await axios.get(`${hostName}api/get/test_result`);
-    return response.data;
+export const apiAddQuestionCategory = async (categoryName: string) => {
+    console.log(categoryName);
+    const response = await axios.post(`${HOST_NAME}api/new_question_category`, {
+        nameCategory: categoryName,
+      });
+      return response.data;
 }
 
 export const apiShowQuestion = async () => {
-    const response = await axios.get(`${hostName}api/get/questions`)
+    const response = await axios.get(`${HOST_NAME}api/get/question`)
     return response.data;
-  }
+}
 
 export const apiGetQuestionWithStats = async () => {
-    const response = await axios.get(`${hostName}api/get/questions_stat`);
+    const response = await axios.get(`${HOST_NAME}api/get/question_stat`);
+    return response.data;
+}
+
+export const apiGetQuestionCategory = async (idCategory: number) => {
+    const response = await axios.get(`${HOST_NAME}api/get/question_category/${idCategory}`);
+    return response.data;
+}
+
+export const apiGetAllQuestionCategory = async () => {
+    const response = await axios.get(`${HOST_NAME}api/get/question_category_all`);
+    return response.data;
+}
+
+export const apiGetAllQuestion = async () => {
+    const response = await axios.get(`${HOST_NAME}api/get/question`);
+    return response.data;
+}
+
+export const apiGetTestResultData = async () => {
+    console.log('api called');
+    const response = await axios.get(`${HOST_NAME}api/get/test_result`);
     return response.data;
 }

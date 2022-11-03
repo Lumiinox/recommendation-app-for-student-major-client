@@ -4,7 +4,6 @@ export const CreateQuestionContentWrapper = css`
     display: flex;
     justify-content: center;
     padding: 30px 0px;
-
 `;
 
 export const FormSubmitButtonStyle = css`
@@ -74,4 +73,28 @@ export const FormInputTextStyle = css`
     resize: none;
     font-size: 20px;
     margin-top: 10px;
+`;
+
+export const DropDownSelectedStyle = css`
+    width: 30%;
+    background-color: #eee;
+    border-radius: 30px;
+    border: 0;
+    resize: none;
+    font-size: 20px;
+    margin-top: 10px;
+    padding: 10px 20px;
+`;
+
+
+export const DropDownListContainer = css`
+    width: 30%;
+    background-color: #eee;
+    border-radius: 30px;
+    border: 0;
+    resize: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    position: absolute;
+    transform: translate(0,-50px);
 `;

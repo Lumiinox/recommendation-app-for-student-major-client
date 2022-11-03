@@ -10,7 +10,7 @@ import ViewQuestionsPage from './page/admin/admin-view-questions/index.view';
 import ListOfTestResult from './page/admin/admin-list-of-test-result/index.view';
 import AdminHome from './page/admin/admin-home/index.view';
 import StudentHome from './page/student/student-home/index.view';
-import AdminCreateQuestion from './page/admin/create_questions/index.view';
+import AdminCreateQuestion from './page/admin/create-questions/index.view';
 import MainLoginPage from './page/login/main-login-page/index.view';
 
 

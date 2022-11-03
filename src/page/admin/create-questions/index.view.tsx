@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { apiSubmitQuestion } from '../../../database-api';
+import { apiAddQuestionCategory, apiGetAllQuestion, apiGetAllQuestionCategory, apiSubmitQuestion } from '../../../database-api';
 import '../../styles/index.style.ts';
 import {
   CreateQuestionFormWrapperStyle,
@@ -13,12 +13,15 @@ import {
   FormTitleStle,
   FormSectionStyle,
   FormTextAreaStyle,
-  FormInputTextStyle
+  FormInputTextStyle,
+  DropDownSelectedStyle,
+  DropDownListContainer
 } from './index.style';
 import { ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { CREATE_QUESTION_TITLE, HOME_MODE } from '../../constants/index.constants';
+
 interface DataPertanyaan {
   question_id: number;
   code_type: string;
@@ -30,6 +33,10 @@ interface DataPertanyaan {
   choice_4: string;
 }
 
+interface DataCategoryType{
+  idCategory: number;
+  nameCategory: string;
+}
 
 export default function AdminCreateQuestion (){
     
@@ -40,36 +47,80 @@ export default function AdminCreateQuestion (){
   const [choice_3, setChoice3] = useState('');
   const [choice_4, setChoice4] = useState('');
   const [answer, setAnswer] = useState('');
-  const [displayForm, setDisplayForm] = useState(false);
-  const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
+  const [categoryName, setCategoryName] = useState('');
+  const [displayCreateQuestionForm, setDisplayCreateQuestionForm] = useState(false);
+  const [displayCategoryQuestionForm, setDisplayCategoryQuestionForm] = useState(false);
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
+  const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
+  const [dataCategory, setDataCategory] = useState<Array<DataCategoryType>>([]);
 
   const divRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:3001/api/get/questions');
-      setDataPertanyaan(response.data);
+      const questionData = await apiGetAllQuestion();
+      const questionCategoryData = await apiGetAllQuestionCategory();
+      console.log(questionCategoryData);
+      setDataPertanyaan(questionData);
+      setDataCategory(questionCategoryData);
     }
     fetchData();
   }, [])
 
+  const DropDownCategory = () => {
+    const displayedText = dataCategory[0].nameCategory;
+    return(
+      <div>
+        <div css={DropDownSelectedStyle}>  
+          {displayedText}
+        </div>
+
+        <div css={DropDownListContainer}>
+          {dataCategory.map((data, index) => {
+              return (
+                <div key={index}>
+                  {index+1} {data.nameCategory}  
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
+    )
+  }
   const SubmitQuestion = async () => {
     console.log("test")
-    await apiSubmitQuestion(code_type, questionText, choice_1, choice_2, choice_3, choice_4, answer)
+    await apiSubmitQuestion(code_type, questionText, choice_1, choice_2, choice_3, choice_4, answer);
+    ShowFormHandler(1);
   }
 
-  const ShowFormHandler = () => {
+  const SubmitCategory = async () => {
+    console.log(categoryName);
+    await apiAddQuestionCategory(categoryName);
+    ShowFormHandler(2);
+  }
+
+  const ShowFormHandler = (type: number) => {
     const tempPageHeight = divRef.current?.clientHeight as number;
     const tempPageWidth = divRef.current?.clientWidth as number;
     console.log(tempPageHeight);
-    setPageHeight(tempPageHeight);
+    if(tempPageHeight > window.innerHeight){
+      setPageHeight(tempPageHeight + 50);
+    } else {
+      setPageHeight(window.innerHeight + 50);
+    }
+
     setPageWidth(tempPageWidth);
-    setDisplayForm(!displayForm);
+    if(type === 1){
+      setDisplayCreateQuestionForm(!displayCreateQuestionForm);
+    } else if (type === 2) {
+      setDisplayCategoryQuestionForm(!displayCategoryQuestionForm);
+    }
+
   }
 
-  const ShowForm = () => {
+  const CreateQuestionForm = () => {
     return(
       <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
         <div>
@@ -79,7 +130,7 @@ export default function AdminCreateQuestion (){
 
               <div css={FormSectionStyle}>
                 <div css={FormTitleStle}>Question Type</div>
-                <input css={FormInputTextStyle} type="text" name="kodeTipe" onChange={(e) => {setCode_type(e.target.value)}}></input>
+                <DropDownCategory/>
               </div>
 
               <div css={FormSectionStyle}>
@@ -107,7 +158,7 @@ export default function AdminCreateQuestion (){
               </div>
 
               <button css={RegularButtonStyle} onClick={SubmitQuestion}>Submit</button>
-              <button css={RegularButtonStyle} onClick={ShowFormHandler}>Cancel</button>
+              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -115,33 +166,59 @@ export default function AdminCreateQuestion (){
     )
   }
 
+  const AddNewCategoryForm = () => {
+    return(
+      <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
+        <div>
+          <div css={CreateQuestionFormStyle}>
+            <h2>Add New Category</h2>
+            <div className="form">
+
+              <div css={FormSectionStyle}>
+                <div css={FormTitleStle}>Category Name</div>
+                <input css={FormInputTextStyle} type="text" name="categoryName" onChange={(e) => {setCategoryName(e.target.value)}}></input>
+              </div>
+
+              <button css={RegularButtonStyle} onClick={SubmitCategory}>Submit</button>
+              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return(
       <div ref={divRef}>
         <div css={ParentGridStyle}>
           <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE}/>
 
           <div>
-            {displayForm && ShowForm()}
+            {displayCreateQuestionForm && CreateQuestionForm()}
+            {displayCategoryQuestionForm && AddNewCategoryForm()}
           </div>
           <div css={CreateQuestionContentWrapper}>
             <div css={QuestionListWrapperStyle}>
 
-              <button css={RegularButtonStyle} onClick={ShowFormHandler}>Add Question</button>
-              {dataPertanyaan.map((value, index) => {
-                return (
-                    <QuestionViewComponent 
-                      key={index}
-                      questionId={value.question_id}
-                      codeType={value.code_type}
-                      questionText={value.questionText}
-                      choice1={value.choice_1}
-                      choice2={value.choice_2}
-                      choice3={value.choice_3}
-                      choice4={value.choice_4}
-                      answer={value.answer}          
-                    />
-                  )
-              })}
+              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
+              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
+              {dataPertanyaan &&
+                dataPertanyaan.map((value, index) => {
+                  return (
+                      <QuestionViewComponent 
+                        key={index}
+                        questionId={value.question_id}
+                        codeType={value.code_type}
+                        questionText={value.questionText}
+                        choice1={value.choice_1}
+                        choice2={value.choice_2}
+                        choice3={value.choice_3}
+                        choice4={value.choice_4}
+                        answer={value.answer}          
+                      />
+                    )
+                })
+              }
+
 
             </div>
           </div>
