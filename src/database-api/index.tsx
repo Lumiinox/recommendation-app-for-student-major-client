@@ -33,7 +33,7 @@ export const apiLoginStudent = async (emailInput: string, passwordInput: string)
     return formatedData;
 }
 
-export const apiSubmitQuestion = async (code_type: string, questionText: string, choice_1: string, choice_2: string, choice_3: string, choice_4: string, answer: string) => {
+export const apiSubmitQuestion = async (code_type: number, questionText: string, choice_1: string, choice_2: string, choice_3: string, choice_4: string, answer: string) => {
     console.log('test')
     const response = await axios.post(`${HOST_NAME}api/insert/question/`, {
       code_type      : code_type,

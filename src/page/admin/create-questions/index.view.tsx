@@ -13,23 +13,22 @@ import {
   FormSectionStyle,
   FormTextAreaStyle,
   FormInputTextStyle,
-  DropDownSelectedStyle,
-  DropDownListContainer
 } from './index.style';
 import { ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { CREATE_QUESTION_TITLE, HOME_MODE } from '../../constants/index.constants';
+import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 
 interface DataPertanyaan {
-  question_id: number;
-  code_type: string;
+  idQuestion: number;
+  idCategory: number;
   answer: string;
   questionText: string;
-  choice_1: string;
-  choice_2: string;
-  choice_3: string;
-  choice_4: string;
+  questionChoice1: string;
+  questionChoice2: string;
+  questionChoice3: string;
+  questionChoice4: string;
 }
 
 interface DataCategoryType{
@@ -40,7 +39,7 @@ interface DataCategoryType{
 export default function AdminCreateQuestion (){
     
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [code_type, setCode_type] = useState('');
+  const [questionCategory, setQuestionCategory] = useState(0);
   const [questionText, setQuestionText] = useState('');
   const [choice_1, setChoice1] = useState('');
   const [choice_2, setChoice2] = useState('');
@@ -53,7 +52,9 @@ export default function AdminCreateQuestion (){
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
   const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
-  const [dataCategory, setDataCategory] = useState<Array<DataCategoryType>>([]);
+  const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
+  const [categoryIdArr, setCategoryId] = useState<Array<number>>([])
+
 
   const divRef = useRef<HTMLDivElement | null>(null);
 
@@ -62,37 +63,24 @@ export default function AdminCreateQuestion (){
       const questionData = await apiGetAllQuestion();
       const questionCategoryData = await apiGetAllQuestionCategory();
       console.log(questionCategoryData);
+      const categoryNameTemp = [];
+      const categoryIdTemp = [];
+      for (const i in questionCategoryData){
+        categoryNameTemp.push(questionCategoryData[i].nameCategory);
+        categoryIdTemp.push(questionCategoryData[i].idCategory);
+      }
       setDataPertanyaan(questionData);
-      setDataCategory(questionCategoryData);
+      setCategoryNameArr(categoryNameTemp);
+      setCategoryId(categoryIdTemp);
     }
     fetchData();
   }, [])
 
-  const DropDownCategory = () => {
-    const displayedText = dataCategory[0].nameCategory;
-    return(
-      <div>
-        <div css={DropDownSelectedStyle}>  
-          {displayedText}
-        </div>
-
-        <div css={DropDownListContainer}>
-          {dataCategory.map((data, index) => {
-              return (
-                <div key={index}>
-                  {index+1} {data.nameCategory}  
-                </div>
-              )
-            })
-          }
-        </div>
-      </div>
-    )
-  }
   const SubmitQuestion = async () => {
     console.log("test")
-    await apiSubmitQuestion(code_type, questionText, choice_1, choice_2, choice_3, choice_4, answer);
+    await apiSubmitQuestion(questionCategory, questionText, choice_1, choice_2, choice_3, choice_4, answer);
     ShowFormHandler(1);
+    RefreshQuestionList();
   }
 
   const SubmitCategory = async () => {
@@ -130,7 +118,7 @@ export default function AdminCreateQuestion (){
 
               <div css={FormSectionStyle}>
                 <div css={FormTitleStle}>Question Type</div>
-                <DropDownCategory/>
+                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory}/>
               </div>
 
               <div css={FormSectionStyle}>
@@ -187,6 +175,12 @@ export default function AdminCreateQuestion (){
       </div>
     )
   }
+
+  const RefreshQuestionList = async () => {
+    const questionData = await apiGetAllQuestion();
+    setDataPertanyaan(questionData);
+  }
+
   return(
       <div ref={divRef}>
         <div css={ParentGridStyle}>
@@ -201,18 +195,20 @@ export default function AdminCreateQuestion (){
 
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
+              <button css={RegularButtonStyle} onClick={RefreshQuestionList}>Refresh</button>
               {dataPertanyaan &&
                 dataPertanyaan.map((value, index) => {
                   return (
                       <QuestionViewComponent 
                         key={index}
-                        questionId={value.question_id}
-                        codeType={value.code_type}
+                        questionnNo={index+1}
+                        questionId={value.idQuestion}
+                        codeType={categoryNameArr[categoryIdArr.indexOf(value.idCategory)]}
                         questionText={value.questionText}
-                        choice1={value.choice_1}
-                        choice2={value.choice_2}
-                        choice3={value.choice_3}
-                        choice4={value.choice_4}
+                        choice1={value.questionChoice1}
+                        choice2={value.questionChoice2}
+                        choice3={value.questionChoice3}
+                        choice4={value.questionChoice4}
                         answer={value.answer}          
                       />
                     )
