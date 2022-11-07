@@ -43,17 +43,19 @@ export default function ViewQuestionsPage(){
                                 </tr>
                             </table>
                             <table css={tableContent}>
-                                {questionWithStat.map((data, index) => {
-                                    return (
-                                        <tr css={mainContentRow}>
-                                            <td css={noColumnStyle}>{index+1}</td>
-                                            <td css={typeColumnStyle}>{data.code_type}</td>
-                                            <td css={questionColumnStyle}>{data.questionText}</td>
-                                            <td css={trueColumnStyle}>{data.true_answer}</td>
-                                            <td css={falseColumnStyle}>{data.false_answer}</td>
-                                        </tr>
-                                    )
-                                })}
+                                <tbody>
+                                    {questionWithStat.map((data, index) => {
+                                        return (
+                                            <tr css={mainContentRow}>
+                                                <td css={noColumnStyle}>{index+1}</td>
+                                                <td css={typeColumnStyle}>{data.code_type}</td>
+                                                <td css={questionColumnStyle}>{data.questionText}</td>
+                                                <td css={trueColumnStyle}>{data.true_answer}</td>
+                                                <td css={falseColumnStyle}>{data.false_answer}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
                             </table>
                         </div>
                     </div>

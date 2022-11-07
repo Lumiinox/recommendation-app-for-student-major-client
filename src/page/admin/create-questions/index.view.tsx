@@ -31,11 +31,6 @@ interface DataPertanyaan {
   questionChoice4: string;
 }
 
-interface DataCategoryType{
-  idCategory: number;
-  nameCategory: string;
-}
-
 export default function AdminCreateQuestion (){
     
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
