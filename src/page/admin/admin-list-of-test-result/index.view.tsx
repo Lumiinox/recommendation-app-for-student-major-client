@@ -1,26 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
-import { apiGetTestResultData } from '../../../database-api';
+import { apiGetAllQuestionCategory, apiGetTestResultData } from '../../../database-api';
 import { HOME_MODE, TEST_RESULT_TITLE } from '../../constants/index.constants';
 import { ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
 interface TestResultDataProps {
-    NIM: string,
-    name: string,
-    code_type: string,
-    score: string,
-    test_date: string
+    NIM: number,
+    nameStudent: string,
+    idCategory: number,
+    testScore: string,
+    testDate: string
 }
 
 export default function ListOfTestResult(){
     const [testResultData, setTestResultData] = useState<TestResultDataProps[]>([]);
+    const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
+    const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await apiGetTestResultData();
+            console.log(data);
             setTestResultData(data);
+        }
+        fetchData();
+      }, [])
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          const questionCategoryData = await apiGetAllQuestionCategory();
+          console.log(questionCategoryData);
+          const categoryNameTemp = [];
+          const categoryIdTemp = [];
+          for (const i in questionCategoryData){
+            categoryNameTemp.push(questionCategoryData[i].nameCategory);
+            categoryIdTemp.push(questionCategoryData[i].idCategory);
+          }
+          setCategoryNameArr(categoryNameTemp);
+          setCategoryId(categoryIdTemp);
         }
         fetchData();
       }, [])
@@ -43,17 +62,19 @@ export default function ListOfTestResult(){
                                 </tr>
                             </table>
                             <table css={tableContent}>
-                                {testResultData.map((data, index) => {
-                                    return (
-                                        <tr css={mainContentRow}>
-                                            <td css={nimColumnStyle}>{data.NIM}</td>
-                                            <td css={nameColumnStyle}>{data.name}</td>
-                                            <td css={typeColumnStyle}>{data.code_type}</td>
-                                            <td css={scoreColumnStyle}>{data.score}</td>
-                                            <td css={dateColumnStyle}>{data.test_date.slice(0,16).replace('T', ' | ')}</td>
-                                        </tr>
-                                    )
-                                })}
+                                <tbody>
+                                    {testResultData.map((data, index) => {
+                                        return (
+                                            <tr css={mainContentRow}>
+                                                <td css={nimColumnStyle}>{data.NIM}</td>
+                                                <td css={nameColumnStyle}>{data.nameStudent}</td>
+                                                <td css={typeColumnStyle}>{categoryNameArr[categoryIdArr.indexOf(data.idCategory)]}</td>
+                                                <td css={scoreColumnStyle}>{data.testScore}</td>
+                                                <td css={dateColumnStyle}>{data.testDate.slice(0,16).replace('T', ' | ')}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
                             </table>
                         </div>
                     </div>
