@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -10,16 +10,17 @@ import { QuestionViewComponent } from "../../../component/QuestionView/index.vie
 import { ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE, TEST_TITLE } from "../../constants/index.constants";
+import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestId, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
 
 interface QuestionsData {
-    question_id: number;
-    code_type: string;
-    questionText: string;
-    choice_1: string;
-    choice_2: string;
-    choice_3: string;
-    choice_4: string;
+    idQuestion: number;
+    idCategory: number;
     answer: string;
+    questionText: string;
+    questionChoice1: string;
+    questionChoice2: string;
+    questionChoice3: string;
+    questionChoice4: string;
   }
 
 interface AnswerData {
@@ -31,10 +32,27 @@ export default function StudentTest () {
     const [questionsData, setQuestionsData] = useState<QuestionsData[]>([]);
     const [answerData, setAnswerData] = useState<AnswerData[]>([]);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [score, setScore] = useState<Number>();
-    const [codeType, setCodeType] = useState<string>("");
+    const [score, setScore] = useState<number>();
+    const [codeType, setCodeType] = useState<number>(0);
     const navigate = useNavigate();
-
+    const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
+    const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          const questionCategoryData = await apiGetAllQuestionCategory();
+          console.log(questionCategoryData);
+          const categoryNameTemp = [];
+          const categoryIdTemp = [];
+          for (const i in questionCategoryData){
+            categoryNameTemp.push(questionCategoryData[i].nameCategory);
+            categoryIdTemp.push(questionCategoryData[i].idCategory);
+          }
+          setCategoryNameArr(categoryNameTemp);
+          setCategoryId(categoryIdTemp);
+        }
+        fetchData();
+      }, [])
     const nim = useSelector((state: State) => state.userData.nim);
 
     const GetDateandTime = () => {
@@ -47,23 +65,24 @@ export default function StudentTest () {
 
     const GetQuestion = async () =>{
         console.log(codeType)
-        await axios.get(`http://localhost:3001/api/get/questions-random/${codeType}`,)
-        .then((response) => {
-            console.log(response.data);
-            setQuestionsData(response.data);
-            const initAnswerData = [] as Array<InitAnswerData>;
-            for (let i = 0; i < response.data.length; i++){
-                initAnswerData.push({
-                    answer: 0,
-                    correctness: false
-                })
-            }
-            setAnswerData(initAnswerData);
-        })
+        const response = await apiGetQuestionRandom(codeType)
+        console.log(response);
+        setQuestionsData(response);
+        const initAnswerData = [] as Array<InitAnswerData>;
+        for (let i = 0; i < response.length; i++){
+            initAnswerData.push({
+                answer: 0,
+                correctness: false
+            })
+        }
+        console.log(initAnswerData)
+        setAnswerData(initAnswerData);
     }
 
     const answerDataHandler = (index: number, answer: number) => {
         const tempAnswerData = [...answerData];
+        console.log(answerData);
+        console.log(tempAnswerData);
         tempAnswerData[index].answer = answer;
         setAnswerData(tempAnswerData);
         console.log(tempAnswerData);
@@ -82,18 +101,13 @@ export default function StudentTest () {
             }
         }
         console.log(tempAnswerData);
-        const scoreTemp = counter * 20;
+        const scoreTemp = Math.round(counter * (100/answerData.length));
         console.log(scoreTemp);
         setScore(scoreTemp);
 
         const dateTime = GetDateandTime();
 
-        await axios.post('http://localhost:3001/api/insert/test_result',{
-            nim: nim,
-            score: scoreTemp,
-            dateTime: dateTime,
-            codeType: codeType,
-        }).then((res) => {
+        await apiPostTestResult(nim, scoreTemp, dateTime, codeType).then((res) => {
             SubmitQuestionHistory(dateTime);
         })
         
@@ -104,29 +118,26 @@ export default function StudentTest () {
 
     const SubmitQuestionHistory = async (dateTime: string) => {
         let stringQuery = ""
-        await axios.get(`http://localhost:3001/api/get/test_id/${nim}/${dateTime}`,
-        ).then((response) => {
-            const tempTestId = response.data[0].test_id;
-            for (let i:number = 0; i < questionsData.length; i++){
-                stringQuery = stringQuery + `(${(questionsData[i].question_id).toString()}, "${tempTestId}", "${answerData[i].answer}", "${answerData[i].correctness}")`
-                if (i < questionsData.length - 1){
-                    stringQuery = stringQuery + ",";
-                }
+        const response = await apiGetTestId(nim, dateTime);
+        console.log(response);
+        const tempTestId = response[0].idTest;
+        for (let i:number = 0; i < questionsData.length; i++){
+            stringQuery = stringQuery + `(${(questionsData[i].idQuestion).toString()}, "${tempTestId}", "${answerData[i].answer}", "${answerData[i].correctness}")`
+            if (i < questionsData.length - 1){
+                stringQuery = stringQuery + ",";
             }
-            console.log(stringQuery);
-        })
+        }
+        console.log(stringQuery);
         
-        await axios.post('http://localhost:3001/api/insert/question_history',{
-            value_to_be_inserted: stringQuery,
-        }).then((res) => {
+        await apiPostQuestionHistory(stringQuery).then((res) => {
             alert("TestDone");
         })
     }
     
 
     const RadioButtonQuestionType = (choice: number) => {
-        if (choice === 1) setCodeType("Personality");
-        else if (choice === 2) setCodeType("KemampuanDasar");
+        if (choice === 1) setCodeType(11);
+        else if (choice === 2) setCodeType(21);
     }
 
     return(
@@ -142,13 +153,13 @@ export default function StudentTest () {
                         return (
                             <QuestionViewComponent 
                             key={index}
-                            questionId={value.question_id}
-                            codeType={value.code_type}
+                            questionId={value.idQuestion}
+                            codeType={categoryNameArr[categoryIdArr.indexOf(value.idCategory)]}
                             questionText={value.questionText}
-                            choice1={value.choice_1}
-                            choice2={value.choice_2}
-                            choice3={value.choice_3}
-                            choice4={value.choice_4}
+                            choice1={value.questionChoice1}
+                            choice2={value.questionChoice2}
+                            choice3={value.questionChoice3}
+                            choice4={value.questionChoice4}
                             answer={value.answer}
                             index = {index}
                             answerDataHandler = {answerDataHandler}   

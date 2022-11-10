@@ -26,9 +26,9 @@ export const QuestionViewComponent = ({
     choice3, 
     choice4, 
     answer,
-    index,
-    isATest,
-    questionnNo,
+    index = 0,
+    isATest = false,
+    questionnNo = 1,
     answerDataHandler,
     }: QuestionViewComponentTypes) => {
     const [choiceStatus1, setChoiceStatus1] = useState<boolean>(false);
@@ -75,6 +75,11 @@ export const QuestionViewComponent = ({
             answerDataHandler(index, 4);
         }
     }
+
+    if (isATest && index){
+        questionnNo = index+1;
+    }
+
     return(
         <div>
             <div css={QuestionViewHeaderWrapperStyle}> 

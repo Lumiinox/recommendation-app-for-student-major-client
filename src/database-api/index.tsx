@@ -85,3 +85,30 @@ export const apiGetTestResultData = async () => {
     const response = await axios.get(`${HOST_NAME}api/get/test_result`);
     return response.data;
 }
+
+export const apiGetQuestionRandom = async (codeType: number) => {
+    const response = await axios.get(`${HOST_NAME}api/get/question_random/${codeType}`);
+    return response.data;
+}
+
+export const apiPostTestResult = async (nim: number, scoreTemp: number, dateTime: string, codeType: number) => {
+    const response = await axios.post(`${HOST_NAME}api/insert/test_result`,{
+        nim: nim,
+        score: scoreTemp,
+        dateTime: dateTime,
+        codeType: codeType,
+    })
+    return response.data;
+}
+
+export const apiGetTestId = async (nim: number, dateTime: string) => {
+    const response = await axios.get(`${HOST_NAME}api/get/test_id/${nim}/${dateTime}`);
+    return response.data;
+}
+
+export const apiPostQuestionHistory = async (stringQuery: string) => {
+    const response = await axios.post(`${HOST_NAME}api/insert/question_history`,{
+        value_to_be_inserted: stringQuery,
+    });
+    return response.data;
+}

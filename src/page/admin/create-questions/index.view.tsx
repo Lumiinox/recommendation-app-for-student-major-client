@@ -48,7 +48,7 @@ export default function AdminCreateQuestion (){
   const [pageWidth, setPageWidth] = useState(0);
   const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
   const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
-  const [categoryIdArr, setCategoryId] = useState<Array<number>>([])
+  const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
 
 
   const divRef = useRef<HTMLDivElement | null>(null);
