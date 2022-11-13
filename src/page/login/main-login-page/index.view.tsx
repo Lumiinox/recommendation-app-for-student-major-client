@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -7,26 +8,19 @@ import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
+import { buttonGhost, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, staffFormContainer, studentFormContainer } from "./index.style";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");
     const [passwordIn, setPasswordIn] = useState<string>("");
-
-    let container: HTMLElement;
+    const [isRightPanelActive, setIsRightPanelActive] = useState<boolean>(false);
     
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const loginStatus = useSelector((state: State) => state.userData.loginStatus)
     const status = useSelector((state: State) => state.userData.status)
 
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const {updateProfileData} = bindActionCreators(actionCreators, dispatch);
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        container = document.getElementById('container')!;
-      }, []);
 
     useEffect(() => {
         const userData = localStorage.getItem('loginUser');
@@ -39,21 +33,11 @@ export default function MainLoginPage(){
                 updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, 0);
                 navigate('/admin/home');
             } else if (parsedUserData.status === "student"){
-                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.nim);
+                updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId);
                 navigate('/student/home');
             }
         }
     })
-    
-    const staffSignInHandler = () => {
-      console.log(container);
-      container.classList.toggle("right-panel-active");
-    }
-    
-    const studentSignInHandler = () => {
-      console.log(container);
-      container.classList.toggle("right-panel-active");
-    }
     
     const signInHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, choice: number) => {
         event.preventDefault();
@@ -87,9 +71,9 @@ export default function MainLoginPage(){
     }
     
     return(
-        <div className="pageWrapper">
-            <div className="container" id="container">
-                <div className="form-container staff-container">
+        <div css={loginPageWrapper}>
+            <div css={loginMainContainer} id="container">
+                <div css={staffFormContainer(isRightPanelActive)}>
                     <form action="#">
                         <h1>Staff</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
@@ -98,7 +82,7 @@ export default function MainLoginPage(){
                     </form>
                 </div>
 
-                <div className="form-container student-container">
+                <div css={studentFormContainer(isRightPanelActive)}>
                     <form action="#">
                         <h1>Student</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
@@ -107,19 +91,18 @@ export default function MainLoginPage(){
                     </form>
                 </div>
 
-                <div className="overlay-container">
-                    <div className="overlay">
-                        <div className="overlay-panel overlay-left">
+                <div css={panelWrapper(isRightPanelActive)}>
+                    <div css={panelContent(isRightPanelActive)}>
+                        <div css={panelLeft(isRightPanelActive)}>
                             <h1>Not a staff?</h1>
-                            <button className="ghost" onClick={staffSignInHandler}>Sign In as Student</button>
+                            <button css={buttonGhost} onClick={() => setIsRightPanelActive(!isRightPanelActive)}>Sign In as Student</button>
                         </div>
-                        <div className="overlay-panel overlay-right">
+                        <div css={panelRight(isRightPanelActive)}>
                             <h1>Not a student?</h1>
-                            <button className="ghost" onClick={studentSignInHandler}>Sign In as Staff</button>
+                            <button css={buttonGhost} onClick={() => setIsRightPanelActive(!isRightPanelActive)}>Sign In as Staff</button>
                         </div>
                     </div>
-                </div>
-                
+                </div> 
             </div>
         </div>
 

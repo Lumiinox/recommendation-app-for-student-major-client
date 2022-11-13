@@ -3,7 +3,7 @@ import { Action } from '../actions';
 
 interface StateProps{
     name: string;
-    nim: number;
+    currentId: number;
     email: string;
     status: number; 
     loginStatus: boolean;
@@ -11,7 +11,7 @@ interface StateProps{
 
 const initialState = {
     name: "",
-    nim: 0,
+    currentId: 0,
     email: "",
     status: 0,
     loginStatus: false,
@@ -22,7 +22,7 @@ const reducer = (state: StateProps = initialState, action: Action) => {
         case ActionType.UPDATE_ACC_DATA:
             return{
                 name: action.payload.name,
-                nim: action.payload.nim,
+                currentId: action.payload.currentId,
                 email: action.payload.email,
                 status: action.payload.status,
                 loginStatus: true,
@@ -31,7 +31,7 @@ const reducer = (state: StateProps = initialState, action: Action) => {
         case ActionType.REMOVE_ACC_DATA:
             return{
                 name: "",
-                nim: 0,
+                currentId: 0,
                 email: "",
                 status: 0,
                 loginStatus: false,

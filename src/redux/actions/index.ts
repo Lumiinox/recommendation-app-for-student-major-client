@@ -2,7 +2,7 @@ interface Payload{
     name: string;
     email: string;
     status: number;
-    nim: number;
+    currentId: number;
 }
 
 interface UpdateAccountData{

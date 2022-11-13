@@ -7,7 +7,7 @@ import { ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
 interface TestResultDataProps {
-    NIM: number,
+    currentId: number,
     nameStudent: string,
     idCategory: number,
     testScore: string,
@@ -54,7 +54,7 @@ export default function ListOfTestResult(){
                         <div css={tableContainer}>
                             <table css={tableHead}>
                                 <tr css={tableHeadRow}>
-                                    <td css={nimColumnStyle}>NIM</td>
+                                    <td css={nimColumnStyle}>currentId</td>
                                     <td css={nameColumnStyle}>Name</td>
                                     <td css={typeColumnStyle}>Type</td>
                                     <td css={scoreColumnStyle}>Score</td>
@@ -66,7 +66,7 @@ export default function ListOfTestResult(){
                                     {testResultData.map((data, index) => {
                                         return (
                                             <tr css={mainContentRow}>
-                                                <td css={nimColumnStyle}>{data.NIM}</td>
+                                                <td css={nimColumnStyle}>{data.currentId}</td>
                                                 <td css={nameColumnStyle}>{data.nameStudent}</td>
                                                 <td css={typeColumnStyle}>{categoryNameArr[categoryIdArr.indexOf(data.idCategory)]}</td>
                                                 <td css={scoreColumnStyle}>{data.testScore}</td>

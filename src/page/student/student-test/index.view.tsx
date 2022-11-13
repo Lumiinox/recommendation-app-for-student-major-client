@@ -52,7 +52,7 @@ export default function StudentTest () {
         }
         fetchData();
       }, [])
-    const nim = useSelector((state: State) => state.userData.nim);
+    const currentId = useSelector((state: State) => state.userData.currentId);
 
     const GetDateandTime = () => {
         let current = new Date();
@@ -106,7 +106,7 @@ export default function StudentTest () {
 
         const dateTime = GetDateandTime();
 
-        await apiPostTestResult(nim, scoreTemp, dateTime, codeType).then((res) => {
+        await apiPostTestResult(currentId, scoreTemp, dateTime, codeType).then((res) => {
             SubmitQuestionHistory(dateTime);
         })
         
@@ -117,7 +117,7 @@ export default function StudentTest () {
 
     const SubmitQuestionHistory = async (dateTime: string) => {
         let stringQuery = ""
-        const response = await apiGetTestId(nim, dateTime);
+        const response = await apiGetTestId(currentId, dateTime);
         console.log(response);
         const tempTestId = response[0].idTest;
         for (let i:number = 0; i < questionsData.length; i++){

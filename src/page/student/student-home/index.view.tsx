@@ -25,7 +25,7 @@ export default function StudentHome (){
     
     const name = useSelector((state: State) => state.userData.name);
     const status = useSelector((state: State) => state.userData.status);
-    const nim = useSelector((state: State) => state.userData.nim);
+    const currentId = useSelector((state: State) => state.userData.currentId);
 
     const menuBtnHandler = (choice:number) => {
         switch(choice) {
@@ -45,7 +45,7 @@ export default function StudentHome (){
                         <div></div>
                         <div>{name}</div>
                         <div>{status}</div>
-                        <div>{nim}</div>
+                        <div>{currentId}</div>
                     </div>
                 </div>
                 <div css={ContentWrapperStyle}>

@@ -10,7 +10,7 @@ export const updateProfileData = (nameIn: string, emailIn: string, statusIn: num
                 name: nameIn,
                 email: emailIn,
                 status: statusIn,
-                nim: nimIn
+                currentId: nimIn
                 }
             })
         }
