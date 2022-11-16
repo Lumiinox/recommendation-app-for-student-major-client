@@ -122,3 +122,39 @@ export const buttonGhost = css`
     background-color: transparent !important;
     border-color: #fff !important;
 `;
+
+export const buttonLoginPage = css`
+    min-width: 200px;
+    margin-top: 16px;
+`;
+
+export const registrationWrapper = css`
+    background: linear-gradient(90deg,#0098d7,#19baff);
+    position: absolute;
+    z-index: 101;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    padding: 50px;
+`;
+
+export const loginFormPanels = css`
+    background-color: #FFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+`;
+
+export const registrationTitle = css`
+    color: #FFF;
+`;
+
+export const buttonGhostRegist = css`
+    background-color: transparent !important;
+    border-color: #fff !important;
+    margin: 20px 30px 0 0;
+`;

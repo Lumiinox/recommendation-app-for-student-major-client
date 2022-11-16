@@ -3,17 +3,21 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
-import "./index.style.css";
 import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
-import { apiLoginStaff, apiLoginStudent } from "../../../database-api";
-import { buttonGhost, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, staffFormContainer, studentFormContainer } from "./index.style";
+import { apiLoginStaff, apiLoginStudent, apiRegisterAdmin, apiRegisterStudent } from "../../../database-api";
+import { buttonGhost, buttonGhostRegist, buttonLoginPage, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");
     const [passwordIn, setPasswordIn] = useState<string>("");
-    const [isRightPanelActive, setIsRightPanelActive] = useState<boolean>(false);
+    const [emailRegistIn, setEmailRegistIn] = useState<string>("");
+    const [nameRegistIn, setNameRegistIn] = useState<string>("");
+    const [passRegistIn, setPassRegistIn] = useState<string>("");
+    const [passConfirmIn, setPassConfirm] = useState<string>("");
+    const [isRegistrationFormActive, setIsRegistrationFormActive] = useState<boolean>(false);
+    const [isAdminMode, setIsAdminMode] = useState<boolean>(false);
     
     const status = useSelector((state: State) => state.userData.status)
 
@@ -53,7 +57,7 @@ export default function MainLoginPage(){
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
                     // console.log(data);
-                    updateProfileData(data.name, data.email, data.status, data.nim);
+                    updateProfileData(data.name, data.email, data.status, data.currentId);
                     localStorage.setItem('loginUser', JSON.stringify(data));
                     navigate('/student/home');
                     break;
@@ -70,36 +74,71 @@ export default function MainLoginPage(){
         }
     }
     
+    const submitRegistrationData = async () => {
+        console.log(nameRegistIn);
+        console.log(emailRegistIn);
+        console.log(passRegistIn);
+        if(!isAdminMode){
+            await apiRegisterStudent(nameRegistIn, emailRegistIn, passRegistIn);
+            setIsRegistrationFormActive(!isRegistrationFormActive)
+        } else {
+            await apiRegisterAdmin(nameRegistIn, emailRegistIn, passRegistIn);
+            setIsRegistrationFormActive(!isRegistrationFormActive)
+        }
+    }
+
+    const registrationForm = () => {
+        console.log("Show Regist")
+        return(
+            <div css={registrationWrapper}>
+                <h1 css={registrationTitle}>{!isAdminMode ? "Student Registration" : "Staff Registration"}</h1>
+                <form>
+                    <input type="text" placeholder="Email" onChange={(e) => setEmailRegistIn(e.target.value)}/>
+                    <input type="text" placeholder="Name" onChange={(e) => setNameRegistIn(e.target.value)}/>
+                    <input type="password" placeholder="Password" onChange={(e) => setPassRegistIn(e.target.value)}/>
+                    <input type="password" placeholder="Confirm Password" onChange={(e) => setPassConfirm(e.target.value)}/>
+                    <button css={buttonGhostRegist}onClick={submitRegistrationData}>Submit</button>
+                    <button css={buttonGhostRegist}onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Cancel</button>
+                </form>
+            </div>
+        )
+    }
+
     return(
         <div css={loginPageWrapper}>
             <div css={loginMainContainer} id="container">
-                <div css={staffFormContainer(isRightPanelActive)}>
-                    <form action="#">
+
+                {isRegistrationFormActive && registrationForm()}
+
+                <div css={staffFormContainer(isAdminMode)}>
+                    <form css={loginFormPanels} action="#">
                         <h1>Staff</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
-                        <button className="btn" onClick={(event) => signInHandler(event, 1)}>Sign In</button>
+                        <button css={buttonLoginPage}onClick={(event) => signInHandler(event, 1)}>Sign In</button>
+                        <button css={buttonLoginPage} onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Register</button>
                     </form>
                 </div>
 
-                <div css={studentFormContainer(isRightPanelActive)}>
-                    <form action="#">
+                <div css={studentFormContainer(isAdminMode)}>
+                    <form css={loginFormPanels} action="#">
                         <h1>Student</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
-                        <button className="btn" onClick={(event) => signInHandler(event, 2)}>Sign In</button>
+                        <button css={buttonLoginPage} onClick={(event) => signInHandler(event, 2)}>Sign In</button>
+                        <button css={buttonLoginPage} onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Register</button>
                     </form>
                 </div>
 
-                <div css={panelWrapper(isRightPanelActive)}>
-                    <div css={panelContent(isRightPanelActive)}>
-                        <div css={panelLeft(isRightPanelActive)}>
+                <div css={panelWrapper(isAdminMode)}>
+                    <div css={panelContent(isAdminMode)}>
+                        <div css={panelLeft(isAdminMode)}>
                             <h1>Not a staff?</h1>
-                            <button css={buttonGhost} onClick={() => setIsRightPanelActive(!isRightPanelActive)}>Sign In as Student</button>
+                            <button css={buttonGhost} onClick={() => setIsAdminMode(!isAdminMode)}>Sign In as Student</button>
                         </div>
-                        <div css={panelRight(isRightPanelActive)}>
+                        <div css={panelRight(isAdminMode)}>
                             <h1>Not a student?</h1>
-                            <button css={buttonGhost} onClick={() => setIsRightPanelActive(!isRightPanelActive)}>Sign In as Staff</button>
+                            <button css={buttonGhost} onClick={() => setIsAdminMode(!isAdminMode)}>Sign In as Staff</button>
                         </div>
                     </div>
                 </div> 
