@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
+import { getIdName } from "../../../functions";
 import { State } from "../../../redux";
 import { ADMIN_HOME_TITLE, LOGOUT_MODE } from "../../constants/index.constants";
 import { 
@@ -41,7 +42,7 @@ export default function AdminHome (){
                     <div css={ProfileCardStyle}>
                         <div></div>
                         <div>{name}</div>
-                        <div>{status}</div>
+                        <div>{getIdName(status)}</div>
                     </div>
                 </div>
                 <div css={ContentWrapperStyle}>

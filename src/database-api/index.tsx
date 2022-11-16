@@ -11,14 +11,21 @@ export const apiLoginStaff = async (
     password: passwordInput,
   });
   console.log("bellow this is a response");
-  console.log(response.data[0]);
-  const formatedData = {
-    name: response.data[0].nameAdmin,
-    email: response.data[0].emailAdmin,
-    status: response.data[0].status,
-    currentId: "",
+  console.log(response);
+  if(response.data.length > 0){
+    console.log(response.data[0]);
+    const formatedData = {
+      name: response.data[0].nameAdmin,
+      email: response.data[0].emailAdmin,
+      status: response.data[0].status,
+      currentId: "",
+    }
+    return formatedData;
+  }
+  else {
+    return null;
   };
-  return formatedData;
+
 };
 
 export const apiLoginStudent = async (
@@ -30,13 +37,19 @@ export const apiLoginStudent = async (
     email: emailInput,
     password: passwordInput,
   });
-  const formatedData = {
-    name: response.data[0].name,
-    email: response.data[0].email,
-    status: response.data[0].status,
-    currentId: response.data[0].currentId,
+  console.log(response);
+  if(response.data.length > 0){
+    const formatedData = {
+      name: response.data[0].nameStudent,
+      email: response.data[0].emailStudent,
+      status: response.data[0].status,
+      currentId: response.data[0].idStudent,
+    };
+    return formatedData;
+  }
+  else {
+    return null;
   };
-  return formatedData;
 };
 
 export const apiSubmitQuestion = async (

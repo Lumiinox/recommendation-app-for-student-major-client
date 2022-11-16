@@ -7,7 +7,7 @@ import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { apiLoginStaff, apiLoginStudent, apiRegisterAdmin, apiRegisterStudent } from "../../../database-api";
-import { buttonGhost, buttonGhostRegist, buttonLoginPage, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
+import { buttonGhost, buttonGhostRegist, buttonLoginPage, errorMsgStyle, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");
@@ -18,6 +18,8 @@ export default function MainLoginPage(){
     const [passConfirmIn, setPassConfirm] = useState<string>("");
     const [isRegistrationFormActive, setIsRegistrationFormActive] = useState<boolean>(false);
     const [isAdminMode, setIsAdminMode] = useState<boolean>(false);
+    const [isStudentCredWrong, setIsStudentCredWrong] = useState<boolean>(false);
+    const [isAdminCredWrong, setIsAdminCredWrong] = useState<boolean>(false);
     
     const status = useSelector((state: State) => state.userData.status)
 
@@ -50,16 +52,24 @@ export default function MainLoginPage(){
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
                     console.log("DATA IS BELLOW HERE");
                     console.log(data);
-                    updateProfileData(data.name, data.email, data.status, 0);
-                    localStorage.setItem('loginUser', JSON.stringify(data));
-                    navigate('/admin/home');
+                    if(data !== null){
+                        updateProfileData(data.name, data.email, data.status, 0);
+                        localStorage.setItem('loginUser', JSON.stringify(data));
+                        navigate('/admin/home');
+                    } else {
+                        setIsAdminCredWrong(true);
+                    }
                     break;
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
-                    // console.log(data);
+                    console.log(data);
+                    if(data !== null){
                     updateProfileData(data.name, data.email, data.status, data.currentId);
                     localStorage.setItem('loginUser', JSON.stringify(data));
                     navigate('/student/home');
+                    } else {
+                        setIsStudentCredWrong(true);
+                    }
                     break;
         }
 
@@ -75,10 +85,14 @@ export default function MainLoginPage(){
     }
     
     const submitRegistrationData = async () => {
+        let isInputCorrect = false;
         console.log(nameRegistIn);
         console.log(emailRegistIn);
         console.log(passRegistIn);
-        if(!isAdminMode){
+        if(passRegistIn === passConfirmIn){
+            isInputCorrect = true;
+        }
+        if(!isAdminMode && isInputCorrect){
             await apiRegisterStudent(nameRegistIn, emailRegistIn, passRegistIn);
             setIsRegistrationFormActive(!isRegistrationFormActive)
         } else {
@@ -115,6 +129,7 @@ export default function MainLoginPage(){
                         <h1>Staff</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
+                        {isAdminCredWrong && <div css={errorMsgStyle}>*Email or password is wrong</div>}
                         <button css={buttonLoginPage}onClick={(event) => signInHandler(event, 1)}>Sign In</button>
                         <button css={buttonLoginPage} onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Register</button>
                     </form>
@@ -125,6 +140,7 @@ export default function MainLoginPage(){
                         <h1>Student</h1>
                         <input type="text" placeholder="Email" onChange={(e) => setUsernameIn(e.target.value)}/>
                         <input type="password" placeholder="Password" onChange={(e) => setPasswordIn(e.target.value)}/>
+                        {isStudentCredWrong && <div css={errorMsgStyle}>*Email or password is wrong</div>}
                         <button css={buttonLoginPage} onClick={(event) => signInHandler(event, 2)}>Sign In</button>
                         <button css={buttonLoginPage} onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Register</button>
                     </form>

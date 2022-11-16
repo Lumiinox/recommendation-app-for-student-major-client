@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
+import { getIdName } from "../../../functions";
 import { actionCreators, State } from "../../../redux";
 import { LOGOUT_MODE, TEST_TITLE } from "../../constants/index.constants";
 import { 
@@ -44,7 +45,7 @@ export default function StudentHome (){
                     <div css={ProfileCardStyle}>
                         <div></div>
                         <div>{name}</div>
-                        <div>{status}</div>
+                        <div>{getIdName(status)}</div>
                         <div>{currentId}</div>
                     </div>
                 </div>

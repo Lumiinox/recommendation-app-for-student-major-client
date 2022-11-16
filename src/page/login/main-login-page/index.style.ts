@@ -158,3 +158,7 @@ export const buttonGhostRegist = css`
     border-color: #fff !important;
     margin: 20px 30px 0 0;
 `;
+
+export const errorMsgStyle = css`
+    color: red;
+`;
