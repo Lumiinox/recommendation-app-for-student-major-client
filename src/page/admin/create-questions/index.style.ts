@@ -38,39 +38,3 @@ export const AnswerChoiceLabelStyle = css`
     grid-template-columns: 50px auto;
 `;
 
-export const QuestionLabelStyle = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-`; 
-
-export const FormTitleStle = css`
-    font-weight: bold;
-    font-size: 20px;
-`;
-
-export const FormSectionStyle = css`
-    padding: 20px 0;
-`;
-
-export const FormTextAreaStyle = css`
-    width: 100%;
-    background-color: #eee;
-    border-radius: 30px;
-    border: 0;
-    resize: none;
-    padding: 10px 25px;
-    font-size: 20px;
-    margin-top: 10px;
-`;
-
-export const FormInputTextStyle = css`
-    width: 100%;
-    background-color: #eee;
-    border-radius: 30px;
-    border: 0;
-    resize: none;
-    font-size: 20px;
-    margin-top: 10px;
-`;

@@ -2,30 +2,29 @@ import axios from "axios";
 import { HOST_NAME } from "../page/constants/index.constants";
 
 export const apiLoginStaff = async (
-  emailInput: string,
-  passwordInput: string
+    emailInput: string,
+    passwordInput: string
 ) => {
-  console.log("api called");
-  const response = await axios.post(`${HOST_NAME}api/login_admin`, {
-    email: emailInput,
-    password: passwordInput,
-  });
-  console.log("bellow this is a response");
-  console.log(response);
-  if(response.data.length > 0){
-    console.log(response.data[0]);
-    const formatedData = {
-      name: response.data[0].nameAdmin,
-      email: response.data[0].emailAdmin,
-      status: response.data[0].status,
-      currentId: "",
+    console.log("api called");
+    const response = await axios.post(`${HOST_NAME}api/login_admin`, {
+        email: emailInput,
+        password: passwordInput,
+    });
+    console.log("bellow this is a response");
+    console.log(response);
+    if(response.data.length > 0){
+        console.log(response.data[0]);
+        const formatedData = {
+            name: response.data[0].nameAdmin,
+            email: response.data[0].emailAdmin,
+            status: response.data[0].status,
+            currentId: "",
+        }
+      return formatedData;
     }
-    return formatedData;
-  }
-  else {
-    return null;
-  };
-
+    else {
+        return null;
+    };
 };
 
 export const apiLoginStudent = async (
@@ -110,6 +109,16 @@ export const apiRegisterStudent = async (
     });
     return response.data;
   };
+
+export const apiAddTest = async (questionCategory: number, testName: string, testDuration: number, numberOfQuestions: number) => {
+  const response = await axios.post(`${HOST_NAME}api/add-test`, {
+    questionCategory: questionCategory,
+    testName: testName,
+    testDuration: testDuration,
+    numberOfQuestions:numberOfQuestions,
+  });
+  return response.data;
+}
 
 export const apiShowQuestion = async () => {
   const response = await axios.get(`${HOST_NAME}api/get/question`);

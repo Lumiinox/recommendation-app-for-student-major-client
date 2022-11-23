@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DropDownItemStyle, DropDownListContainer, DropDownSelectedStyle } from "./index.style";
 
 interface customDropDownTypes{
@@ -10,8 +10,12 @@ interface customDropDownTypes{
 
 export const CustomDropDown = (props: customDropDownTypes)  => {
     const [displayDropDown, setDisplayDropDown] = useState(false);
-    const [displayedText, setDisplayedText] = useState(props.dropdownName[0])
+    const [displayedText, setDisplayedText] = useState('')
 
+    useEffect(() => {
+      setDisplayedText(props.dropdownName[0]);
+    }, [props.dropdownName])
+    
     const dropDownClickHandler = (catName: string, catId: number) => {
       setDisplayedText(catName);
       props.onClickHandler(catId);

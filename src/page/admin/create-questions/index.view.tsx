@@ -8,13 +8,8 @@ import {
   CreateQuestionContentWrapper,
   QuestionListWrapperStyle,
   AnswerChoiceLabelStyle,
-  QuestionLabelStyle,
-  FormTitleStle,
-  FormSectionStyle,
-  FormTextAreaStyle,
-  FormInputTextStyle,
 } from './index.style';
-import { ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
+import { FormInputTextStyle, FormLabelStyle, FormSectionStyle, FormTextAreaStyle, FormTitleStle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { CREATE_QUESTION_TITLE, HOME_MODE } from '../../constants/index.constants';
@@ -124,13 +119,13 @@ export default function AdminCreateQuestion (){
               <div css={FormSectionStyle}>
                 <div css={FormTitleStle}>Answer Choice</div>
                 <div css={AnswerChoiceLabelStyle}>
-                  <div css={QuestionLabelStyle}>A</div>
+                  <div css={FormLabelStyle}>A</div>
                   <input css={FormInputTextStyle}  type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
-                  <div css={QuestionLabelStyle}>B</div>
+                  <div css={FormLabelStyle}>B</div>
                   <input css={FormInputTextStyle}  type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
-                  <div css={QuestionLabelStyle}>C</div>
+                  <div css={FormLabelStyle}>C</div>
                   <input css={FormInputTextStyle}  type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
-                  <div css={QuestionLabelStyle}>D</div>
+                  <div css={FormLabelStyle}>D</div>
                   <input css={FormInputTextStyle}  type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
                 </div>
               </div>
