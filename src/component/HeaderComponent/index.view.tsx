@@ -27,6 +27,9 @@ export default function HeaderComp({headerTitle, headerButtonMode}: HeaderCompTy
 
             case 2: navigate('/admin/home');
                     break;
+
+            case 3: navigate('/student/home');
+                    break;
         }
     }
 
@@ -34,6 +37,7 @@ export default function HeaderComp({headerTitle, headerButtonMode}: HeaderCompTy
         switch(choice){
             case 1: return "Log Out";
             case 2: return "Home";
+            case 3: return "Home";
         }
     }
 

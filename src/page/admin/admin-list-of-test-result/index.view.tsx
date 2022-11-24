@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { apiGetAllQuestionCategory, apiGetTestResultData } from '../../../database-api';
-import { HOME_MODE, TEST_RESULT_TITLE } from '../../constants/index.constants';
+import { HOME_MODE_ADMIN, TEST_RESULT_TITLE } from '../../constants/index.constants';
 import { ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
 
@@ -47,7 +47,7 @@ export default function ListOfTestResult(){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE}/>
+                <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
                 <div css={wholeContentWrapperStyle}>
                     <div>

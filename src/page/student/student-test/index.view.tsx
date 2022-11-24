@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { State } from "../../../redux";
 import { InitAnswerData } from "./type";
 import { QuestionViewComponent } from "../../../component/QuestionView/index.view";
-import { ParentGridStyle } from '../../styles/index.style';
+import { ContentCardStyle, ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
-import { HOME_MODE, TEST_TITLE } from "../../constants/index.constants";
-import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestId, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
+import { HOME_MODE_ADMIN, HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
+import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestData, apiGetTestResultId, apiGetTestResultStudent, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
+import { DoTestContentWrapper, TestContentHeadListStyle, TestContentListStyle } from "./index.style";
 
 interface QuestionsData {
     idQuestion: number;
@@ -20,39 +21,82 @@ interface QuestionsData {
     questionChoice2: string;
     questionChoice3: string;
     questionChoice4: string;
-  }
+}
 
 interface AnswerData {
     answer: number;
     correctness: boolean;
 }
 
+interface TestData{
+    idCategory: number;
+    idTest: number;
+    nameTest: string;
+    questionAmount: number;
+    timeAmount: number;
+}
+
+
+
 export default function StudentTest () {
     const [questionsData, setQuestionsData] = useState<QuestionsData[]>([]);
     const [answerData, setAnswerData] = useState<AnswerData[]>([]);
+    const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
+    const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
+    const [testDataSetting, setTestDataSetting] = useState<Array<TestData>>([]);
+    const [selectedTestData, setSelectedTestData] = useState<TestData>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [score, setScore] = useState<number>();
     const [codeType, setCodeType] = useState<number>(0);
     const navigate = useNavigate();
-    const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
-    const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          const questionCategoryData = await apiGetAllQuestionCategory();
-          console.log(questionCategoryData);
-          const categoryNameTemp = [];
-          const categoryIdTemp = [];
-          for (const i in questionCategoryData){
-            categoryNameTemp.push(questionCategoryData[i].nameCategory);
-            categoryIdTemp.push(questionCategoryData[i].idCategory);
-          }
-          setCategoryNameArr(categoryNameTemp);
-          setCategoryId(categoryIdTemp);
-        }
-        fetchData();
-      }, [])
+
+    const [firstRender, setFirstRender] = useState<boolean>(false);
+
     const currentId = useSelector((state: State) => state.userData.currentId);
+
+    useEffect(() => {
+        console.log(firstRender);
+        console.log(currentId);
+        if (!firstRender){
+            setFirstRender(true);
+            fetchData();
+            fetchDataTestData(currentId);
+            console.log("You should only see this once")
+        }
+    }, [currentId, firstRender])
+
+    const fetchData = async () => {
+        const questionCategoryData = await apiGetAllQuestionCategory();
+        console.log(questionCategoryData);
+        const categoryNameTemp = [];
+        const categoryIdTemp = [];
+        for (const i in questionCategoryData){
+          categoryNameTemp.push(questionCategoryData[i].nameCategory);
+          categoryIdTemp.push(questionCategoryData[i].idCategory);
+        }
+        setCategoryNameArr(categoryNameTemp);
+        setCategoryId(categoryIdTemp);
+    }
+
+    const fetchDataTestData = async (currentId: number) => {
+        console.log("testing");
+        const testResultData = await apiGetTestResultStudent(currentId);
+        const testData = await apiGetTestData();
+        const filteredTestData = [];
+        for (let i = 0; i < testData.length; i++){
+            let dataMatched = false;
+            for(let k = 0; k < testResultData.length; k++){
+                if(testData[i].idTest === testResultData[k].idTest){
+                    dataMatched = true;
+                }
+            }
+            if (!dataMatched){
+                filteredTestData.push(testData[i]);
+            }
+        }
+        console.log(filteredTestData);
+        setTestDataSetting(filteredTestData);
+    }
 
     const GetDateandTime = () => {
         let current = new Date();
@@ -63,19 +107,21 @@ export default function StudentTest () {
     }
 
     const GetQuestion = async () =>{
-        console.log(codeType)
-        const response = await apiGetQuestionRandom(codeType)
-        console.log(response);
-        setQuestionsData(response);
-        const initAnswerData = [] as Array<InitAnswerData>;
-        for (let i = 0; i < response.length; i++){
-            initAnswerData.push({
-                answer: 0,
-                correctness: false
-            })
+        if(selectedTestData){
+            console.log(codeType)
+            const response = await apiGetQuestionRandom(codeType, selectedTestData.questionAmount)
+            console.log(response);
+            setQuestionsData(response);
+            const initAnswerData = [] as Array<InitAnswerData>;
+            for (let i = 0; i < response.length; i++){
+                initAnswerData.push({
+                    answer: 0,
+                    correctness: false
+                })
+            }
+            console.log(initAnswerData)
+            setAnswerData(initAnswerData);
         }
-        console.log(initAnswerData)
-        setAnswerData(initAnswerData);
     }
 
     const answerDataHandler = (index: number, answer: number) => {
@@ -117,7 +163,7 @@ export default function StudentTest () {
 
     const SubmitQuestionHistory = async (dateTime: string) => {
         let stringQuery = ""
-        const response = await apiGetTestId(currentId, dateTime);
+        const response = await apiGetTestResultId(currentId, dateTime);
         console.log(response);
         const tempTestId = response[0].idTest;
         for (let i:number = 0; i < questionsData.length; i++){
@@ -139,15 +185,37 @@ export default function StudentTest () {
         else if (choice === 2) setCodeType(21);
     }
 
+    const DoTestHandler = (testData: TestData) => {
+
+    }
+
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE}/>
+                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE_STUDENT}/>
                 
-                <div>
-                    <input type='radio' value="personality" name="question_type" onChange={() => RadioButtonQuestionType(1)}/>Personality
-                    <input type='radio' value="kemampuanDasar" name="question_type" onChange={() => RadioButtonQuestionType(2)}/>Kemampuan Dasar
-                    <button onClick={GetQuestion}>Get Questions</button>
+                <div css={DoTestContentWrapper}>
+                    <div css={ContentCardStyle}>
+                        <div css={TestContentHeadListStyle}>
+                            <div>Test Name</div>
+                            <div>Question Category</div>
+                            <div>Question Amount</div>
+                            <div>Duration (Minutes)</div>
+                        </div>
+                        {testDataSetting.map((value, index) =>{
+                            return(
+                                <div key={index} css={TestContentListStyle}>
+                                    <div>{value.nameTest}</div>
+                                    <div>{value.idCategory}</div>
+                                    <div>{value.questionAmount}</div>
+                                    <div>{value.timeAmount}</div>
+                                    <div><button onClick={() => DoTestHandler(value)}>Test</button></div>
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    {/* <button onClick={GetQuestion}>Get Questions</button>
                     {questionsData.map((value, index) => {
                         return (
                             <QuestionViewComponent 
@@ -166,7 +234,7 @@ export default function StudentTest () {
                             />
                         )
                     })}
-                    <button onClick={SubmitHandler}>Submit</button>
+                    <button onClick={SubmitHandler}>Submit</button> */}
                 </div>
             </div>
       </div>

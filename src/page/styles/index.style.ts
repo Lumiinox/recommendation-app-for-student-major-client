@@ -166,8 +166,8 @@ export const ProfileCardStyle = css`
 export const ContentCardStyle = css`
     text-align: center;
     padding: 20px;
-    width: 50vh;
-    height: 20vh;
+    min-width: 50vh;
+    min-height: 20vh;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgb(150, 150, 150);
     &:hover{

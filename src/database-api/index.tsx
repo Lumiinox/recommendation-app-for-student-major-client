@@ -6,7 +6,7 @@ export const apiLoginStaff = async (
     passwordInput: string
 ) => {
     console.log("api called");
-    const response = await axios.post(`${HOST_NAME}api/login_admin`, {
+    const response = await axios.post(`${HOST_NAME}/login_admin`, {
         email: emailInput,
         password: passwordInput,
     });
@@ -32,7 +32,7 @@ export const apiLoginStudent = async (
   passwordInput: string
 ) => {
   console.log("api called");
-  const response = await axios.post(`${HOST_NAME}api/login_student`, {
+  const response = await axios.post(`${HOST_NAME}/login_student`, {
     email: emailInput,
     password: passwordInput,
   });
@@ -61,7 +61,7 @@ export const apiSubmitQuestion = async (
   answer: string
 ) => {
   console.log("test");
-  const response = await axios.post(`${HOST_NAME}api/insert/question/`, {
+  const response = await axios.post(`${HOST_NAME}/insert/question/`, {
     code_type: code_type,
     questionText: questionText,
     choice_1: choice_1,
@@ -75,7 +75,7 @@ export const apiSubmitQuestion = async (
 
 export const apiAddQuestionCategory = async (categoryName: string) => {
   console.log(categoryName);
-  const response = await axios.post(`${HOST_NAME}api/new_question_category`, {
+  const response = await axios.post(`${HOST_NAME}/new_question_category`, {
     nameCategory: categoryName,
   });
   return response.data;
@@ -86,7 +86,7 @@ export const apiRegisterAdmin = async (
   emailAdminIn: string,
   passAdminIn: string
 ) => {
-  const response = await axios.post(`${HOST_NAME}api/admin_registration`, {
+  const response = await axios.post(`${HOST_NAME}/admin_registration`, {
     nameAdmin: nameAdminIn,
     emailAdmin: emailAdminIn,
     passAdmin: passAdminIn,
@@ -102,7 +102,7 @@ export const apiRegisterStudent = async (
     console.log(nameStudentIn);
     console.log(emailStudentIn);
     console.log(passStudentIn);
-    const response = await axios.post(`${HOST_NAME}api/student_registration`, {
+    const response = await axios.post(`${HOST_NAME}/student_registration`, {
       nameStudent: nameStudentIn,
       emailStudent: emailStudentIn,
       passStudent: passStudentIn,
@@ -111,7 +111,7 @@ export const apiRegisterStudent = async (
   };
 
 export const apiAddTest = async (questionCategory: number, testName: string, testDuration: number, numberOfQuestions: number) => {
-  const response = await axios.post(`${HOST_NAME}api/add-test`, {
+  const response = await axios.post(`${HOST_NAME}/add-test`, {
     questionCategory: questionCategory,
     testName: testName,
     testDuration: testDuration,
@@ -121,41 +121,41 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
 }
 
 export const apiShowQuestion = async () => {
-  const response = await axios.get(`${HOST_NAME}api/get/question`);
+  const response = await axios.get(`${HOST_NAME}/get/question`);
   return response.data;
 };
 
 export const apiGetQuestionWithStats = async () => {
-  const response = await axios.get(`${HOST_NAME}api/get/question_stat`);
+  const response = await axios.get(`${HOST_NAME}/get/question_stat`);
   return response.data;
 };
 
 export const apiGetQuestionCategory = async (idCategory: number) => {
   const response = await axios.get(
-    `${HOST_NAME}api/get/question_category/${idCategory}`
+    `${HOST_NAME}/get/question_category/${idCategory}`
   );
   return response.data;
 };
 
 export const apiGetAllQuestionCategory = async () => {
-  const response = await axios.get(`${HOST_NAME}api/get/question_category_all`);
+  const response = await axios.get(`${HOST_NAME}/get/question_category_all`);
   return response.data;
 };
 
 export const apiGetAllQuestion = async () => {
-  const response = await axios.get(`${HOST_NAME}api/get/question`);
+  const response = await axios.get(`${HOST_NAME}/get/question`);
   return response.data;
 };
 
 export const apiGetTestResultData = async () => {
   console.log("api called");
-  const response = await axios.get(`${HOST_NAME}api/get/test_result`);
+  const response = await axios.get(`${HOST_NAME}/get/test_result`);
   return response.data;
 };
 
-export const apiGetQuestionRandom = async (codeType: number) => {
+export const apiGetQuestionRandom = async (codeType: number, questionAmount: number) => {
   const response = await axios.get(
-    `${HOST_NAME}api/get/question_random/${codeType}`
+    `${HOST_NAME}/get/question_random/${codeType}/${questionAmount}`
   );
   return response.data;
 };
@@ -166,7 +166,7 @@ export const apiPostTestResult = async (
   dateTime: string,
   codeType: number
 ) => {
-  const response = await axios.post(`${HOST_NAME}api/insert/test_result`, {
+  const response = await axios.post(`${HOST_NAME}/insert/test_result`, {
     currentId: currentId,
     score: scoreTemp,
     dateTime: dateTime,
@@ -175,16 +175,26 @@ export const apiPostTestResult = async (
   return response.data;
 };
 
-export const apiGetTestId = async (currentId: number, dateTime: string) => {
+export const apiGetTestResultId = async (currentId: number, dateTime: string) => {
   const response = await axios.get(
-    `${HOST_NAME}api/get/test_id/${currentId}/${dateTime}`
+    `${HOST_NAME}/get/test_id/${currentId}/${dateTime}`
   );
   return response.data;
 };
 
 export const apiPostQuestionHistory = async (stringQuery: string) => {
-  const response = await axios.post(`${HOST_NAME}api/insert/question_history`, {
+  const response = await axios.post(`${HOST_NAME}/insert/question_history`, {
     value_to_be_inserted: stringQuery,
   });
   return response.data;
 };
+
+export const apiGetTestData = async () => {
+  const response = await axios.get(`${HOST_NAME}/get/test_data`);
+  return response.data;
+}
+
+export const apiGetTestResultStudent = async (idStudent: number) => {
+  const response = await axios.get(`${HOST_NAME}/get/test_result/${idStudent}`);
+  return response.data;
+}

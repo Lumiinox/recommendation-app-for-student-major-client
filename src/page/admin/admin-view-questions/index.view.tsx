@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { apiGetAllQuestionCategory, apiGetQuestionWithStats } from "../../../database-api";
-import { HOME_MODE, VIEW_QUESTION_TITLE } from "../../constants/index.constants";
+import { HOME_MODE_ADMIN, VIEW_QUESTION_TITLE } from "../../constants/index.constants";
 import { ParentGridStyle } from "../../styles/index.style";
 import { falseColumnStyle, mainContentRow, noColumnStyle, questionColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, trueColumnStyle, typeColumnStyle, wholeContentWrapperStyle } from "./index.style";
 
@@ -47,7 +47,7 @@ export default function ViewQuestionsPage(){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={VIEW_QUESTION_TITLE} headerButtonMode={HOME_MODE}/>
+                <HeaderComp headerTitle={VIEW_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
                 <div css={wholeContentWrapperStyle}>
                     <div>

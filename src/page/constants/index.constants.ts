@@ -9,7 +9,8 @@ export const TEST_TITLE = "Test";
 
 //BUTTON MODE
 export const LOGOUT_MODE = 1;
-export const HOME_MODE = 2;
+export const HOME_MODE_ADMIN = 2;
+export const HOME_MODE_STUDENT = 3;
 
 //URL
-export const HOST_NAME = 'https://recommendation-app-for-student.herokuapp.com/';
+export const HOST_NAME = 'https://recommendation-app-for-student.herokuapp.com/api';

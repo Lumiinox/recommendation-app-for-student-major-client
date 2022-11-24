@@ -12,7 +12,7 @@ import {
 import { FormInputTextStyle, FormLabelStyle, FormSectionStyle, FormTextAreaStyle, FormTitleStle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
-import { CREATE_QUESTION_TITLE, HOME_MODE } from '../../constants/index.constants';
+import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 
 interface DataPertanyaan {
@@ -174,7 +174,7 @@ export default function AdminCreateQuestion (){
   return(
       <div ref={divRef}>
         <div css={ParentGridStyle}>
-          <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE}/>
+          <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
           <div>
             {displayCreateQuestionForm && CreateQuestionForm()}
