@@ -93,9 +93,9 @@ export const QuestionViewComponent = ({
                 <div css={MgrnTop20px}>
                     <div css={TextMargin}><b>{questionText}</b></div>
                     <div css={TextMargin}>
-                        <div>
+                        <div onClick={choiceHandler1}>
                             <div css={isATest ? QuestionTestLetterStyle(choiceStatus1) : QuestionLetterStyle(Number(answer) === 1 ? true : false)}>A</div> 
-                            <div css={QuestionTextContainer} onClick={choiceHandler1}>{choice1}</div>
+                            <div css={QuestionTextContainer}>{choice1}</div>
                         </div>
                         <div onClick={choiceHandler2}>
                             <div css={isATest ? QuestionTestLetterStyle(choiceStatus2) : QuestionLetterStyle(Number(answer) === 2 ? true : false)}>B</div> 

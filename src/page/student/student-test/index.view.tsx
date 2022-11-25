@@ -8,9 +8,9 @@ import { InitAnswerData } from "./type";
 import { QuestionViewComponent } from "../../../component/QuestionView/index.view";
 import { ContentCardStyle, ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
-import { HOME_MODE_ADMIN, HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
+import { HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
 import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestData, apiGetTestResultId, apiGetTestResultStudent, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
-import { DoTestContentWrapper, TestContentHeadListStyle, TestContentListStyle } from "./index.style";
+import { DoTestContentWrapper, PopUpCardStyle, PopUpWrapper, TestContentHeadListStyle, TestContentListStyle } from "./index.style";
 
 interface QuestionsData {
     idQuestion: number;
@@ -45,9 +45,11 @@ export default function StudentTest () {
     const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
     const [testDataSetting, setTestDataSetting] = useState<Array<TestData>>([]);
     const [selectedTestData, setSelectedTestData] = useState<TestData>();
+    const [showConfirmationPopUp, setShowConfirmationPopUp] = useState<boolean>(false);
+    const [showTestTable, setShowTestTable] = useState<boolean>(true);
+    const [showQuestionList, setShowQuestionList] = useState<boolean>(false);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [score, setScore] = useState<number>();
-    const [codeType, setCodeType] = useState<number>(0);
     const navigate = useNavigate();
 
     const [firstRender, setFirstRender] = useState<boolean>(false);
@@ -108,8 +110,7 @@ export default function StudentTest () {
 
     const GetQuestion = async () =>{
         if(selectedTestData){
-            console.log(codeType)
-            const response = await apiGetQuestionRandom(codeType, selectedTestData.questionAmount)
+            const response = await apiGetQuestionRandom(selectedTestData.idCategory, selectedTestData.questionAmount)
             console.log(response);
             setQuestionsData(response);
             const initAnswerData = [] as Array<InitAnswerData>;
@@ -121,6 +122,7 @@ export default function StudentTest () {
             }
             console.log(initAnswerData)
             setAnswerData(initAnswerData);
+            setShowQuestionList(true);
         }
     }
 
@@ -134,29 +136,32 @@ export default function StudentTest () {
     }
 
     const SubmitHandler = async () => {
-        let counter = 0;
-        let tempAnswerData = [...answerData]
-        for (let i = 0; i < answerData.length; i++){
-            if (tempAnswerData[i].answer === parseInt(questionsData[i].answer)){
-                counter = counter + 1;
-                tempAnswerData[i].correctness = true;
+        if(selectedTestData){
+            let counter = 0;
+            let tempAnswerData = [...answerData]
+            for (let i = 0; i < answerData.length; i++){
+                if (tempAnswerData[i].answer === parseInt(questionsData[i].answer)){
+                    counter = counter + 1;
+                    tempAnswerData[i].correctness = true;
+                }
+                else{
+                    tempAnswerData[i].correctness = false;
+                }
             }
-            else{
-                tempAnswerData[i].correctness = false;
-            }
+            console.log(tempAnswerData);
+            const scoreTemp = Math.round(counter * (100/answerData.length));
+            console.log(scoreTemp);
+            setScore(scoreTemp);
+    
+            const dateTime = GetDateandTime();
+            
+            await apiPostTestResult(currentId,selectedTestData.idTest, scoreTemp, dateTime, selectedTestData.idCategory).then((res) => {
+                SubmitQuestionHistory(dateTime);
+            })
+            
+            navigate('/student/home');
         }
-        console.log(tempAnswerData);
-        const scoreTemp = Math.round(counter * (100/answerData.length));
-        console.log(scoreTemp);
-        setScore(scoreTemp);
 
-        const dateTime = GetDateandTime();
-
-        await apiPostTestResult(currentId, scoreTemp, dateTime, codeType).then((res) => {
-            SubmitQuestionHistory(dateTime);
-        })
-        
-        navigate('/student/home');
     }
 
 
@@ -165,7 +170,7 @@ export default function StudentTest () {
         let stringQuery = ""
         const response = await apiGetTestResultId(currentId, dateTime);
         console.log(response);
-        const tempTestId = response[0].idTest;
+        const tempTestId = response[0].idTestResult;
         for (let i:number = 0; i < questionsData.length; i++){
             stringQuery = stringQuery + `(${(questionsData[i].idQuestion).toString()}, "${tempTestId}", "${answerData[i].answer}", "${answerData[i].correctness}")`
             if (i < questionsData.length - 1){
@@ -179,14 +184,15 @@ export default function StudentTest () {
         })
     }
     
-
-    const RadioButtonQuestionType = (choice: number) => {
-        if (choice === 1) setCodeType(11);
-        else if (choice === 2) setCodeType(21);
+    const DoTestHandler = (testData: TestData) => {
+        setShowConfirmationPopUp(true);
+        setSelectedTestData(testData);
     }
 
-    const DoTestHandler = (testData: TestData) => {
-
+    const ConfirmationYesHandler = () => {
+        setShowConfirmationPopUp(false);
+        setShowTestTable(false);
+        GetQuestion();
     }
 
     return(
@@ -194,7 +200,17 @@ export default function StudentTest () {
             <div css={ParentGridStyle}>
                 <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE_STUDENT}/>
                 
+                {showConfirmationPopUp &&                 
+                <div css={PopUpWrapper}>
+                    <div css={PopUpCardStyle}>
+                        <div>Are you sure you want to do the test now?</div>
+                        <button onClick={ConfirmationYesHandler}>Yes</button>
+                        <button onClick={() => setShowConfirmationPopUp(false)}>No</button>
+                    </div>
+                </div>}
+
                 <div css={DoTestContentWrapper}>
+                {showTestTable && 
                     <div css={ContentCardStyle}>
                         <div css={TestContentHeadListStyle}>
                             <div>Test Name</div>
@@ -209,32 +225,36 @@ export default function StudentTest () {
                                     <div>{value.idCategory}</div>
                                     <div>{value.questionAmount}</div>
                                     <div>{value.timeAmount}</div>
-                                    <div><button onClick={() => DoTestHandler(value)}>Test</button></div>
+                                    <div><button onClick={() => DoTestHandler(value)}>Do Test</button></div>
                                 </div>
                             )
                         })}
                     </div>
-
-                    {/* <button onClick={GetQuestion}>Get Questions</button>
-                    {questionsData.map((value, index) => {
-                        return (
-                            <QuestionViewComponent 
-                            key={index}
-                            questionId={value.idQuestion}
-                            codeType={categoryNameArr[categoryIdArr.indexOf(value.idCategory)]}
-                            questionText={value.questionText}
-                            choice1={value.questionChoice1}
-                            choice2={value.questionChoice2}
-                            choice3={value.questionChoice3}
-                            choice4={value.questionChoice4}
-                            answer={value.answer}
-                            index = {index}
-                            answerDataHandler = {answerDataHandler}   
-                            isATest={true}       
-                            />
-                        )
-                    })}
-                    <button onClick={SubmitHandler}>Submit</button> */}
+                }
+                
+                {showQuestionList &&
+                    <div>
+                        {questionsData.map((value, index) => {
+                            return (
+                                <QuestionViewComponent 
+                                key={index}
+                                questionId={value.idQuestion}
+                                codeType={categoryNameArr[categoryIdArr.indexOf(value.idCategory)]}
+                                questionText={value.questionText}
+                                choice1={value.questionChoice1}
+                                choice2={value.questionChoice2}
+                                choice3={value.questionChoice3}
+                                choice4={value.questionChoice4}
+                                answer={value.answer}
+                                index = {index}
+                                answerDataHandler = {answerDataHandler}   
+                                isATest={true}       
+                                />
+                            )
+                        })}
+                        <button onClick={SubmitHandler}>Submit</button>
+                    </div>
+                }
                 </div>
             </div>
       </div>

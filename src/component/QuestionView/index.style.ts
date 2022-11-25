@@ -43,7 +43,7 @@ export const QuestionLetterStyle = (correct: boolean) => css`
 `;
 
 export const QuestionTestLetterStyle = (selected: boolean) => css`
-    background-color: ${selected ? "blue" : "#ffffff"};
+    background-color: ${selected ? "#69ccfd" : "#ffffff"};
     font-size: 14px;
     text-align: center;
     width: 20px;

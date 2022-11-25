@@ -162,12 +162,14 @@ export const apiGetQuestionRandom = async (codeType: number, questionAmount: num
 
 export const apiPostTestResult = async (
   currentId: number,
+  idTest: number,
   scoreTemp: number,
   dateTime: string,
   codeType: number
 ) => {
   const response = await axios.post(`${HOST_NAME}/insert/test_result`, {
     currentId: currentId,
+    idTest: idTest,
     score: scoreTemp,
     dateTime: dateTime,
     codeType: codeType,

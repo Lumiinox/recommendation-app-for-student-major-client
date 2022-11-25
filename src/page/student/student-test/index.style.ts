@@ -24,3 +24,24 @@ export const TestContentHeadListStyle = css`
     align-items: center;
     font-weight: bold;
 `;
+
+export const PopUpCardStyle = css`
+    text-align: center;
+    padding: 20px;
+    width: 500px;
+    height: 100px;
+    border-radius: 30px;
+    background: white;
+`;
+
+export const PopUpWrapper = css`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: auto;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);;
+`;
