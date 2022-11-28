@@ -45,11 +45,11 @@ export default function StudentTest () {
     const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
     const [testDataSetting, setTestDataSetting] = useState<Array<TestData>>([]);
     const [selectedTestData, setSelectedTestData] = useState<TestData>();
+    const [counter, setCounter] = useState<number>(0);
     const [showConfirmationPopUp, setShowConfirmationPopUp] = useState<boolean>(false);
     const [showTestTable, setShowTestTable] = useState<boolean>(true);
-    const [showQuestionList, setShowQuestionList] = useState<boolean>(false);
+    const [isTestRunning, setIsTestRunning] = useState<boolean>(false);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [score, setScore] = useState<number>();
     const navigate = useNavigate();
 
     const [firstRender, setFirstRender] = useState<boolean>(false);
@@ -66,6 +66,27 @@ export default function StudentTest () {
             console.log("You should only see this once")
         }
     }, [currentId, firstRender])
+
+    useEffect(() => {
+        if(isTestRunning && counter > 0){
+            setTimeout(() => setCounter(counter - 1), 1000);
+        } else if (isTestRunning && counter === 0){
+            SubmitHandler();
+        }
+    })
+
+    const convertSecondsToTime = () => {
+        const dateObj = new Date(counter * 1000);
+        const hours = dateObj.getUTCHours();
+        const minutes = dateObj.getUTCMinutes();
+        const seconds = dateObj.getSeconds();
+
+        const timeString = hours.toString().padStart(2, '0')
+        + ':' + minutes.toString().padStart(2, '0')
+        + ':' + seconds.toString().padStart(2, '0');
+
+        return timeString
+    }
 
     const fetchData = async () => {
         const questionCategoryData = await apiGetAllQuestionCategory();
@@ -122,7 +143,7 @@ export default function StudentTest () {
             }
             console.log(initAnswerData)
             setAnswerData(initAnswerData);
-            setShowQuestionList(true);
+            setIsTestRunning(true);
         }
     }
 
@@ -151,11 +172,10 @@ export default function StudentTest () {
             console.log(tempAnswerData);
             const scoreTemp = Math.round(counter * (100/answerData.length));
             console.log(scoreTemp);
-            setScore(scoreTemp);
     
             const dateTime = GetDateandTime();
             
-            await apiPostTestResult(currentId,selectedTestData.idTest, scoreTemp, dateTime, selectedTestData.idCategory).then((res) => {
+            await apiPostTestResult(currentId, selectedTestData.idTest, scoreTemp, dateTime, selectedTestData.idCategory).then((res) => {
                 SubmitQuestionHistory(dateTime);
             })
             
@@ -186,6 +206,7 @@ export default function StudentTest () {
     
     const DoTestHandler = (testData: TestData) => {
         setShowConfirmationPopUp(true);
+        setCounter(testData.timeAmount * 60);
         setSelectedTestData(testData);
     }
 
@@ -232,8 +253,9 @@ export default function StudentTest () {
                     </div>
                 }
                 
-                {showQuestionList &&
+                {isTestRunning &&
                     <div>
+                        <div>{convertSecondsToTime()}</div>
                         {questionsData.map((value, index) => {
                             return (
                                 <QuestionViewComponent 

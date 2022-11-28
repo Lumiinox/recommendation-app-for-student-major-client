@@ -58,7 +58,7 @@ export default function AdminCreateQuiz (){
                                 <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory}/>
                             </div>
                             <div css={FormSectionStyle}>
-                                <div css={FormTitleStle}>Test Duration (in seconds)</div>
+                                <div css={FormTitleStle}>Test Duration (in minutes)</div>
                                 <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(Number(e.target.value))}}></input>
                             </div>
                             <div css={FormSectionStyle}>

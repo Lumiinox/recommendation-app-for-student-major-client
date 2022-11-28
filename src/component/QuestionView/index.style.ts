@@ -40,6 +40,7 @@ export const QuestionLetterStyle = (correct: boolean) => css`
     float: left;
     margin-right: 5px;
     border-radius:5px;
+    cursor: pointer;
 `;
 
 export const QuestionTestLetterStyle = (selected: boolean) => css`
@@ -50,10 +51,12 @@ export const QuestionTestLetterStyle = (selected: boolean) => css`
     float: left;
     margin-right: 5px;
     border-radius:5px;
+    cursor: pointer;
 `;
 
 
 export const QuestionTextContainer = css`
     height: 20px;
     font-size: 14px;
+    cursor: pointer;
 `;
