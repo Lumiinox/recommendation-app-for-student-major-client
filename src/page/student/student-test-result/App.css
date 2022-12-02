@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins';
+}
+
+body {
+  background: #F8F8F8;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar {
+  background: #0098D7;
+  color: white;
+  min-height: 85px;
+  padding: 25px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  position: relative;
+}
+
+.navbar h2 {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  width: max-content;
+}
+
+.navbar .link {
+  color: white;
+  font-size: 20px;
+}
+
+.user-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 70%;
+  margin: 60px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.user-box .profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background: gray;
+}
+
+.user-box .lorem {
+  color: #0098D7;
+}
+
+.user-box .number {
+  color: #5F5F5F;
+}
+
+.menu {
+  margin: auto auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 80px;
+  width: 70%;
+}
+
+.menu .menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 80px 80px;
+  border-radius: 20px;
+  gap: 15px;
+  padding-bottom: 40px;
+}
+
+.menu .menu-item h3 {
+  width: max-content;
+}
+
+.menu .menu-item .menu-btn {
+  background: #0098D7;
+  padding: 5px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.menu .menu-item .menu-btn:hover {
+  background: rgba(0, 121, 227, 0.996);
+}
+
+.box {
+  width: 70%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+  padding: 20px;
+  min-height: 125px;
+  border-radius: 20px;
+}
+
+.box-1 h1 {
+  color: #0098D7;
+}
+
+.box-2 h4 {
+  color: #5F5F5F;
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
