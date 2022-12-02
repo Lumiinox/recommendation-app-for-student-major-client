@@ -35,6 +35,8 @@ export default function StudentHome (){
             case 2: removeProfileData();
                     navigate('/');
                     break;
+            case 3: navigate('/student/test-result');
+                    break;
         }
     }
     return(
@@ -52,6 +54,7 @@ export default function StudentHome (){
                 <div css={ContentWrapperStyle}>
                     <div css={ContentListStyle}>
                         <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}> Do Test </div>
+                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(3)}> Test Result </div>
                     </div>
                 </div>
             </div>

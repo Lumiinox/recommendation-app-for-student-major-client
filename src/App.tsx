@@ -13,6 +13,8 @@ import StudentHome from './page/student/student-home/index.view';
 import AdminCreateQuestion from './page/admin/create-questions/index.view';
 import MainLoginPage from './page/login/main-login-page/index.view';
 import AdminCreateQuiz from './page/admin/admin-create-quiz/index.view';
+import StudentTestResult from './page/student/student-test-result/index.result';
+
 
 
 function App() {
@@ -48,6 +50,9 @@ function App() {
           
           <Route path='/student/do-test' 
             element={loginStatus && status === 2 ? <StudentTest/> : <Navigate replace to="/"/>}/>
+          
+          <Route path='/student/test-result' 
+            element={loginStatus && status === 2 ? <StudentTestResult/> : <Navigate replace to="/"/>}/>
 
         </Routes>
 
