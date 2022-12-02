@@ -13,7 +13,7 @@ import StudentHome from './page/student/student-home/index.view';
 import AdminCreateQuestion from './page/admin/create-questions/index.view';
 import MainLoginPage from './page/login/main-login-page/index.view';
 import AdminCreateQuiz from './page/admin/admin-create-quiz/index.view';
-import StudentTestResult from './page/student/student-test-result/index.result';
+import StudentTestResult from './page/student/student-test-result/index.view';
 
 
 

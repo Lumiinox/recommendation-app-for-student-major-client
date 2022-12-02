@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { apiLoginStaff, apiLoginStudent, apiRegisterAdmin, apiRegisterStudent } from "../../../database-api";
 import { buttonGhost, buttonGhostRegist, buttonLoginPage, errorMsgStyle, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
+import { checkConfirmedPassword, checkEmail, checkPassword } from "../../../functions";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");
@@ -16,10 +17,16 @@ export default function MainLoginPage(){
     const [nameRegistIn, setNameRegistIn] = useState<string>("");
     const [passRegistIn, setPassRegistIn] = useState<string>("");
     const [passConfirmIn, setPassConfirm] = useState<string>("");
+
     const [isRegistrationFormActive, setIsRegistrationFormActive] = useState<boolean>(false);
     const [isAdminMode, setIsAdminMode] = useState<boolean>(false);
     const [isStudentCredWrong, setIsStudentCredWrong] = useState<boolean>(false);
     const [isAdminCredWrong, setIsAdminCredWrong] = useState<boolean>(false);
+
+    const [emailCorrectState, setEmailCorrectState] = useState<boolean>(true);
+    const [passCorrectState, setPassCorrectState] = useState<boolean>(true);
+    const [passMatchState, setPassMatchState] = useState<boolean>(true);
+    const [emptyFieldsState, setEmptyFieldsState] = useState<boolean>(true);
     
     const status = useSelector((state: State) => state.userData.status)
 
@@ -84,20 +91,38 @@ export default function MainLoginPage(){
         }
     }
     
-    const submitRegistrationData = async () => {
-        let isInputCorrect = false;
-        console.log(nameRegistIn);
-        console.log(emailRegistIn);
-        console.log(passRegistIn);
-        if(passRegistIn === passConfirmIn){
-            isInputCorrect = true;
-        }
-        if(!isAdminMode && isInputCorrect){
-            await apiRegisterStudent(nameRegistIn, emailRegistIn, passRegistIn);
-            setIsRegistrationFormActive(!isRegistrationFormActive)
+    const submitVerification = async () => {
+        const isFieldsEmpty = !(emailRegistIn !== '' && nameRegistIn !== '' && passRegistIn !== '')
+        const isEmailCorrent =  (checkEmail(emailRegistIn));
+        const isPasswordCorrect = (checkPassword(passRegistIn));
+        const isPasswordMatch = (checkConfirmedPassword(passRegistIn, passConfirmIn))
+        console.log(isEmailCorrent);
+        console.log(isPasswordCorrect);
+        console.log(isPasswordMatch);
+        if(isEmailCorrent && isPasswordCorrect && isPasswordMatch){
+            console.log(nameRegistIn);
+            console.log(emailRegistIn);
+            console.log(passRegistIn);
+            if(!isAdminMode){
+                await apiRegisterStudent(nameRegistIn, emailRegistIn, passRegistIn);
+                setIsRegistrationFormActive(!isRegistrationFormActive)
+            } else {
+                await apiRegisterAdmin(nameRegistIn, emailRegistIn, passRegistIn);
+                setIsRegistrationFormActive(!isRegistrationFormActive)
+            }
+            setEmailCorrectState(true);
+            setPassCorrectState(true);
+            setPassMatchState(true);
+            setEmptyFieldsState(true);
         } else {
-            await apiRegisterAdmin(nameRegistIn, emailRegistIn, passRegistIn);
-            setIsRegistrationFormActive(!isRegistrationFormActive)
+            if(!isFieldsEmpty){
+                setEmailCorrectState(isEmailCorrent);
+                setPassCorrectState(isPasswordCorrect);
+                setPassMatchState(isPasswordMatch);
+            } else {
+                setEmptyFieldsState(!isFieldsEmpty);
+            }
+            
         }
     }
 
@@ -108,10 +133,14 @@ export default function MainLoginPage(){
                 <h1 css={registrationTitle}>{!isAdminMode ? "Student Registration" : "Staff Registration"}</h1>
                 <form>
                     <input type="text" placeholder="Email" onChange={(e) => setEmailRegistIn(e.target.value)}/>
+                    {!emailCorrectState && <div css={errorMsgStyle}>*Please enter the correct email format</div>}
                     <input type="text" placeholder="Name" onChange={(e) => setNameRegistIn(e.target.value)}/>
                     <input type="password" placeholder="Password" onChange={(e) => setPassRegistIn(e.target.value)}/>
+                    {!passCorrectState && <div css={errorMsgStyle}>*Password must be at least 8 characters long and include numbers 0 - 9 and alphabetic characters</div>}
                     <input type="password" placeholder="Confirm Password" onChange={(e) => setPassConfirm(e.target.value)}/>
-                    <button css={buttonGhostRegist}onClick={submitRegistrationData}>Submit</button>
+                    {!passMatchState && <div css={errorMsgStyle}>*Password not match</div>}
+                    {!emptyFieldsState && <div css={errorMsgStyle}>*Fields are empty</div>}
+                    <button css={buttonGhostRegist}onClick={submitVerification}>Submit</button>
                     <button css={buttonGhostRegist}onClick={() => setIsRegistrationFormActive(!isRegistrationFormActive)}>Cancel</button>
                 </form>
             </div>

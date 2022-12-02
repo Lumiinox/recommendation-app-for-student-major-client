@@ -153,6 +153,13 @@ export const apiGetTestResultData = async () => {
   return response.data;
 };
 
+export const apiGetStudentTestData = async (currentId: number) => {
+  console.log("api called");
+  const response = await axios.get(`${HOST_NAME}/get/test_result/${currentId}`);
+  console.log(response);
+  return response.data;
+};
+
 export const apiGetQuestionRandom = async (codeType: number, questionAmount: number) => {
   const response = await axios.get(
     `${HOST_NAME}/get/question_random/${codeType}/${questionAmount}`

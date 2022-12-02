@@ -172,7 +172,6 @@ export const ContentCardStyle = css`
     box-shadow: 0px 5px 10px rgb(150, 150, 150);
     &:hover{
         transition-duration: 0.2s;
-        cursor: pointer;
         box-shadow: 0px 10px 13px rgb(150, 150, 150);
     }
 `;
