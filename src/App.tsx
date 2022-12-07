@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { State } from './redux';
 import { useSelector } from 'react-redux';
 import { GlobalAppStyle } from './App.style';
@@ -20,7 +20,7 @@ import StudentTestResult from './page/student/student-test-result/index.view';
 function App() {
   const loginStatus = useSelector((state: State) => state.userData.loginStatus)
   const status = useSelector((state: State) => state.userData.status)
-
+  
   return (
     <div className="App" css={GlobalAppStyle}>
       <Global styles={GlobalAppStyle}/>

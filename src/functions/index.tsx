@@ -37,3 +37,19 @@ export const checkIfNumber = (args: any) => {
         return false;
     }
 }
+
+export const updateLastUrl = (url: string) => {
+    const userData = localStorage.getItem('loginUser');
+    if (userData){
+        const parsedUserData = JSON.parse(userData);
+        const updatedData = {
+            name: parsedUserData?.name,
+            email: parsedUserData?.email,
+            status: parsedUserData?.status,
+            currentId: parsedUserData?.currentId,
+            lastUrl: url
+        };
+        localStorage.setItem('loginUser', JSON.stringify(updatedData));
+    }
+    
+}

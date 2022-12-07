@@ -6,6 +6,7 @@ import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.co
 import { FormSectionStyle, FormTextAreaStyle, FormTitleStle, ParentGridStyle } from '../../styles/index.style';
 import { AddQuizFormStyle, formContainer } from './index.style';
 import { apiAddTest, apiGetAllQuestionCategory } from '../../../database-api';
+import { updateLastUrl } from '../../../functions';
 
 export default function AdminCreateQuiz (){
     const [questionCategory, setQuestionCategory] = useState(0);
@@ -29,6 +30,7 @@ export default function AdminCreateQuiz (){
           setCategoryId(categoryIdTemp);
         }
         fetchData();
+        updateLastUrl(window.location.pathname);
       }, [])
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
