@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { apiGetAllQuestionCategory, apiGetTestResultData } from '../../../database-api';
+import { updateLastUrl } from '../../../functions';
 import { HOME_MODE_ADMIN, TEST_RESULT_TITLE } from '../../constants/index.constants';
 import { ParentGridStyle } from '../../styles/index.style';
 import { dateColumnStyle, mainContentRow, nameColumnStyle, nimColumnStyle, scoreColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, typeColumnStyle, wholeContentWrapperStyle } from './index.style';
@@ -27,6 +28,10 @@ export default function ListOfTestResult(){
         }
         fetchData();
       }, [])
+    
+    useEffect(() => {
+        updateLastUrl(window.location.pathname);
+    }, []);
     
     useEffect(() => {
         const fetchData = async () => {

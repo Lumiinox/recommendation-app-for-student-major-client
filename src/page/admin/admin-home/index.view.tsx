@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
-import { getIdName } from "../../../functions";
+import { getIdName, updateLastUrl } from "../../../functions";
 import { State } from "../../../redux";
 import { ADMIN_HOME_TITLE, LOGOUT_MODE } from "../../constants/index.constants";
 import { 
@@ -17,7 +17,10 @@ import {
 
 export default function AdminHome (){   
     const navigate = useNavigate();
-
+    
+    useEffect(() => {
+        updateLastUrl(window.location.pathname);
+    }, [])
     
     const name = useSelector((state: State) => state.userData.name)
     const status = useSelector((state: State) => state.userData.status)

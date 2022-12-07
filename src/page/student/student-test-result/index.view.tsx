@@ -9,6 +9,7 @@ import { State } from '../../../redux';
 import { useEffect, useState } from 'react';
 import { apiGetStudentTestData } from '../../../database-api';
 import { ContentCardStyle } from '../../styles/index.style';
+import { updateLastUrl } from '../../../functions';
 
 interface testResultData {
   idStudent: number;
@@ -33,6 +34,10 @@ export default function StudentTestResult () {
     }
     fetchData();
   }, [currentId]); 
+
+  useEffect(() => {
+    updateLastUrl(window.location.pathname);
+  }, [])
 
   return(
     <div>

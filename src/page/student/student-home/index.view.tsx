@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
-import { getIdName } from "../../../functions";
+import { getIdName, updateLastUrl } from "../../../functions";
 import { actionCreators, State } from "../../../redux";
 import { LOGOUT_MODE, TEST_TITLE } from "../../constants/index.constants";
 import { 
@@ -27,7 +27,11 @@ export default function StudentHome (){
     const name = useSelector((state: State) => state.userData.name);
     const status = useSelector((state: State) => state.userData.status);
     const currentId = useSelector((state: State) => state.userData.currentId);
-
+    
+    useEffect(() => {
+        updateLastUrl(window.location.pathname);
+    }, []);
+    
     const menuBtnHandler = (choice:number) => {
         switch(choice) {
             case 1: navigate(`/student/do-test`);

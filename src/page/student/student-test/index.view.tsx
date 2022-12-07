@@ -11,6 +11,7 @@ import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
 import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestData, apiGetTestResultId, apiGetTestResultStudent, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
 import { DoTestContentWrapper, PopUpCardStyle, PopUpWrapper, TestContentHeadListStyle, TestContentListStyle } from "./index.style";
+import { updateLastUrl } from "../../../functions";
 
 interface QuestionsData {
     idQuestion: number;
@@ -75,6 +76,10 @@ export default function StudentTest () {
         }
     })
 
+    useEffect(() => {
+        updateLastUrl(window.location.pathname);
+    }, []);
+    
     const convertSecondsToTime = () => {
         const dateObj = new Date(counter * 1000);
         const hours = dateObj.getUTCHours();

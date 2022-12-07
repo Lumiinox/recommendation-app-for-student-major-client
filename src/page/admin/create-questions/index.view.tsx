@@ -14,6 +14,7 @@ import { QuestionViewComponent } from '../../../component/QuestionView/index.vie
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
+import { updateLastUrl } from '../../../functions';
 
 interface DataPertanyaan {
   idQuestion: number;
@@ -47,7 +48,10 @@ export default function AdminCreateQuestion (){
 
 
   const divRef = useRef<HTMLDivElement | null>(null);
-
+  useEffect(() => {
+    updateLastUrl(window.location.pathname);
+  }, [])
+  
   useEffect(() => {
     const fetchData = async () => {
       const questionData = await apiGetAllQuestion();
