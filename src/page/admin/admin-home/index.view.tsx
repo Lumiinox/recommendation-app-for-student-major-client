@@ -34,7 +34,9 @@ export default function AdminHome (){
             case 3: navigate(`/admin/view-test-result`);
                     break;
             case 4: navigate(`/admin/create-quiz`);
-            break;
+                    break;
+            case 5: navigate(`/admin/view-test-list`);
+                    break;
         }
     }
 
@@ -56,6 +58,7 @@ export default function AdminHome (){
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(2)}> Question List </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(3)}> Test Result  </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(4)}> Create Quiz  </div>
+                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(5)}> View Test List  </div>
                     </div>
                 </div>
             </div>

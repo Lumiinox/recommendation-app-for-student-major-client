@@ -31,7 +31,8 @@ export default function ViewQuestionsPage(){
 
     useEffect(() => {
         updateLastUrl(window.location.pathname);
-    }, [])
+    }, []);
+    
     useEffect(() => {
       const fetchData = async () => {
         const questionCategoryData = await apiGetAllQuestionCategory();

@@ -165,6 +165,7 @@ export const ProfileCardStyle = css`
 
 export const ContentCardStyle = css`
     text-align: center;
+    margin: 20px 0;
     padding: 20px;
     min-width: 50vh;
     min-height: 20vh;
