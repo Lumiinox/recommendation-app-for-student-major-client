@@ -36,7 +36,7 @@ export default function MainLoginPage(){
     const {updateProfileData} = bindActionCreators(actionCreators, dispatch);
 
     useEffect(() => {
-        const userData = localStorage.getItem('loginUser');
+        const userData = sessionStorage.getItem('loginUser');
         console.log("FROM LOCAL STORAGE");
         console.log(userData);
         if(userData){
@@ -70,7 +70,7 @@ export default function MainLoginPage(){
                     console.log(adminDataToLocal);
                     if(data !== null){
                         updateProfileData(data.name, data.email, data.status, data.currentId);
-                        localStorage.setItem('loginUser', JSON.stringify(adminDataToLocal));
+                        sessionStorage.setItem('loginUser', JSON.stringify(adminDataToLocal));
                         navigate(adminDataToLocal.lastUrl);
                     } else {
                         setIsAdminCredWrong(true);
@@ -89,7 +89,7 @@ export default function MainLoginPage(){
                     console.log(studentDataToLocal);
                     if(data !== null){
                         updateProfileData(data.name, data.email, data.status, data.currentId);
-                        localStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
+                        sessionStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
                         navigate(studentDataToLocal.lastUrl);
                     } else {
                         setIsStudentCredWrong(true);

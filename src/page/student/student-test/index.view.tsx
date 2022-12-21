@@ -9,8 +9,23 @@ import { QuestionViewComponent } from "../../../component/QuestionView/index.vie
 import { ContentCardStyle, ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
-import { apiGetAllQuestionCategory, apiGetQuestionRandom, apiGetTestData, apiGetTestResultId, apiGetTestResultStudent, apiPostQuestionHistory, apiPostTestResult } from "../../../database-api";
-import { DoTestContentWrapper, PopUpCardStyle, PopUpWrapper, TestContentHeadListStyle, TestContentListStyle } from "./index.style";
+import { 
+    apiGetAllQuestionCategory, 
+    apiGetQuestionRandom, 
+    apiGetTestData, 
+    apiGetTestResultId, 
+    apiGetTestResultStudent, 
+    apiPostQuestionHistory, 
+    apiPostTestResult 
+} from "../../../database-api";
+import { 
+    DoTestContentWrapper, 
+    PopUpCardStyle, 
+    PopUpWrapper, 
+    TestContentHeadListStyle, 
+    TestContentListStyle, 
+    timerStyle
+} from "./index.style";
 import { updateLastUrl } from "../../../functions";
 
 interface QuestionsData {
@@ -183,10 +198,8 @@ export default function StudentTest () {
             await apiPostTestResult(currentId, selectedTestData.idTest, scoreTemp, dateTime, selectedTestData.idCategory).then((res) => {
                 SubmitQuestionHistory(dateTime);
             })
-            
             navigate('/student/home');
         }
-
     }
 
 
@@ -225,7 +238,7 @@ export default function StudentTest () {
         <div>
             <div css={ParentGridStyle}>
                 <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE_STUDENT}/>
-                
+                {isTestRunning && <div css={timerStyle}>{convertSecondsToTime()}</div>}
                 {showConfirmationPopUp &&                 
                 <div css={PopUpWrapper}>
                     <div css={PopUpCardStyle}>
@@ -260,7 +273,6 @@ export default function StudentTest () {
                 
                 {isTestRunning &&
                     <div>
-                        <div>{convertSecondsToTime()}</div>
                         {questionsData.map((value, index) => {
                             return (
                                 <QuestionViewComponent 

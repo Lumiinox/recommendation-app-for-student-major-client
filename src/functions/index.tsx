@@ -39,7 +39,7 @@ export const checkIfNumber = (args: any) => {
 }
 
 export const updateLastUrl = (url: string) => {
-    const userData = localStorage.getItem('loginUser');
+    const userData = sessionStorage.getItem('loginUser');
     if (userData){
         const parsedUserData = JSON.parse(userData);
         const updatedData = {
@@ -49,7 +49,7 @@ export const updateLastUrl = (url: string) => {
             currentId: parsedUserData?.currentId,
             lastUrl: url
         };
-        localStorage.setItem('loginUser', JSON.stringify(updatedData));
+        sessionStorage.setItem('loginUser', JSON.stringify(updatedData));
     }
     
 }

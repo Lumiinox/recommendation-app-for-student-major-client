@@ -45,3 +45,17 @@ export const PopUpWrapper = css`
     height: 100%;
     background: rgba(0,0,0,0.8);;
 `;
+
+export const timerStyle = css`
+    background: #d5d5d5;
+    width: 150px;
+    height: 100px;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin: 120px 20px 30px 40px;
+    position: fixed;
+`;

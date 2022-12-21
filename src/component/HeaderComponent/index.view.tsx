@@ -21,7 +21,7 @@ export default function HeaderComp({headerTitle, headerButtonMode}: HeaderCompTy
     const headerButtonHandler = (choice: number) => {
         switch(choice){
             case 1: removeProfileData();
-                    localStorage.setItem('loginUser', '');
+                    sessionStorage.setItem('loginUser', '');
                     navigate('/');
                     break;
 
