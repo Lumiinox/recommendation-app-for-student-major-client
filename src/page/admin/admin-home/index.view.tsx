@@ -12,12 +12,15 @@ import {
     ContentWrapperStyle, 
     ProfileCardStyle, 
     ProfileWrapperStyle, 
-    ParentGridStyle 
+    ParentGridStyle, 
+    homeCardIconStyle
     } from "../../styles/index.style";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faList, faPlus, faSquarePollHorizontal } from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminHome (){   
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         updateLastUrl(window.location.pathname);
     }, [])
@@ -54,11 +57,26 @@ export default function AdminHome (){
                 </div>
                 <div css={ContentWrapperStyle}>
                     <div css={ContentListStyle}>
-                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}> Create Question </div>
-                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(2)}> Question List </div>
-                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(3)}> Test Result  </div>
-                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(4)}> Create Quiz  </div>
-                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(5)}> View Test List  </div>
+                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}>
+                            <FontAwesomeIcon icon={faPlus} css={homeCardIconStyle}/> 
+                            Create Question 
+                            </div>
+                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(2)}> 
+                            <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>
+                            Question List 
+                        </div>
+                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(3)}>
+                            <FontAwesomeIcon icon={faSquarePollHorizontal} css={homeCardIconStyle}/>
+                            Test Result  
+                        </div>
+                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(4)}> 
+                            <FontAwesomeIcon icon={faPlus} css={homeCardIconStyle}/>
+                            Create Quiz  
+                        </div>
+                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(5)}> 
+                            <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>
+                            View Test List 
+                        </div>
                     </div>
                 </div>
             </div>

@@ -164,7 +164,14 @@ export const ProfileCardStyle = css`
 `;
 
 export const ContentCardStyle = css`
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    color: #646464;
+    font-size: 20px;
     margin: 20px 0;
     padding: 20px;
     min-width: 50vh;
@@ -216,4 +223,10 @@ export const FormInputTextStyle = css`
     resize: none;
     font-size: 20px;
     margin-top: 10px;
+`;
+
+export const homeCardIconStyle = css`
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #7a7a7a;
 `;

@@ -118,7 +118,22 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
     numberOfQuestions:numberOfQuestions,
   });
   return response.data;
-}
+};
+
+export const apiDeactivateTest = async (idTest: number) => {
+  const response = await axios.post(`${HOST_NAME}/deactivate/test-entry`, {
+    idTest: idTest,
+  });
+  return response.data;
+};
+
+export const apiReactivateTest = async (idTest: number) => {
+  const response = await axios.post(`${HOST_NAME}/reactivate/test-entry`, {
+    idTest: idTest,
+  });
+  return response.data;
+};
+
 
 export const apiShowQuestion = async () => {
   const response = await axios.get(`${HOST_NAME}/get/question`);
