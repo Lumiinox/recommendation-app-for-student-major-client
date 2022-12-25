@@ -223,7 +223,7 @@ export const apiGetTestResultStudent = async (idStudent: number) => {
   return response.data;
 };
 
-export const apiGetTestList = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/test_list`);
+export const apiGetActiveTest = async () => {
+  const response = await axios.get(`${HOST_NAME}/get/active_test`);
   return response.data;
 }

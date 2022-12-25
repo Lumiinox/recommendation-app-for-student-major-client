@@ -10,9 +10,9 @@ import { ContentCardStyle, ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
 import { 
+    apiGetActiveTest,
     apiGetAllQuestionCategory, 
     apiGetQuestionRandom, 
-    apiGetTestData, 
     apiGetTestResultId, 
     apiGetTestResultStudent, 
     apiPostQuestionHistory, 
@@ -124,7 +124,7 @@ export default function StudentTest () {
     const fetchDataTestData = async (currentId: number) => {
         console.log("testing");
         const testResultData = await apiGetTestResultStudent(currentId);
-        const testData = await apiGetTestData();
+        const testData = await apiGetActiveTest();
         const filteredTestData = [];
         for (let i = 0; i < testData.length; i++){
             let dataMatched = false;

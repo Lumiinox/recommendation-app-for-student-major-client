@@ -49,13 +49,46 @@ export const tableHead = css`
 
 export const tableHeadRow = css`
     font-size: 24px;
+    text-align: center;
 `;
 
 export const tableContent = css`
     font-size: 20px;
+    text-align: center;
     border-collapse: collapse; 
 `;
 
 export const mainContentRow = css`
     border-bottom: 2px solid #f1f1f1;
+`;
+
+export const actionColumnsStyle = css`
+    border-bottom: 2px solid #f1f1f1;
+`;
+
+export const actionColumnsContentWrapperStyle = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const playButtonStyle = css`
+    margin-right: 10px;
+    cursor: pointer;
+    color: #015e01;
+`;
+
+export const stopButtonStyle = css`
+    margin-right: 10px;
+    cursor: pointer;
+    color: #a10000;
+`;
+
+export const repeatButtonStyle = css`
+    color: #0059b5;
+    cursor: pointer;
+`;
+
+export const activeStatusText = (status: number) => css`
+    color: ${status === 1 ? "#015e01" : "#a10000"};
 `;
