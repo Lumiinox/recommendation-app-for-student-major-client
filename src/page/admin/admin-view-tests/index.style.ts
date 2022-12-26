@@ -94,16 +94,10 @@ export const activeStatusText = (status: number) => css`
 `;
 
 export const formContainer = css`
-    display: flex;
-    flex-direction: column;
-    margin: 50px auto;
-    padding: 50px 70px;
-    box-shadow: 0px 5px 10px rgb(150, 150, 150);
     border-radius: 50px;
-    &:hover {
-        transition-duration: 0.2s;
-        box-shadow: 0px 10px 13px rgb(150, 150, 150);
-    }
+    background-color: #FFFFFF;
+    padding: 50px;
+    min-width: 700px;
 `;
 
 export const AddQuizFormStyle = css`
@@ -112,4 +106,14 @@ export const AddQuizFormStyle = css`
     width: 100vh;
     padding: 30px;
     border-radius: 50px;
+`;
+
+export const CreateQuestionFormWrapperStyle = (pageHeight: number, pageWidth: number) => css`
+    padding: 50px 0;
+    background:rgba(0,0,0,0.8);
+    position: absolute;
+    width: ${pageWidth}px;
+    height: ${pageHeight}px;
+    display: flex;
+    justify-content: center;
 `;

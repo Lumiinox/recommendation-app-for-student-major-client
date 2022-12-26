@@ -35,7 +35,7 @@ import {
     activeStatusText, 
     actionColumnsContentWrapperStyle, 
     formContainer, 
-    AddQuizFormStyle 
+    CreateQuestionFormWrapperStyle
 } from './index.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlay, faCircleStop, faRepeat } from '@fortawesome/free-solid-svg-icons'
@@ -108,7 +108,7 @@ export default function ListofTest(){
         console.log(numberOfQuestions);
         await apiAddTest(questionCategory, testName, testDuration, numberOfQuestions);
         await fetchTestData();
-        setShowReAddForm(false);
+    setShowReAddForm(false);
     }
     
     const RemakeTest = () => {
@@ -118,32 +118,35 @@ export default function ListofTest(){
             setTestDuration(testRedoData.questionAmount);
             setQuestionCategory(categoryIdArr.indexOf(testRedoData.idCategory));
             return(
-                <div css={formContainer}>
-                    <div css={AddQuizFormStyle}>
-                        <h2>Create Test</h2>
-                        <div>
-                            <div css={FormSectionStyle}>
-                                <div css={FormTitleStle}>Test Name</div>
-                                <input css={FormTextAreaStyle} name="testName" onChange={(e) => {setTestName(e.target.value)}} value={testRedoData.nameTest}></input>
+                <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
+                    <div>   
+                        <div css={formContainer}>
+                            <h2>Create Test</h2>
+                            <div>
+                                <div css={FormSectionStyle}>
+                                    <div css={FormTitleStle}>Test Name</div>
+                                    <input css={FormTextAreaStyle} name="testName" onChange={(e) => {setTestName(e.target.value)}} value={testRedoData.nameTest}></input>
+                                </div>
+                                <div css={FormSectionStyle}>
+                                    <div css={FormTitleStle}>Question Category</div>
+                                    <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={categoryIdArr.indexOf(testRedoData.idCategory)}/>
+                                </div>
+                                <div css={FormSectionStyle}>
+                                    <div css={FormTitleStle}>Test Duration (in minutes)</div>
+                                    <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(Number(e.target.value))}} value={testRedoData.timeAmount}></input>
+                                </div>
+                                <div css={FormSectionStyle}>
+                                    <div css={FormTitleStle}>Number of Questions</div>
+                                    <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(Number(e.target.value))}} value={testRedoData.questionAmount}></input>
+                                </div>
+                    
+                                <button onClick={handleSubmit}>Submit</button>
+                                <button onClick={() => setShowReAddForm(false)}>Cancel</button>
                             </div>
-                            <div css={FormSectionStyle}>
-                                <div css={FormTitleStle}>Question Category</div>
-                                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={categoryIdArr.indexOf(testRedoData.idCategory)}/>
-                            </div>
-                            <div css={FormSectionStyle}>
-                                <div css={FormTitleStle}>Test Duration (in minutes)</div>
-                                <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(Number(e.target.value))}} value={testRedoData.timeAmount}></input>
-                            </div>
-                            <div css={FormSectionStyle}>
-                                <div css={FormTitleStle}>Number of Questions</div>
-                                <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(Number(e.target.value))}} value={testRedoData.questionAmount}></input>
-                            </div>
-                
-                            <button onClick={handleSubmit}>Submit</button>
-                            <button onClick={() => setShowReAddForm(false)}>Cancel</button>
                         </div>
-                    </div>
+                    </div> 
                 </div>
+
             )
         } else {
             return(<></>);
@@ -170,7 +173,7 @@ export default function ListofTest(){
     }
 
     return(
-        <div>
+        <div ref={divRef}>
             <div css={ParentGridStyle}>
                 <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 

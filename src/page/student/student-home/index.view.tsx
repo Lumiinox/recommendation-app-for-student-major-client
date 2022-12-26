@@ -14,8 +14,11 @@ import {
     ContentWrapperStyle, 
     ProfileCardStyle, 
     ProfileWrapperStyle, 
-    ParentGridStyle 
+    ParentGridStyle, 
+    homeCardIconStyle
 } from "../../styles/index.style";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faList, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 export default function StudentHome (){
     
@@ -57,8 +60,14 @@ export default function StudentHome (){
                 </div>
                 <div css={ContentWrapperStyle}>
                     <div css={ContentListStyle}>
-                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}> Do Test </div>
-                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(3)}> Test Result </div>
+                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}> 
+                            <FontAwesomeIcon icon={faPenToSquare} css={homeCardIconStyle}/> 
+                            Do Test 
+                        </div>
+                        <div css={ContentCardStyle} onClick={() => menuBtnHandler(3)}> 
+                            <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/> 
+                            Test Result 
+                        </div>
                     </div>
                 </div>
             </div>

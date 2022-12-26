@@ -16,7 +16,7 @@ import {
     homeCardIconStyle
     } from "../../styles/index.style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faList, faPlus, faSquarePollHorizontal } from '@fortawesome/free-solid-svg-icons'
+import { faList, faPlus, faSquarePollHorizontal } from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminHome (){   
     const navigate = useNavigate();
