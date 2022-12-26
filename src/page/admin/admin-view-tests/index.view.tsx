@@ -1,13 +1,45 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
-import { apiDeactivateTest, apiGetAllQuestionCategory, apiReactivateTest, apiGetTestData } from '../../../database-api';
+import { 
+    apiDeactivateTest, 
+    apiGetAllQuestionCategory, 
+    apiReactivateTest, 
+    apiGetTestData, 
+    apiAddTest 
+} from '../../../database-api';
 import { updateLastUrl } from '../../../functions';
 import { HOME_MODE_ADMIN, TEST_RESULT_TITLE } from '../../constants/index.constants';
-import { ParentGridStyle } from '../../styles/index.style';
-import { mainContentRow, nameTestColumnStyle, categoryNameColumnStyle, durationColumnStyle, numQuestionColumnStyle, statusColumnStyle,  actionColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, wholeContentWrapperStyle, stopButtonStyle, playButtonStyle, repeatButtonStyle, activeStatusText, actionColumnsContentWrapperStyle } from './index.style';
+import { 
+    FormSectionStyle, 
+    FormTextAreaStyle, 
+    FormTitleStle, 
+    ParentGridStyle 
+} from '../../styles/index.style';
+import { 
+    mainContentRow, 
+    nameTestColumnStyle, 
+    categoryNameColumnStyle, 
+    durationColumnStyle, 
+    numQuestionColumnStyle, 
+    statusColumnStyle,  
+    actionColumnStyle, 
+    tableContainer, 
+    tableContent, 
+    tableHead, 
+    tableHeadRow, 
+    wholeContentWrapperStyle, 
+    stopButtonStyle, 
+    playButtonStyle, 
+    repeatButtonStyle, 
+    activeStatusText, 
+    actionColumnsContentWrapperStyle, 
+    formContainer, 
+    AddQuizFormStyle 
+} from './index.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlay, faCircleStop, faRepeat } from '@fortawesome/free-solid-svg-icons'
+import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 interface TestListData {
     idTest: number; 
     idCategory: number;
@@ -21,7 +53,17 @@ export default function ListofTest(){
     const [testListData, setTestListData] = useState<Array<TestListData>>([]);
     const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
     const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
+    const [questionCategory, setQuestionCategory] = useState(0);
+    const [testName, setTestName] = useState<string>('');
+    const [testDuration, setTestDuration] = useState<number>(0);
+    const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+    const [showReAddForm, setShowReAddForm] = useState<boolean>(false);
+    const [testRedoData, setTestRedoData] = useState<TestListData>();
+    const [pageHeight, setPageHeight] = useState(0);
+    const [pageWidth, setPageWidth] = useState(0);
 
+    const divRef = useRef<HTMLDivElement | null>(null);
+    
     useEffect(() => {
         fetchTestData();
     }, []);
@@ -46,6 +88,69 @@ export default function ListofTest(){
         updateLastUrl(window.location.pathname);
     }, []);
 
+    const showFormHandler = (curentData: TestListData) => {
+        setTestRedoData(curentData);
+        const tempPageHeight = divRef.current?.clientHeight as number;
+        const tempPageWidth = divRef.current?.clientWidth as number;
+        if(tempPageHeight > window.innerHeight){
+            setPageHeight(tempPageHeight + 50);
+        } else {
+            setPageHeight(window.innerHeight + 50);
+        }
+        setPageWidth(tempPageWidth);
+        setShowReAddForm(!showReAddForm);
+    };
+
+    const handleSubmit = async () => {
+        console.log(questionCategory);
+        console.log(testName);
+        console.log(testDuration);
+        console.log(numberOfQuestions);
+        await apiAddTest(questionCategory, testName, testDuration, numberOfQuestions);
+        await fetchTestData();
+        setShowReAddForm(false);
+    }
+    
+    const RemakeTest = () => {
+        if(testRedoData){
+            setTestName(testRedoData.nameTest);
+            setNumberOfQuestions(testRedoData.questionAmount);
+            setTestDuration(testRedoData.questionAmount);
+            setQuestionCategory(categoryIdArr.indexOf(testRedoData.idCategory));
+            return(
+                <div css={formContainer}>
+                    <div css={AddQuizFormStyle}>
+                        <h2>Create Test</h2>
+                        <div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Test Name</div>
+                                <input css={FormTextAreaStyle} name="testName" onChange={(e) => {setTestName(e.target.value)}} value={testRedoData.nameTest}></input>
+                            </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Question Category</div>
+                                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={categoryIdArr.indexOf(testRedoData.idCategory)}/>
+                            </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Test Duration (in minutes)</div>
+                                <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(Number(e.target.value))}} value={testRedoData.timeAmount}></input>
+                            </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Number of Questions</div>
+                                <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(Number(e.target.value))}} value={testRedoData.questionAmount}></input>
+                            </div>
+                
+                            <button onClick={handleSubmit}>Submit</button>
+                            <button onClick={() => setShowReAddForm(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return(<></>);
+        }
+
+    }
+
     const fetchTestData = async () => {
         const data = await apiGetTestData();
         console.log(data);
@@ -69,6 +174,7 @@ export default function ListofTest(){
             <div css={ParentGridStyle}>
                 <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
+                {showReAddForm && <RemakeTest/>}
                 <div css={wholeContentWrapperStyle}>
                     <div>
                         <div css={tableContainer}>
@@ -111,7 +217,9 @@ export default function ListofTest(){
                                                                 <FontAwesomeIcon icon={faCirclePlay} css={playButtonStyle}/>
                                                             }
                                                         </div>
-                                                        <FontAwesomeIcon icon={faRepeat} css={repeatButtonStyle}/>
+                                                        <div onClick={() => showFormHandler(data)}>
+                                                            <FontAwesomeIcon icon={faRepeat} css={repeatButtonStyle}/>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -5,6 +5,7 @@ import { DropDownItemStyle, DropDownListContainer, DropDownSelectedStyle } from 
 interface customDropDownTypes{
   dropdownName: Array<string>;
   dropdownId: Array<number>;
+  preSelectedIndex?: number;
   onClickHandler: (args: number) => void;
 }
 
@@ -14,7 +15,11 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
 
     useEffect(() => {
       setDisplayedText(props.dropdownName[0]);
-    }, [props.dropdownName])
+      if (props.preSelectedIndex){
+        setDisplayedText(props.dropdownName[props.preSelectedIndex]);
+        props.onClickHandler(props.dropdownId[props.preSelectedIndex]);
+      }
+    }, [props, props.dropdownName, props.preSelectedIndex])
     
     const dropDownClickHandler = (catName: string, catId: number) => {
       setDisplayedText(catName);
