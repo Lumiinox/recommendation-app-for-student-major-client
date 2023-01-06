@@ -41,7 +41,7 @@ export default function MainLoginPage(){
         console.log(userData);
         if(userData){
             const parsedUserData = JSON.parse(userData);
-            updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId);
+            updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId, parsedUserData.accessToken);
             console.log(parsedUserData);
             if(parsedUserData.status === 1){
                 console.log("Admin data from storage");            
@@ -60,16 +60,21 @@ export default function MainLoginPage(){
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
                     console.log("DATA IS BELLOW HERE");
                     console.log(data);
+                    document.cookie = data.accessToken;
+                    console.log("AccessToken");
+                    console.log(data.accessToken);
+                    console.log("COOKIE");
+                    console.log(document.cookie);
                     const adminDataToLocal = {
-                        name: data?.name,
-                        email: data?.email,
+                        name: data?.nameAdmin,
+                        email: data?.emailAdmin,
                         status: data?.status,
-                        currentId: data?.currentId,
+                        currentId: data?.idAdmin,
+                        accessToken: data?.accessToken,
                         lastUrl: "admin/home"
                     };
-                    console.log(adminDataToLocal);
                     if(data !== null){
-                        updateProfileData(data.name, data.email, data.status, data.currentId);
+                        updateProfileData(data.nameAdmin, data.emailAdmin, data.status, data.idAdmin, data.accessToken);
                         sessionStorage.setItem('loginUser', JSON.stringify(adminDataToLocal));
                         navigate(adminDataToLocal.lastUrl);
                     } else {
@@ -88,7 +93,7 @@ export default function MainLoginPage(){
                     };
                     console.log(studentDataToLocal);
                     if(data !== null){
-                        updateProfileData(data.name, data.email, data.status, data.currentId);
+                        updateProfileData(data.name, data.email, data.status, data.currentId, '');
                         sessionStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
                         navigate(studentDataToLocal.lastUrl);
                     } else {

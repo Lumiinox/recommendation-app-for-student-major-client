@@ -2,7 +2,7 @@ import { Dispatch } from "react"
 import { ActionType } from "../action-types"
 import { Action } from "../actions"
 
-export const updateProfileData = (nameIn: string, emailIn: string, statusIn: number, nimIn: number) => {
+export const updateProfileData = (nameIn: string, emailIn: string, statusIn: number, idIn: number, tokenIn: string) => {
     return (dispatch: Dispatch<Action>) => {
         dispatch({
             type:ActionType.UPDATE_ACC_DATA,
@@ -10,7 +10,8 @@ export const updateProfileData = (nameIn: string, emailIn: string, statusIn: num
                 name: nameIn,
                 email: emailIn,
                 status: statusIn,
-                currentId: nimIn
+                currentId: idIn,
+                authToken: tokenIn,
                 }
             })
         }

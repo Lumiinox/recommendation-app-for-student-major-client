@@ -7,6 +7,7 @@ interface StateProps{
     email: string;
     status: number; 
     loginStatus: boolean;
+    authToken: string;
 }
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
     email: "",
     status: 0,
     loginStatus: false,
+    authToken: "",
 };
 
 const reducer = (state: StateProps = initialState, action: Action) => {
@@ -25,6 +27,7 @@ const reducer = (state: StateProps = initialState, action: Action) => {
                 currentId: action.payload.currentId,
                 email: action.payload.email,
                 status: action.payload.status,
+                authToken: action.payload.authToken,
                 loginStatus: true,
             };
             
@@ -35,6 +38,7 @@ const reducer = (state: StateProps = initialState, action: Action) => {
                 email: "",
                 status: 0,
                 loginStatus: false,
+                authToken: "",
             }
         default:
             return state;

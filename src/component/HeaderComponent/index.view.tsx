@@ -22,6 +22,7 @@ export default function HeaderComp({headerTitle, headerButtonMode}: HeaderCompTy
         switch(choice){
             case 1: removeProfileData();
                     sessionStorage.setItem('loginUser', '');
+                    document.cookie = "";
                     navigate('/');
                     break;
 

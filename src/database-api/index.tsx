@@ -12,15 +12,8 @@ export const apiLoginStaff = async (
     });
     console.log("bellow this is a response");
     console.log(response);
-    if(response.data.length > 0){
-        console.log(response.data[0]);
-        const formatedData = {
-            name: response.data[0].nameAdmin,
-            email: response.data[0].emailAdmin,
-            status: response.data[0].status,
-            currentId:  response.data[0].idAdmin,
-        }
-      return formatedData;
+    if(response){
+      return response.data;
     }
     else {
         return null;
@@ -140,8 +133,14 @@ export const apiShowQuestion = async () => {
   return response.data;
 };
 
-export const apiGetQuestionWithStats = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/question_stat`);
+export const apiGetQuestionWithStats = async (tokenIn: string) => {
+  console.log("TOKEN IN API");
+  console.log(tokenIn);
+  const response = await axios.get(`${HOST_NAME}/get/question_stat`, {
+    headers: {
+      "Authorization": `Bearer ${tokenIn}`,
+    }
+  });
   return response.data;
 };
 
