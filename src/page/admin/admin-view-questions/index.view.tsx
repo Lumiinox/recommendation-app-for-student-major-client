@@ -1,13 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { apiGetAllQuestionCategory, apiGetQuestionWithStats } from "../../../database-api";
 import { updateLastUrl } from "../../../functions";
 import { HOME_MODE_ADMIN, VIEW_QUESTION_TITLE } from "../../constants/index.constants";
 import { ParentGridStyle } from "../../styles/index.style";
 import { falseColumnStyle, mainContentRow, noColumnStyle, questionColumnStyle, tableContainer, tableContent, tableHead, tableHeadRow, trueColumnStyle, typeColumnStyle, wholeContentWrapperStyle } from "./index.style";
-import { State } from "../../../redux";
 
 interface QuestionWithStatProps {
     idCategory: number,
@@ -21,7 +19,6 @@ export default function ViewQuestionsPage(){
     const [questionWithStat, setQuestionWithStat] = useState<Array<QuestionWithStatProps>>([]);
     const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
     const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
-    // const authToken = useSelector((state: State) => state.userData.authToken);
 
     useEffect(() => {
         const fetchData = async () => {
