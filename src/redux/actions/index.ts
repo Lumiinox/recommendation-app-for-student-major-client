@@ -3,7 +3,6 @@ interface Payload{
     email: string;
     status: number;
     currentId: number;
-    authToken: string;
 }
 
 interface UpdateAccountData{

@@ -28,7 +28,7 @@ export default function MainLoginPage(){
     const [passMatchState, setPassMatchState] = useState<boolean>(true);
     const [emptyFieldsState, setEmptyFieldsState] = useState<boolean>(true);
     
-    const status = useSelector((state: State) => state.userData.status)
+    const status = useSelector((state: State) => state.userData.status);
 
     const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export default function MainLoginPage(){
         console.log(userData);
         if(userData){
             const parsedUserData = JSON.parse(userData);
-            updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId, parsedUserData.accessToken);
+            updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId);
             console.log(parsedUserData);
             if(parsedUserData.status === 1){
                 console.log("Admin data from storage");            
@@ -58,23 +58,15 @@ export default function MainLoginPage(){
         let data;
         switch(choice){                                      
             case 1: data = await apiLoginStaff(usernameIn, passwordIn);
-                    console.log("DATA IS BELLOW HERE");
-                    console.log(data);
-                    document.cookie = data.accessToken;
-                    console.log("AccessToken");
-                    console.log(data.accessToken);
-                    console.log("COOKIE");
-                    console.log(document.cookie);
                     const adminDataToLocal = {
                         name: data?.nameAdmin,
                         email: data?.emailAdmin,
                         status: data?.status,
                         currentId: data?.idAdmin,
-                        accessToken: data?.accessToken,
                         lastUrl: "admin/home"
                     };
                     if(data !== null){
-                        updateProfileData(data.nameAdmin, data.emailAdmin, data.status, data.idAdmin, data.accessToken);
+                        updateProfileData(data.nameAdmin, data.emailAdmin, data.status, data.idAdmin);
                         sessionStorage.setItem('loginUser', JSON.stringify(adminDataToLocal));
                         navigate(adminDataToLocal.lastUrl);
                     } else {
@@ -85,15 +77,17 @@ export default function MainLoginPage(){
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
                     console.log(data);
                     const studentDataToLocal = {
-                        name: data?.name,
-                        email: data?.email,
+                        name: data?.nameStudent,
+                        email: data?.emailStudent,
                         status: data?.status,
-                        currentId: data?.currentId,
+                        currentId: data?.idStudent,
                         lastUrl: "student/home"
                     };
                     console.log(studentDataToLocal);
                     if(data !== null){
-                        updateProfileData(data.name, data.email, data.status, data.currentId, '');
+                        console.log("STUDENT DATA");
+                        console.log(data);
+                        updateProfileData(data.nameStudent, data.nameEmail, data.status, data.idStudent);
                         sessionStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
                         navigate(studentDataToLocal.lastUrl);
                     } else {

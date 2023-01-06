@@ -123,6 +123,7 @@ export default function StudentTest () {
 
     const fetchDataTestData = async (currentId: number) => {
         console.log("testing");
+        console.log(currentId);
         const testResultData = await apiGetTestResultStudent(currentId);
         const testData = await apiGetActiveTest();
         const filteredTestData = [];

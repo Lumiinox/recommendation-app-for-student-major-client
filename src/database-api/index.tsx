@@ -4,19 +4,19 @@ import { HOST_NAME } from "../page/constants/index.constants";
 export const apiLoginStaff = async (
     emailInput: string,
     passwordInput: string
-) => {
+    ) => {
     console.log("api called");
     const response = await axios.post(`${HOST_NAME}/login_admin`, {
         email: emailInput,
         password: passwordInput,
     });
-    console.log("bellow this is a response");
-    console.log(response);
-    if(response){
+    document.cookie = '';
+    if(response.data){
+      document.cookie = response.data.accessToken;
       return response.data;
     }
     else {
-        return null;
+      return null;
     };
 };
 
@@ -29,15 +29,11 @@ export const apiLoginStudent = async (
     email: emailInput,
     password: passwordInput,
   });
-  console.log(response);
-  if(response.data.length > 0){
-    const formatedData = {
-      name: response.data[0].nameStudent,
-      email: response.data[0].emailStudent,
-      status: response.data[0].status,
-      currentId: response.data[0].idStudent,
-    };
-    return formatedData;
+  console.log(response.data);
+  document.cookie = '';
+  if(response){
+    document.cookie = response.data.accessToken;
+    return response.data;
   }
   else {
     return null;
@@ -62,6 +58,10 @@ export const apiSubmitQuestion = async (
     choice_3: choice_3,
     choice_4: choice_4,
     answer: answer,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
@@ -70,6 +70,10 @@ export const apiAddQuestionCategory = async (categoryName: string) => {
   console.log(categoryName);
   const response = await axios.post(`${HOST_NAME}/new_question_category`, {
     nameCategory: categoryName,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
@@ -109,6 +113,10 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
     testName: testName,
     testDuration: testDuration,
     numberOfQuestions:numberOfQuestions,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
@@ -116,6 +124,10 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
 export const apiDeactivateTest = async (idTest: number) => {
   const response = await axios.post(`${HOST_NAME}/deactivate/test-entry`, {
     idTest: idTest,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
@@ -123,13 +135,21 @@ export const apiDeactivateTest = async (idTest: number) => {
 export const apiReactivateTest = async (idTest: number) => {
   const response = await axios.post(`${HOST_NAME}/reactivate/test-entry`, {
     idTest: idTest,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
 
 
 export const apiShowQuestion = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/question`);
+  const response = await axios.get(`${HOST_NAME}/get/question` ,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 };
 
@@ -146,37 +166,61 @@ export const apiGetQuestionWithStats = async (tokenIn: string) => {
 
 export const apiGetQuestionCategory = async (idCategory: number) => {
   const response = await axios.get(
-    `${HOST_NAME}/get/question_category/${idCategory}`
+    `${HOST_NAME}/get/question_category/${idCategory}`,{
+      headers: {
+        "Authorization": `Bearer ${document.cookie}`,
+      }
+    }
   );
   return response.data;
 };
 
 export const apiGetAllQuestionCategory = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/question_category_all`);
+  const response = await axios.get(`${HOST_NAME}/get/question_category_all`,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 };
 
 export const apiGetAllQuestion = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/question`);
+  const response = await axios.get(`${HOST_NAME}/get/question`,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 };
 
 export const apiGetTestResultData = async () => {
   console.log("api called");
-  const response = await axios.get(`${HOST_NAME}/get/test_result`);
+  const response = await axios.get(`${HOST_NAME}/get/test_result`,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 };
 
 export const apiGetStudentTestData = async (currentId: number) => {
   console.log("api called");
-  const response = await axios.get(`${HOST_NAME}/get/test_result/${currentId}`);
+  const response = await axios.get(`${HOST_NAME}/get/test_result/${currentId}`,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   console.log(response);
   return response.data;
 };
 
 export const apiGetQuestionRandom = async (codeType: number, questionAmount: number) => {
   const response = await axios.get(
-    `${HOST_NAME}/get/question_random/${codeType}/${questionAmount}`
+    `${HOST_NAME}/get/question_random/${codeType}/${questionAmount}`,{
+      headers: {
+        "Authorization": `Bearer ${document.cookie}`,
+      }
+    }
   );
   return response.data;
 };
@@ -194,13 +238,21 @@ export const apiPostTestResult = async (
     score: scoreTemp,
     dateTime: dateTime,
     codeType: codeType,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
 
 export const apiGetTestResultId = async (currentId: number, dateTime: string) => {
   const response = await axios.get(
-    `${HOST_NAME}/get/test_id/${currentId}/${dateTime}`
+    `${HOST_NAME}/get/test_id/${currentId}/${dateTime}`,{
+      headers: {
+        "Authorization": `Bearer ${document.cookie}`,
+      }
+    }
   );
   return response.data;
 };
@@ -208,21 +260,39 @@ export const apiGetTestResultId = async (currentId: number, dateTime: string) =>
 export const apiPostQuestionHistory = async (stringQuery: string) => {
   const response = await axios.post(`${HOST_NAME}/insert/question_history`, {
     value_to_be_inserted: stringQuery,
+  },{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
   });
   return response.data;
 };
 
 export const apiGetTestData = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/test_data`);
+  const response = await axios.get(`${HOST_NAME}/get/test_data` ,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 }
 
 export const apiGetTestResultStudent = async (idStudent: number) => {
-  const response = await axios.get(`${HOST_NAME}/get/test_result/${idStudent}`);
+  console.log("ID STUDENT")
+  console.log(idStudent);
+  const response = await axios.get(`${HOST_NAME}/get/test_result/${idStudent}` ,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 };
 
 export const apiGetActiveTest = async () => {
-  const response = await axios.get(`${HOST_NAME}/get/active_test`);
+  const response = await axios.get(`${HOST_NAME}/get/active_test` ,{
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
   return response.data;
 }

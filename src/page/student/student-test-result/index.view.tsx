@@ -25,9 +25,13 @@ const skyBlue = '#0098D7';
 export default function StudentTestResult () {
   const [testResultData, setTestResultData] = useState<Array<testResultData>>([]);
   const currentId = useSelector((state: State) => state.userData.currentId);
-  
+  const studentName = useSelector((state: State) => state.userData.name);
+
   useEffect(() =>{
     const fetchData = async () => {
+      console.log("TESTING");
+      console.log(studentName);
+      console.log(currentId);
       const response = await apiGetStudentTestData(currentId);
       console.log(response);
       setTestResultData(response);
