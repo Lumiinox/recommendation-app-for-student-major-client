@@ -8,11 +8,23 @@ export const QuestionViewWrapperStyle = css`
 export const QuestionViewHeaderWrapperStyle = css`
     background-color: #b5b5b5;
     padding: 10px 10px 10px 24px;
-    min-width: 100vh;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     box-shadow: 1px -1px 2px rgb(150, 150, 150);
     margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+`;
+
+export const QuestionHeaderTextStyle = css`
+    font-weight: bold;
+`;
+
+export const QuestionRemoveButton = css`
+    background-color: red !important;
+    border: 0px !important;
 `;
 
 export const QuestionViewContentStyle = css`

@@ -295,4 +295,15 @@ export const apiGetActiveTest = async () => {
     }
   });
   return response.data;
-}
+};
+
+export const apiDeleteQuestion = async (questionId: number) => {
+  const response = await axios.post(`${HOST_NAME}/delete/question`, {
+    questionId: questionId,
+  } , {
+    headers: {
+      "Authorization": `Bearer ${document.cookie}`,
+    }
+  });
+  return response.data;
+};

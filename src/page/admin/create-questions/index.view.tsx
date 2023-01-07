@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef, useState } from 'react';
-import { apiAddQuestionCategory, apiGetAllQuestion, apiGetAllQuestionCategory, apiSubmitQuestion } from '../../../database-api';
+import { apiAddQuestionCategory, apiDeleteQuestion, apiGetAllQuestion, apiGetAllQuestionCategory, apiSubmitQuestion } from '../../../database-api';
 import '../../styles/index.style.ts';
 import {
   CreateQuestionFormWrapperStyle,
@@ -53,20 +53,8 @@ export default function AdminCreateQuestion (){
   }, [])
   
   useEffect(() => {
-    const fetchData = async () => {
-      const questionData = await apiGetAllQuestion();
-      const questionCategoryData = await apiGetAllQuestionCategory();
-      const categoryNameTemp = [];
-      const categoryIdTemp = [];
-      for (const i in questionCategoryData){
-        categoryNameTemp.push(questionCategoryData[i].nameCategory);
-        categoryIdTemp.push(questionCategoryData[i].idCategory);
-      }
-      setDataPertanyaan(questionData);
-      setCategoryNameArr(categoryNameTemp);
-      setCategoryId(categoryIdTemp);
-    }
-    fetchData();
+    updateQuestionCategory();
+    updateQuestionData();
   }, []);
 
   const updateQuestionCategory = async () => {
@@ -80,6 +68,17 @@ export default function AdminCreateQuestion (){
     setCategoryNameArr(categoryNameTemp);
     setCategoryId(categoryIdTemp);
   };
+
+  const updateQuestionData = async () => {
+    const questionData = await apiGetAllQuestion();
+    setDataPertanyaan(questionData);
+  }
+
+  const deleteQuestion = async (idQuestion: number) => {
+    console.log("clicked");
+    await apiDeleteQuestion(idQuestion);
+    updateQuestionData();
+  }
 
   const SubmitQuestion = async () => {
     console.log("test")
@@ -214,7 +213,8 @@ export default function AdminCreateQuestion (){
                         choice2={value.questionChoice2}
                         choice3={value.questionChoice3}
                         choice4={value.questionChoice4}
-                        answer={value.answer}          
+                        answer={value.answer}      
+                        deleteQuestionHandler={() => deleteQuestion(value.idQuestion)}    
                       />
                     )
                 })

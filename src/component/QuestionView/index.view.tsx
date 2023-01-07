@@ -1,6 +1,18 @@
 /** @jsxImportSource @emotion/react */
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import {QuestionViewHeaderWrapperStyle, QuestionViewContentStyle, TextMargin, MgrnTop20px, QuestionLetterStyle, QuestionTextContainer, QuestionTestLetterStyle } from './index.style';
+import {
+    QuestionViewHeaderWrapperStyle, 
+    QuestionViewContentStyle, 
+    TextMargin, 
+    MgrnTop20px, 
+    QuestionLetterStyle, 
+    QuestionTextContainer, 
+    QuestionTestLetterStyle, 
+    QuestionRemoveButton,
+    QuestionHeaderTextStyle
+} from './index.style';
 
 interface QuestionViewComponentTypes{
     questionId: number;
@@ -15,6 +27,7 @@ interface QuestionViewComponentTypes{
     index?: number;
     questionnNo?: number;
     answerDataHandler?: (index: number, answer: number) => void;
+    deleteQuestionHandler?: (idQuestion: number) => void;
 }
 
 export const QuestionViewComponent = ({    
@@ -30,6 +43,7 @@ export const QuestionViewComponent = ({
     isATest = false,
     questionnNo = 1,
     answerDataHandler,
+    deleteQuestionHandler,
     }: QuestionViewComponentTypes) => {
     const [choiceStatus1, setChoiceStatus1] = useState<boolean>(false);
     const [choiceStatus2, setChoiceStatus2] = useState<boolean>(false);
@@ -83,7 +97,8 @@ export const QuestionViewComponent = ({
     return(
         <div>
             <div css={QuestionViewHeaderWrapperStyle}> 
-                <div><b>Question {questionnNo}</b></div>
+                <div css={QuestionHeaderTextStyle}>Question {questionnNo}</div>
+                {!isATest && deleteQuestionHandler && <button css={QuestionRemoveButton} onClick={() => deleteQuestionHandler(questionId)}>Remove <FontAwesomeIcon icon={faTrash}/> </button>}
             </div>
             <div css={QuestionViewContentStyle}>
                 <div>
