@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
-import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
+import { CREATE_TEST_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
 import { FormSectionStyle, FormTextAreaStyle, FormTitleStle, ParentGridStyle } from '../../styles/index.style';
 import { AddQuizFormStyle, formContainer } from './index.style';
 import { apiAddTest, apiGetAllQuestionCategory } from '../../../database-api';
@@ -45,7 +45,7 @@ export default function AdminCreateQuiz (){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                <HeaderComp headerTitle={CREATE_TEST_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
                 <div css={formContainer}>
                     <div css={AddQuizFormStyle}>

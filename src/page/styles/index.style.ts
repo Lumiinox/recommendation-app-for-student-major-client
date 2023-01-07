@@ -175,7 +175,7 @@ export const ContentCardStyle = css`
     margin-right: 10px;
     padding: 20px;
     width: 30%;
-    height: 60%;
+    height: 200px;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgb(150, 150, 150);
     &:hover{

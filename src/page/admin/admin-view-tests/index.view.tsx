@@ -9,7 +9,7 @@ import {
     apiAddTest 
 } from '../../../database-api';
 import { updateLastUrl } from '../../../functions';
-import { HOME_MODE_ADMIN, TEST_RESULT_TITLE } from '../../constants/index.constants';
+import { HOME_MODE_ADMIN, VIEW_TEST_LIST_TITLE } from '../../constants/index.constants';
 import { 
     FormSectionStyle, 
     FormTextAreaStyle, 
@@ -175,7 +175,7 @@ export default function ListofTest(){
     return(
         <div ref={divRef}>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                <HeaderComp headerTitle={VIEW_TEST_LIST_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
                 {showReAddForm && <RemakeTest/>}
                 <div css={wholeContentWrapperStyle}>
