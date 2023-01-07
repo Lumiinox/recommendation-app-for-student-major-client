@@ -56,7 +56,6 @@ export default function AdminCreateQuestion (){
     const fetchData = async () => {
       const questionData = await apiGetAllQuestion();
       const questionCategoryData = await apiGetAllQuestionCategory();
-      console.log(questionCategoryData);
       const categoryNameTemp = [];
       const categoryIdTemp = [];
       for (const i in questionCategoryData){
@@ -68,7 +67,19 @@ export default function AdminCreateQuestion (){
       setCategoryId(categoryIdTemp);
     }
     fetchData();
-  }, [])
+  }, []);
+
+  const updateQuestionCategory = async () => {
+    const questionCategoryData = await apiGetAllQuestionCategory();
+    const categoryNameTemp = [];
+    const categoryIdTemp = [];
+    for (const i in questionCategoryData){
+      categoryNameTemp.push(questionCategoryData[i].nameCategory);
+      categoryIdTemp.push(questionCategoryData[i].idCategory);
+    }
+    setCategoryNameArr(categoryNameTemp);
+    setCategoryId(categoryIdTemp);
+  };
 
   const SubmitQuestion = async () => {
     console.log("test")
@@ -81,6 +92,7 @@ export default function AdminCreateQuestion (){
     console.log(categoryName);
     await apiAddQuestionCategory(categoryName);
     ShowFormHandler(2);
+    updateQuestionCategory();
   }
 
   const ShowFormHandler = (type: number) => {
@@ -189,7 +201,6 @@ export default function AdminCreateQuestion (){
 
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
-              <button css={RegularButtonStyle} onClick={RefreshQuestionList}>Refresh</button>
               {dataPertanyaan &&
                 dataPertanyaan.map((value, index) => {
                   return (

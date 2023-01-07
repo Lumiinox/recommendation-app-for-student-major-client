@@ -63,15 +63,15 @@ export default function AdminHome (){
                             </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(2)}> 
                             <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>
-                            Question List 
+                            View Question List 
                         </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(3)}>
                             <FontAwesomeIcon icon={faSquarePollHorizontal} css={homeCardIconStyle}/>
-                            Test Result  
+                            View Test Result  
                         </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(4)}> 
                             <FontAwesomeIcon icon={faPlus} css={homeCardIconStyle}/>
-                            Create Quiz  
+                            Create Test  
                         </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(5)}> 
                             <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>

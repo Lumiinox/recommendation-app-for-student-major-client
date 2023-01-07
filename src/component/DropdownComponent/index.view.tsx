@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { DropDownItemStyle, DropDownListContainer, DropDownSelectedStyle } from "./index.style";
+import { DropDownItemStyle, DropDownListContainer, DropDownSelectedStyle, DrowDownAngleDown } from "./index.style";
 
 interface customDropDownTypes{
   dropdownName: Array<string>;
@@ -32,12 +34,14 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
 
     return(
       <div>
+        <FontAwesomeIcon icon={faAngleDown} css={DrowDownAngleDown}/>
         <div css={DropDownSelectedStyle} onClick={() => setDisplayDropDown(!displayDropDown)}>  
           {displayedText}
         </div>
 
         {displayDropDown && 
           <div css={DropDownListContainer}>
+
             {props.dropdownName.map((data, index) => {
                 return (
                   <div css={DropDownItemStyle} key={index} onClick={() => dropDownClickHandler(data, props.dropdownId[index])}>

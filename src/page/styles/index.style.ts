@@ -129,38 +129,36 @@ export const ARefStyle = css`
 export const ContentWrapperStyle = css`
     display: flex;
     justify-content: center;
+    margin: 0 60px;
 `;
 
 export const ContentListStyle = css`
     display: flex;
     flex-wrap: wrap;
-    width: 170vh;
-    justify-content:space-evenly; 
+    width: 100%;
+    justify-content:center; 
 `;
 
 export const RegularButtonStyle = css`
 	padding: 10px 0px;
-	margin: 10px 0px;
+	margin: 10px 20px 10px 0;
 	min-width: 20vh;
 `;
 
 export const ProfileWrapperStyle = css`
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 `;
 
 export const ProfileCardStyle = css`
     text-align: center;
-    margin: 30px 0;
+    margin: 30px 90px;
     padding: 20px 0;
-    width: 160vh;
+    width: 100%;
     height: 20vh;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgb(150, 150, 150);
-    &:hover {
-        transition-duration: 0.2s;
-        box-shadow: 0px 10px 13px rgb(150, 150, 150);
-    }
 `;
 
 export const ContentCardStyle = css`
@@ -172,10 +170,12 @@ export const ContentCardStyle = css`
     text-align: center;
     color: #646464;
     font-size: 20px;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding: 20px;
-    min-width: 50vh;
-    min-height: 20vh;
+    width: 30%;
+    height: 60%;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgb(150, 150, 150);
     &:hover{

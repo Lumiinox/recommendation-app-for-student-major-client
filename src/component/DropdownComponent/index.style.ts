@@ -33,3 +33,10 @@ export const DropDownItemStyle = css`
         background-color: white;
     }
 `;
+
+export const DrowDownAngleDown = css`
+    position: absolute;
+    font-size: 24px;
+    transform: translate(220px, 13px);
+    color: #4e4e4e;
+`;
