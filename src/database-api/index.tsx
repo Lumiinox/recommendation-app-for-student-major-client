@@ -12,7 +12,7 @@ export const apiLoginStaff = async (
     });
     document.cookie = '';
     if(response.data){
-      document.cookie = response.data.accessToken;
+      sessionStorage.setItem('authToken', response.data.accessToken);
       return response.data;
     }
     else {
@@ -32,7 +32,7 @@ export const apiLoginStudent = async (
   console.log(response.data);
   document.cookie = '';
   if(response){
-    document.cookie = response.data.accessToken;
+    sessionStorage.setItem('authToken', response.data.accessToken);
     return response.data;
   }
   else {
@@ -60,7 +60,7 @@ export const apiSubmitQuestion = async (
     answer: answer,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -72,7 +72,7 @@ export const apiAddQuestionCategory = async (categoryName: string) => {
     nameCategory: categoryName,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -115,7 +115,7 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
     numberOfQuestions:numberOfQuestions,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -126,7 +126,7 @@ export const apiDeactivateTest = async (idTest: number) => {
     idTest: idTest,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -137,7 +137,7 @@ export const apiReactivateTest = async (idTest: number) => {
     idTest: idTest,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -147,7 +147,7 @@ export const apiReactivateTest = async (idTest: number) => {
 export const apiShowQuestion = async () => {
   const response = await axios.get(`${HOST_NAME}/get/question` ,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -158,7 +158,7 @@ export const apiGetQuestionWithStats = async (tokenIn: string) => {
   console.log(tokenIn);
   const response = await axios.get(`${HOST_NAME}/get/question_stat`, {
     headers: {
-      "Authorization": `Bearer ${tokenIn}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -168,7 +168,7 @@ export const apiGetQuestionCategory = async (idCategory: number) => {
   const response = await axios.get(
     `${HOST_NAME}/get/question_category/${idCategory}`,{
       headers: {
-        "Authorization": `Bearer ${document.cookie}`,
+        "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
       }
     }
   );
@@ -178,7 +178,7 @@ export const apiGetQuestionCategory = async (idCategory: number) => {
 export const apiGetAllQuestionCategory = async () => {
   const response = await axios.get(`${HOST_NAME}/get/question_category_all`,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -187,7 +187,7 @@ export const apiGetAllQuestionCategory = async () => {
 export const apiGetAllQuestion = async () => {
   const response = await axios.get(`${HOST_NAME}/get/question`,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -197,7 +197,7 @@ export const apiGetTestResultData = async () => {
   console.log("api called");
   const response = await axios.get(`${HOST_NAME}/get/test_result`,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -207,7 +207,7 @@ export const apiGetStudentTestData = async (currentId: number) => {
   console.log("api called");
   const response = await axios.get(`${HOST_NAME}/get/test_result/${currentId}`,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   console.log(response);
@@ -218,7 +218,7 @@ export const apiGetQuestionRandom = async (codeType: number, questionAmount: num
   const response = await axios.get(
     `${HOST_NAME}/get/question_random/${codeType}/${questionAmount}`,{
       headers: {
-        "Authorization": `Bearer ${document.cookie}`,
+        "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
       }
     }
   );
@@ -240,7 +240,7 @@ export const apiPostTestResult = async (
     codeType: codeType,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -250,7 +250,7 @@ export const apiGetTestResultId = async (currentId: number, dateTime: string) =>
   const response = await axios.get(
     `${HOST_NAME}/get/test_id/${currentId}/${dateTime}`,{
       headers: {
-        "Authorization": `Bearer ${document.cookie}`,
+        "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
       }
     }
   );
@@ -262,7 +262,7 @@ export const apiPostQuestionHistory = async (stringQuery: string) => {
     value_to_be_inserted: stringQuery,
   },{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -271,7 +271,7 @@ export const apiPostQuestionHistory = async (stringQuery: string) => {
 export const apiGetTestData = async () => {
   const response = await axios.get(`${HOST_NAME}/get/test_data` ,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -282,7 +282,7 @@ export const apiGetTestResultStudent = async (idStudent: number) => {
   console.log(idStudent);
   const response = await axios.get(`${HOST_NAME}/get/test_result/${idStudent}` ,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -291,7 +291,7 @@ export const apiGetTestResultStudent = async (idStudent: number) => {
 export const apiGetActiveTest = async () => {
   const response = await axios.get(`${HOST_NAME}/get/active_test` ,{
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;
@@ -302,7 +302,7 @@ export const apiDeleteQuestion = async (questionId: number) => {
     questionId: questionId,
   } , {
     headers: {
-      "Authorization": `Bearer ${document.cookie}`,
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
   return response.data;

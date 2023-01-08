@@ -187,7 +187,7 @@ export default function ListofTest(){
                                         <td css={nameTestColumnStyle}>Test Name</td>
                                         <td css={categoryNameColumnStyle}>Category</td>
                                         <td css={durationColumnStyle}>Duration</td>
-                                        <td css={numQuestionColumnStyle}>No of Question</td>
+                                        <td css={numQuestionColumnStyle}>Question</td>
                                         <td css={statusColumnStyle}>Status</td>
                                         <td css={actionColumnStyle}>Action</td>
                                     </tr>

@@ -18,22 +18,23 @@ export const tableContainer = css`
 `;
 
 export const nimColumnStyle = css`
-    width: 170px;
+    width: 10%;
 `;
 
 export const nameColumnStyle = css`
-    width: 500px;
+    width: 30%;
 `;
 
 export const typeColumnStyle = css`
-    width: 200px;
+    width: 20%;
 `;
 
 export const scoreColumnStyle = css`
-    width: 100px;
+    width: 10%;
 `;
 
 export const dateColumnStyle = css`
+    width: 30%;
 `;
 
 export const tableHead = css`
@@ -48,7 +49,9 @@ export const tableHeadRow = css`
 
 export const tableContent = css`
     font-size: 20px;
+    border-collapse: collapse;
 `;
 
 export const mainContentRow = css`
+    border-bottom: 2px solid #f1f1f1;
 `;

@@ -1,9 +1,7 @@
 import { css } from "@emotion/react";
 
 export const CreateQuestionContentWrapper = css`
-    display: flex;
-    justify-content: center;
-    padding: 30px 0px;
+    padding: 30px 20%;
 `;
 
 export const FormSubmitButtonStyle = css`

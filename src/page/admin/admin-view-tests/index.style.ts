@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const wholeContentWrapperStyle = css`
-    padding: 50px 200px;
+    padding: 50px 10%;
 `;
 
 export const tableContainer = css`
@@ -18,27 +18,27 @@ export const tableContainer = css`
 `;
 
 export const nameTestColumnStyle = css`
-    width: 200px;
+    width: 20%;
 `;
 
 export const categoryNameColumnStyle = css`
-    width: 150px;
+    width: 20%;
 `;
 
 export const durationColumnStyle = css`
-    width: 150px;
+    width: 10%;
 `;
 
 export const numQuestionColumnStyle = css`
-    width: 150px;
+    width: 10%;
 `;
 
 export const statusColumnStyle = css`
-    width: 100px;
+    width: 10%;
 `;
 
 export const actionColumnStyle = css`
-    width: 100px;   
+    width: 10%;   
 `;
 
 export const tableHead = css`

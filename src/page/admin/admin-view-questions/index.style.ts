@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const wholeContentWrapperStyle = css`
-    padding: 50px 200px;
+    padding: 50px 10%;
 `;
 
 export const tableContainer = css`
@@ -18,23 +18,23 @@ export const tableContainer = css`
 `;
 
 export const noColumnStyle = css`
-    min-width: 80px;
+    width: 10%;
 `;
 
 export const typeColumnStyle = css`
-    min-width: 200px;
+    width: 20%;
 `;
 
 export const questionColumnStyle = css`
-    min-width: 700px;
+    width: 50%;
 `;
 
 export const trueColumnStyle = css`
-    min-width: 100px;
+    width: 10%;
 `;
 
 export const falseColumnStyle = css`
-    min-width: 100px;
+    width: 10%;
 `;
 
 export const tableHead = css`
@@ -49,8 +49,9 @@ export const tableHeadRow = css`
 
 export const tableContent = css`
     font-size: 20px;
+    border-collapse: collapse;
 `;
 
 export const mainContentRow = css`
-    border: 1px solid;
+    border-bottom: 1px solid #f1f1f1;
 `;

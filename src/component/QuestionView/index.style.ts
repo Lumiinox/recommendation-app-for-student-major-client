@@ -25,11 +25,12 @@ export const QuestionHeaderTextStyle = css`
 export const QuestionRemoveButton = css`
     background-color: red !important;
     border: 0px !important;
+    padding: 10px 20px !important;
 `;
 
 export const QuestionViewContentStyle = css`
     padding: 10px 10px 10px 24px;
-    min-width: 100vh;
+    width: 100%;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     box-shadow: 1px 1px 2px rgb(150, 150, 150);

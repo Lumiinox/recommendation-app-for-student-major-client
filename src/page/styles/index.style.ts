@@ -141,8 +141,8 @@ export const ContentListStyle = css`
 
 export const RegularButtonStyle = css`
 	padding: 10px 0px;
-	margin: 10px 20px 10px 0;
 	min-width: 20vh;
+    margin: 10px 0;
 `;
 
 export const ProfileWrapperStyle = css`
