@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useRef, useState } from 'react';
-import { apiAddQuestionCategory, apiDeleteQuestion, apiGetAllQuestion, apiGetAllQuestionCategory, apiSubmitQuestion } from '../../../database-api';
+import { 
+  apiAddQuestionCategory, 
+  apiDeleteQuestion, 
+  apiGetAllQuestion, 
+  apiGetAllQuestionCategory, 
+  apiSubmitQuestion 
+} from '../../../database-api';
 import '../../styles/index.style.ts';
 import {
   CreateQuestionFormWrapperStyle,
@@ -9,14 +15,22 @@ import {
   QuestionListWrapperStyle,
   AnswerChoiceLabelStyle,
 } from './index.style';
-import { FormInputTextStyle, FormLabelStyle, FormSectionStyle, FormTextAreaStyle, FormTitleStle, ParentGridStyle, RegularButtonStyle } from '../../styles/index.style';
+import { 
+  FormInputTextStyle, 
+  FormLabelStyle, 
+  FormSectionStyle, 
+  FormTextAreaStyle, 
+  FormTitleStle, 
+  ParentGridStyle, 
+  RegularButtonStyle 
+} from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
 import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 import { updateLastUrl } from '../../../functions';
 
-interface DataPertanyaan {
+interface questionData {
   idQuestion: number;
   idCategory: number;
   answer: string;
@@ -42,7 +56,8 @@ export default function AdminCreateQuestion (){
   const [displayCategoryQuestionForm, setDisplayCategoryQuestionForm] = useState(false);
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const [dataPertanyaan, setDataPertanyaan] = useState<Array<DataPertanyaan>>([]);
+  const [questionData, setQuestionData] = useState<Array<questionData>>([]);
+  const [questionDataDisplay, setQuestionDataDisplay] = useState<Array<questionData>>([]);
   const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
   const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
 
@@ -70,8 +85,9 @@ export default function AdminCreateQuestion (){
   };
 
   const updateQuestionData = async () => {
-    const questionData = await apiGetAllQuestion();
-    setDataPertanyaan(questionData);
+    const questionDataTemp = await apiGetAllQuestion();
+    setQuestionData(questionDataTemp);
+    setQuestionDataDisplay(questionDataTemp);
   }
 
   const deleteQuestion = async (idQuestion: number) => {
@@ -111,6 +127,17 @@ export default function AdminCreateQuestion (){
       setDisplayCategoryQuestionForm(!displayCategoryQuestionForm);
     }
 
+  }
+
+  const HandleFilterDropdown = (idCategoryFilter: number) => {
+    console.log("THIS IS RUNNING")
+    if(idCategoryFilter !== 0){
+      const tempFilteredQuestionData = questionData.filter(questionData => questionData.idCategory === idCategoryFilter);
+      setQuestionDataDisplay(tempFilteredQuestionData);
+      console.log(tempFilteredQuestionData);
+    }else{
+      setQuestionDataDisplay([...questionData]);
+    }
   }
 
   const CreateQuestionForm = () => {
@@ -183,7 +210,7 @@ export default function AdminCreateQuestion (){
 
   const RefreshQuestionList = async () => {
     const questionData = await apiGetAllQuestion();
-    setDataPertanyaan(questionData);
+    setQuestionData(questionData);
   }
 
   return(
@@ -200,8 +227,9 @@ export default function AdminCreateQuestion (){
 
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
-              {dataPertanyaan &&
-                dataPertanyaan.map((value, index) => {
+              <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={HandleFilterDropdown} isFilterMode={true}/>
+              {questionDataDisplay &&
+                questionDataDisplay.map((value, index) => {
                   return (
                       <QuestionViewComponent 
                         key={index}

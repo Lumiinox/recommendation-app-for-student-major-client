@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const DropDownSelectedStyle = css`
-    width: 30%;
+    width: 200px;
     background-color: #eee;
     border-radius: 30px;
     border: 0;
@@ -10,6 +10,8 @@ export const DropDownSelectedStyle = css`
     margin-top: 10px;
     padding: 10px 20px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 `;
 
 
@@ -35,8 +37,6 @@ export const DropDownItemStyle = css`
 `;
 
 export const DrowDownAngleDown = css`
-    position: absolute;
     font-size: 24px;
-    transform: translate(220px, 13px);
     color: #4e4e4e;
 `;

@@ -8,22 +8,28 @@ interface customDropDownTypes{
   dropdownName: Array<string>;
   dropdownId: Array<number>;
   preSelectedIndex?: number;
+  isFilterMode?: boolean;
   onClickHandler: (args: number) => void;
 }
 
 export const CustomDropDown = (props: customDropDownTypes)  => {
     const [displayDropDown, setDisplayDropDown] = useState(false);
-    const [displayedText, setDisplayedText] = useState('')
-
+    const [displayedText, setDisplayedText] = useState('');
     useEffect(() => {
-      setDisplayedText(props.dropdownName[0]);
       if (props.preSelectedIndex){
         setDisplayedText(props.dropdownName[props.preSelectedIndex]);
         props.onClickHandler(props.dropdownId[props.preSelectedIndex]);
       }
-    }, [props, props.dropdownName, props.preSelectedIndex])
+    }, [props, props.dropdownName, props.preSelectedIndex]);
     
+    useEffect(() => {
+      if(props.isFilterMode){
+        setDisplayedText("No Filter");
+      }
+    }, [props.isFilterMode]);
+
     const dropDownClickHandler = (catName: string, catId: number) => {
+      console.log(catName);
       setDisplayedText(catName);
       props.onClickHandler(catId);
       setDisplayDropDown(false);
@@ -34,14 +40,18 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
 
     return(
       <div>
-        <FontAwesomeIcon icon={faAngleDown} css={DrowDownAngleDown}/>
         <div css={DropDownSelectedStyle} onClick={() => setDisplayDropDown(!displayDropDown)}>  
           {displayedText}
+          <FontAwesomeIcon icon={faAngleDown} css={DrowDownAngleDown}/>
         </div>
 
         {displayDropDown && 
           <div css={DropDownListContainer}>
-
+            {props.isFilterMode &&             
+              <div css={DropDownItemStyle}  onClick={() => dropDownClickHandler("No Filter", 0)}>
+                Clear  
+              </div>
+            }
             {props.dropdownName.map((data, index) => {
                 return (
                   <div css={DropDownItemStyle} key={index} onClick={() => dropDownClickHandler(data, props.dropdownId[index])}>
