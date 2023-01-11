@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { getIdName, updateLastUrl } from "../../../functions";
 import { actionCreators, State } from "../../../redux";
-import { LOGOUT_MODE, STUDENT_HOME_TITLE, TEST_TITLE } from "../../constants/index.constants";
+import { LOGOUT_MODE, STUDENT_HOME_TITLE } from "../../constants/index.constants";
 import { 
     ContentListStyle, 
     ContentCardStyle, 

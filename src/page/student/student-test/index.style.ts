@@ -3,13 +3,22 @@ import { css } from "@emotion/react";
 export const DoTestContentWrapper = css`
     display: flex;
     justify-content: center;
-    margin: 50px auto;
+    margin: 50px 10%;
+`;
+
+export const TableWrapperStyle = css`
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    padding: 50px 70px;
+    box-shadow: 0px 5px 10px rgb(150 150 150);
+    border-radius: 50px;
 `;
 
 export const TestContentListStyle = css`
     padding: 10px 0;
     display: grid;
-    grid-template-columns: 200px 150px 150px 150px 150px;
+    grid-template-columns: 35% 10% 10% 10% 25%;
     grid-gap: 20px;
     border-bottom: 1px solid #aaa;
     align-items: center;
@@ -18,7 +27,7 @@ export const TestContentListStyle = css`
 export const TestContentHeadListStyle = css`
     padding: 10px 0;
     display: grid;
-    grid-template-columns: 200px 150px 150px 150px 150px;
+    grid-template-columns: 35% 10% 10% 10% 35%;
     grid-gap: 20px;
     border-bottom: 1px solid #aaa;
     align-items: center;

@@ -3,7 +3,7 @@
 import './index.style.ts';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE_STUDENT } from "../../constants/index.constants";
-import { StudentTestResultWrapper, testResultBoxHeader, TestResultContentHeadListStyle, TestResultContentListStyle } from './index.style';
+import { StudentTestResultWrapper, testResultBoxHeader, TestResultContentHeadListStyle, TestResultContentListStyle, testResultWrapper } from './index.style';
 import { useSelector } from 'react-redux';
 import { State } from '../../../redux';
 import { useEffect, useState } from 'react';
@@ -45,7 +45,7 @@ export default function StudentTestResult () {
     <div>
       <HeaderComp headerTitle={"Student Test Result"} headerButtonMode={HOME_MODE_STUDENT}/>
       <div css={StudentTestResultWrapper}>
-        <div css={ContentCardStyle}>
+        <div css={testResultWrapper}>
           <div css={TestResultContentHeadListStyle}>
               <div>Test Name</div>
               <div>Score</div>

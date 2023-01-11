@@ -22,6 +22,7 @@ import {
     DoTestContentWrapper, 
     PopUpCardStyle, 
     PopUpWrapper, 
+    TableWrapperStyle, 
     TestContentHeadListStyle, 
     TestContentListStyle, 
     timerStyle
@@ -247,11 +248,12 @@ export default function StudentTest () {
                         <button onClick={ConfirmationYesHandler}>Yes</button>
                         <button onClick={() => setShowConfirmationPopUp(false)}>No</button>
                     </div>
-                </div>}
+                </div>
+                }
 
                 <div css={DoTestContentWrapper}>
                 {showTestTable && 
-                    <div css={ContentCardStyle}>
+                    <div css={TableWrapperStyle}>
                         <div css={TestContentHeadListStyle}>
                             <div>Test Name</div>
                             <div>Question Category</div>

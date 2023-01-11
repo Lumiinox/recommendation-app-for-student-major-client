@@ -1,15 +1,19 @@
 import { css } from "@emotion/react";
 
 export const testResultWrapper = css`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 200px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    padding: 50px 70px;
+    box-shadow: 0px 5px 10px rgb(150 150 150);
+    border-radius: 50px;
+    width: 100%;
 `;
 
 export const StudentTestResultWrapper = css`
     display: flex;
     justify-content: center;
-    margin: 50px auto;
+    margin: 50px 10%;
 `;
 
 export const testResultBoxHeader = (color: string) => css`
@@ -19,7 +23,7 @@ export const testResultBoxHeader = (color: string) => css`
 export const TestResultContentListStyle = css`
     padding: 10px 0;
     display: grid;
-    grid-template-columns: 300px 200px;
+    grid-template-columns: 65% 35%;
     grid-gap: 20px;
     border-bottom: 1px solid #aaa;
     align-items: center;
@@ -29,7 +33,7 @@ export const TestResultContentListStyle = css`
 export const TestResultContentHeadListStyle = css`
     padding: 10px 0;
     display: grid;
-    grid-template-columns: 300px 200px;
+    grid-template-columns: 65% 35%;
     grid-gap: 20px;
     border-bottom: 1px solid #aaa;
     align-items: center;
