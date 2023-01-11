@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { State } from '../../../redux';
 import { useEffect, useState } from 'react';
 import { apiGetStudentTestData } from '../../../database-api';
-import { ContentCardStyle } from '../../styles/index.style';
 import { updateLastUrl } from '../../../functions';
 
 interface testResultData {
