@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { State } from "../../../redux";
 import { InitAnswerData } from "./type";
 import { QuestionViewComponent } from "../../../component/QuestionView/index.view";
-import { ContentCardStyle, ParentGridStyle } from '../../styles/index.style';
+import { ParentGridStyle } from '../../styles/index.style';
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { HOME_MODE_STUDENT, TEST_TITLE } from "../../constants/index.constants";
 import { 
