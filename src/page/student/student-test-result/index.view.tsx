@@ -9,6 +9,7 @@ import { State } from '../../../redux';
 import { useEffect, useState } from 'react';
 import { apiGetStudentTestData } from '../../../database-api';
 import { updateLastUrl } from '../../../functions';
+import { ParentGridStyle } from '../../styles/index.style';
 
 interface testResultData {
   idStudent: number;
@@ -41,33 +42,29 @@ export default function StudentTestResult () {
   }, [])
 
   return(
-    <div>
-      <HeaderComp headerTitle={"Student Test Result"} headerButtonMode={HOME_MODE_STUDENT}/>
-      <div css={StudentTestResultWrapper}>
-        <div css={testResultWrapper}>
-          <div css={TestResultContentHeadListStyle}>
-              <div>Test Name</div>
-              <div>Score</div>
-            </div>
-            {testResultData.map((data: any) => {
-              return(
-                <div css={TestResultContentListStyle}>
-                  <div css={testResultBoxHeader(skyBlue)}>{data.nameTest}</div>
-                  <div>{data.testScore}</div>
-                </div>
-              )
-            })}
-        </div>
+    <div css={ParentGridStyle}>
+      <div>
+        <HeaderComp headerTitle={"Student Test Result"} headerButtonMode={HOME_MODE_STUDENT}/>
+      </div>
 
-      </div>  
-
-
-      {/* <div>
-        <div css={testResultBoxStyle}>
-          <h2 css={testResultBoxHeader(darkGray)}>DEF Test</h2>
-          <h4>not yet</h4>
-        </div>
-      </div> */}
+      <div>
+        <div css={StudentTestResultWrapper}>
+          <div css={testResultWrapper}>
+            <div css={TestResultContentHeadListStyle}>
+                <div>Test Name</div>
+                <div>Score</div>
+              </div>
+              {testResultData.map((data: any) => {
+                return(
+                  <div css={TestResultContentListStyle}>
+                    <div css={testResultBoxHeader(skyBlue)}>{data.nameTest}</div>
+                    <div>{data.testScore}</div>
+                  </div>
+                )
+              })}
+          </div>
+        </div>  
+      </div>
     </div>
   )
 }

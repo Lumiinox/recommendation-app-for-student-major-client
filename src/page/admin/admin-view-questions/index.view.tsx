@@ -54,7 +54,10 @@ export default function ViewQuestionsPage(){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={VIEW_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                <div>
+                    <HeaderComp headerTitle={VIEW_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                </div>
+
 
                 <div css={wholeContentWrapperStyle}>
                     <div>

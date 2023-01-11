@@ -15,6 +15,8 @@ export const HeadWrapperStyle = css`
     justify-content: space-between;
     background-color: rgb(68, 149, 255);
     color: white;
+    position: fixed;
+    width: 100%;
 `;
 
 export const LogOutButtonStyle = css`
@@ -129,12 +131,13 @@ export const ARefStyle = css`
 export const ContentWrapperStyle = css`
     display: flex;
     justify-content: center;
-    margin: 0 60px;
+    margin: 0 20%;
 `;
 
 export const ContentListStyle = css`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 20px;
     width: 100%;
     justify-content:center; 
 `;
@@ -153,7 +156,7 @@ export const ProfileWrapperStyle = css`
 
 export const ProfileCardStyle = css`
     text-align: center;
-    margin: 30px 90px;
+    margin: 30px 20%;
     padding: 20px 0;
     width: 100%;
     height: 20vh;
@@ -170,11 +173,8 @@ export const ContentCardStyle = css`
     text-align: center;
     color: #646464;
     font-size: 20px;
-    margin-bottom: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
     padding: 20px;
-    width: 30%;
+    width: 100%;
     height: 200px;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgb(150, 150, 150);

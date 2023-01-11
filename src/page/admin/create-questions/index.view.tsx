@@ -216,7 +216,10 @@ export default function AdminCreateQuestion (){
   return(
       <div ref={divRef}>
         <div css={ParentGridStyle}>
-          <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+          <div>
+            <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+          </div>
+
 
           <div>
             {displayCreateQuestionForm && CreateQuestionForm()}

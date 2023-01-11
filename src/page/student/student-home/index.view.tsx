@@ -49,7 +49,10 @@ export default function StudentHome (){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={STUDENT_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
+                <div>
+                    <HeaderComp headerTitle={STUDENT_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
+                </div>
+
                 <div css={ProfileWrapperStyle}>
                     <div css={ProfileCardStyle}>
                         <div></div>

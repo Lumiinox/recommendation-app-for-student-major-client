@@ -53,7 +53,10 @@ export default function ListOfTestResult(){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                <div>
+                    <HeaderComp headerTitle={TEST_RESULT_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                </div>
+
 
                 <div css={wholeContentWrapperStyle}>
                     <div>

@@ -234,7 +234,10 @@ export default function ListofTest(){
     return(
         <div ref={divRef}>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={VIEW_TEST_LIST_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                <div>
+                    <HeaderComp headerTitle={VIEW_TEST_LIST_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+                </div>
+
 
                 {showReAddForm && ShowTestForm()}
                 <div css={wholeContentWrapperStyle}>

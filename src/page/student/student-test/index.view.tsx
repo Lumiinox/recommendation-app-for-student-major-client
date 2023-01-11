@@ -239,7 +239,10 @@ export default function StudentTest () {
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE_STUDENT}/>
+                <div>
+                    <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={HOME_MODE_STUDENT}/>
+                </div>
+
                 {isTestRunning && <div css={timerStyle}>{convertSecondsToTime()}</div>}
                 {showConfirmationPopUp &&                 
                 <div css={PopUpWrapper}>
