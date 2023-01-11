@@ -7,7 +7,7 @@ import { DropDownItemStyle, DropDownListContainer, DropDownSelectedStyle, DrowDo
 interface customDropDownTypes{
   dropdownName: Array<string>;
   dropdownId: Array<number>;
-  preSelectedIndex?: number;
+  preSelectedIndex: number;
   isFilterMode?: boolean;
   onClickHandler: (args: number) => void;
 }
@@ -16,17 +16,23 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
     const [displayDropDown, setDisplayDropDown] = useState(false);
     const [displayedText, setDisplayedText] = useState('');
     useEffect(() => {
-      if (props.preSelectedIndex){
+      if (props.preSelectedIndex && props.preSelectedIndex !== -1){
+        console.log(props.preSelectedIndex);
+        console.log(props.dropdownName[props.preSelectedIndex]);
         setDisplayedText(props.dropdownName[props.preSelectedIndex]);
         props.onClickHandler(props.dropdownId[props.preSelectedIndex]);
       }
+
     }, [props, props.dropdownName, props.preSelectedIndex]);
     
     useEffect(() => {
-      if(props.isFilterMode){
+      if (props.preSelectedIndex === -1){
+        setDisplayedText("None Selected");
+      } 
+      if (props.isFilterMode){
         setDisplayedText("No Filter");
       }
-    }, [props.isFilterMode]);
+    }, [props.isFilterMode, props.preSelectedIndex]);
 
     const dropDownClickHandler = (catName: string, catId: number) => {
       console.log(catName);

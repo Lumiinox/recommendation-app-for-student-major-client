@@ -89,6 +89,13 @@ export const repeatButtonStyle = css`
     cursor: pointer;
 `;
 
+export const editButtonStyle = css`
+    margin-right: 10px;
+    cursor: pointer;
+    color: #0059b5;
+`;
+
+
 export const activeStatusText = (status: number) => css`
     color: ${status === 1 ? "#015e01" : "#a10000"};
 `;

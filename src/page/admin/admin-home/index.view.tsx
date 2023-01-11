@@ -59,7 +59,7 @@ export default function AdminHome (){
                     <div css={ContentListStyle}>
                         <div css={ContentCardStyle} onClick={() => menuBtnHandler(1)}>
                             <FontAwesomeIcon icon={faPlus} css={homeCardIconStyle}/> 
-                            Create Question 
+                            Manage Question 
                             </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(2)}> 
                             <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>
@@ -69,13 +69,9 @@ export default function AdminHome (){
                             <FontAwesomeIcon icon={faSquarePollHorizontal} css={homeCardIconStyle}/>
                             View Test Result  
                         </div>
-                        <div css={ContentCardStyle}  onClick={() => menuBtnHandler(4)}> 
-                            <FontAwesomeIcon icon={faPlus} css={homeCardIconStyle}/>
-                            Create Test  
-                        </div>
                         <div css={ContentCardStyle}  onClick={() => menuBtnHandler(5)}> 
                             <FontAwesomeIcon icon={faList} css={homeCardIconStyle}/>
-                            View Test List 
+                            Manage Test 
                         </div>
                     </div>
                 </div>

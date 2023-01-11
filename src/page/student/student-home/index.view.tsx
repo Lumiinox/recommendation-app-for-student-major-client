@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import HeaderComp from "../../../component/HeaderComponent/index.view";
 import { getIdName, updateLastUrl } from "../../../functions";
 import { actionCreators, State } from "../../../redux";
-import { LOGOUT_MODE, TEST_TITLE } from "../../constants/index.constants";
+import { LOGOUT_MODE, STUDENT_HOME_TITLE, TEST_TITLE } from "../../constants/index.constants";
 import { 
     ContentListStyle, 
     ContentCardStyle, 
@@ -49,7 +49,7 @@ export default function StudentHome (){
     return(
         <div>
             <div css={ParentGridStyle}>
-                <HeaderComp headerTitle={TEST_TITLE} headerButtonMode={LOGOUT_MODE}/>
+                <HeaderComp headerTitle={STUDENT_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
                 <div css={ProfileWrapperStyle}>
                     <div css={ProfileCardStyle}>
                         <div></div>

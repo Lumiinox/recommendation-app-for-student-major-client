@@ -7,8 +7,9 @@ import "../../styles/index.style.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../../../redux";
 import { apiLoginStaff, apiLoginStudent, apiRegisterAdmin, apiRegisterStudent } from "../../../database-api";
-import { buttonGhost, buttonGhostRegist, buttonLoginPage, errorMsgStyle, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
+import { buttonGhost, buttonGhostRegist, buttonLoginPage, loginFormPanels, loginMainContainer, loginPageWrapper, panelContent, panelLeft, panelRight, panelWrapper, registrationTitle, registrationWrapper, staffFormContainer, studentFormContainer } from "./index.style";
 import { checkConfirmedPassword, checkEmail, checkPassword } from "../../../functions";
+import { errorMsgStyle } from "../../styles/index.style";
 
 export default function MainLoginPage(){
     const [usernameIn, setUsernameIn] = useState<string>("");

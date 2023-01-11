@@ -121,6 +121,21 @@ export const apiAddTest = async (questionCategory: number, testName: string, tes
   return response.data;
 };
 
+export const apiEditTest = async (questionCategory: number, testName: string, testDuration: number, numberOfQuestions: number, idTest: number) => {
+  const response = await axios.post(`${HOST_NAME}/update/test`, {
+    questionCategory: questionCategory,
+    testName: testName,
+    testDuration: testDuration,
+    numberOfQuestions: numberOfQuestions,
+    idTest: idTest,
+  },{
+    headers: {
+      "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
+    }
+  })
+  return response.data;
+}
+
 export const apiDeactivateTest = async (idTest: number) => {
   const response = await axios.post(`${HOST_NAME}/deactivate/test-entry`, {
     idTest: idTest,
@@ -307,3 +322,4 @@ export const apiDeleteQuestion = async (questionId: number) => {
   });
   return response.data;
 };
+

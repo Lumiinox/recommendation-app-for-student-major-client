@@ -12,7 +12,6 @@ import AdminHome from './page/admin/admin-home/index.view';
 import StudentHome from './page/student/student-home/index.view';
 import AdminCreateQuestion from './page/admin/create-questions/index.view';
 import MainLoginPage from './page/login/main-login-page/index.view';
-import AdminCreateQuiz from './page/admin/admin-create-quiz/index.view';
 import StudentTestResult from './page/student/student-test-result/index.view';
 import ListofTest from './page/admin/admin-view-tests/index.view';
 
@@ -43,8 +42,6 @@ function App() {
           <Route path='/admin/view-test-result' 
             element={loginStatus && status === 1 ? <ListOfTestResult/> : <Navigate replace to="/"/>}/>
 
-          <Route path='/admin/create-quiz' 
-            element={loginStatus && status === 1 ? <AdminCreateQuiz/> : <Navigate replace to="/"/>}/>
 
           <Route path='/admin/view-test-list' 
             element={loginStatus && status === 1 ? <ListofTest/> : <Navigate replace to="/"/>}/>

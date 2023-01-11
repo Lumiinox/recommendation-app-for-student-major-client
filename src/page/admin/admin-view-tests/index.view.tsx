@@ -6,15 +6,18 @@ import {
     apiGetAllQuestionCategory, 
     apiReactivateTest, 
     apiGetTestData, 
-    apiAddTest 
+    apiAddTest, 
+    apiEditTest
 } from '../../../database-api';
-import { updateLastUrl } from '../../../functions';
+import { checkIfNumber, updateLastUrl } from '../../../functions';
 import { HOME_MODE_ADMIN, VIEW_TEST_LIST_TITLE } from '../../constants/index.constants';
 import { 
+    errorMsgStyle,
     FormSectionStyle, 
     FormTextAreaStyle, 
     FormTitleStle, 
-    ParentGridStyle 
+    ParentGridStyle, 
+    RegularButtonStyle
 } from '../../styles/index.style';
 import { 
     mainContentRow, 
@@ -35,10 +38,11 @@ import {
     activeStatusText, 
     actionColumnsContentWrapperStyle, 
     formContainer, 
-    CreateQuestionFormWrapperStyle
+    CreateQuestionFormWrapperStyle,
+    editButtonStyle
 } from './index.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlay, faCircleStop, faRepeat } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlay, faCircleStop, faPencil, faRepeat } from '@fortawesome/free-solid-svg-icons'
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 interface TestListData {
     idTest: number; 
@@ -47,20 +51,25 @@ interface TestListData {
     timeAmount: number;
     nameTest: string;
     activeStatus: number;
-}
+};
 
 export default function ListofTest(){
     const [testListData, setTestListData] = useState<Array<TestListData>>([]);
     const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
     const [categoryIdArr, setCategoryId] = useState<Array<number>>([]);
-    const [questionCategory, setQuestionCategory] = useState(0);
+    const [questionCategory, setQuestionCategory] = useState(-1);
     const [testName, setTestName] = useState<string>('');
-    const [testDuration, setTestDuration] = useState<number>(0);
-    const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+    const [testDuration, setTestDuration] = useState<string>('');
+    const [numberOfQuestions, setNumberOfQuestions] = useState<string>('');
     const [showReAddForm, setShowReAddForm] = useState<boolean>(false);
-    const [testRedoData, setTestRedoData] = useState<TestListData>();
     const [pageHeight, setPageHeight] = useState(0);
     const [pageWidth, setPageWidth] = useState(0);
+    const [selectedIdTest, setIdTest] = useState(0);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isDurationError, setIsDurationError] = useState(false);
+    const [isNumQuestionError, setIsNumQuestionError] = useState(false);
+    const [isEmptyFieldsError, setIsEmptyFieldsError] = useState(false);
+    const [isCategoryError, setIsCategoryError] = useState(false);
 
     const divRef = useRef<HTMLDivElement | null>(null);
     
@@ -88,8 +97,18 @@ export default function ListofTest(){
         updateLastUrl(window.location.pathname);
     }, []);
 
-    const showFormHandler = (curentData: TestListData) => {
-        setTestRedoData(curentData);
+    const showFormHandler = (data?: TestListData, isEdit?: boolean) => {
+        if(data){
+            setTestName(data.nameTest);
+            setNumberOfQuestions(String(data.questionAmount));
+            setTestDuration(String(data.timeAmount));
+            setQuestionCategory(data.idCategory);
+            if(isEdit){
+                setIsEditMode(true);
+                setIdTest(data.idTest);
+            }
+        }
+
         const tempPageHeight = divRef.current?.clientHeight as number;
         const tempPageWidth = divRef.current?.clientWidth as number;
         if(tempPageHeight > window.innerHeight){
@@ -101,57 +120,97 @@ export default function ListofTest(){
         setShowReAddForm(!showReAddForm);
     };
 
+    const clearErrorState = () => {
+        setIsCategoryError(false);
+        setIsDurationError(false);
+        setIsEmptyFieldsError(false);
+        setIsNumQuestionError(false);
+    }
+
+    const clearInputState = () => {
+        setTestName("");
+        setNumberOfQuestions("");
+        setTestDuration("");
+        setQuestionCategory(-1);
+    }
     const handleSubmit = async () => {
         console.log(questionCategory);
         console.log(testName);
         console.log(testDuration);
         console.log(numberOfQuestions);
-        await apiAddTest(questionCategory, testName, testDuration, numberOfQuestions);
-        await fetchTestData();
-    setShowReAddForm(false);
+        let isNumberOfQuestionCorrect = checkIfNumber(Number(numberOfQuestions));
+        let isTestDuration = checkIfNumber(Number(numberOfQuestions));
+        if(isNumberOfQuestionCorrect && isTestDuration && questionCategory !== -1 && testName !== "" && testDuration !== "" && numberOfQuestions !== ""){
+            switch(isEditMode){
+                case false: await apiAddTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions));
+                            await fetchTestData();
+                            setShowReAddForm(false);
+                            clearErrorState();
+                            clearInputState();
+                            break;
+                case true:  await apiEditTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions), selectedIdTest);
+                            await fetchTestData();
+                            setShowReAddForm(false);
+                            clearErrorState();
+                            clearInputState();
+                            break;
+            }
+            if (!isNumberOfQuestionCorrect){
+                setIsNumQuestionError(true);
+            }
+            if (!isTestDuration){
+                setIsDurationError(true);
+            }
+            if (!isCategoryError){
+                setIsCategoryError(true);
+            }
+            if (questionCategory === -1 && !testName && !testDuration && !numberOfQuestions){
+                setIsEmptyFieldsError(true);
+            }
+        } 
     }
-    
-    const RemakeTest = () => {
-        if(testRedoData){
-            setTestName(testRedoData.nameTest);
-            setNumberOfQuestions(testRedoData.questionAmount);
-            setTestDuration(testRedoData.questionAmount);
-            setQuestionCategory(categoryIdArr.indexOf(testRedoData.idCategory));
-            return(
-                <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
-                    <div>   
-                        <div css={formContainer}>
-                            <h2>Create Test</h2>
-                            <div>
-                                <div css={FormSectionStyle}>
-                                    <div css={FormTitleStle}>Test Name</div>
-                                    <input css={FormTextAreaStyle} name="testName" onChange={(e) => {setTestName(e.target.value)}} value={testRedoData.nameTest}></input>
-                                </div>
-                                <div css={FormSectionStyle}>
-                                    <div css={FormTitleStle}>Question Category</div>
-                                    <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={categoryIdArr.indexOf(testRedoData.idCategory)}/>
-                                </div>
-                                <div css={FormSectionStyle}>
-                                    <div css={FormTitleStle}>Test Duration (in minutes)</div>
-                                    <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(Number(e.target.value))}} value={testRedoData.timeAmount}></input>
-                                </div>
-                                <div css={FormSectionStyle}>
-                                    <div css={FormTitleStle}>Number of Questions</div>
-                                    <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(Number(e.target.value))}} value={testRedoData.questionAmount}></input>
-                                </div>
-                    
-                                <button onClick={handleSubmit}>Submit</button>
-                                <button onClick={() => setShowReAddForm(false)}>Cancel</button>
+
+    const handleCancel = () => {
+        clearInputState();
+        setShowReAddForm(false);
+    }
+
+    const ShowTestForm = () => {
+        console.log("HI");
+        return(
+            <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
+                <div>   
+                    <div css={formContainer}>
+                        <h2>{isEditMode ? "Edit Test" : "Duplicate Test"}</h2>
+                        <div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Test Name</div>
+                                <input css={FormTextAreaStyle} type="text" name="testName" onChange={(e) => {setTestName(e.target.value)}} value={testName}></input>
                             </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Question Category</div>
+                                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={categoryIdArr.indexOf(questionCategory)}/>
+                                {isCategoryError && <div css={errorMsgStyle}>*Please select a category</div>}
+                            </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Test Duration (in minutes)</div>
+                                <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(e.target.value)}} value={testDuration}></input>
+                                {isDurationError && <div css={errorMsgStyle}>*Numeric character only</div>}
+                            </div>
+                            <div css={FormSectionStyle}>
+                                <div css={FormTitleStle}>Number of Questions</div>
+                                <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(e.target.value)}} value={numberOfQuestions}></input>
+                                {isNumQuestionError && <div css={errorMsgStyle}>*Numeric character only</div>}
+                            </div>
+                            {isEmptyFieldsError && <div css={errorMsgStyle}>*Fields cannot be empty</div>}
+
+                            <button css={RegularButtonStyle} onClick={handleSubmit}>Submit</button>
+                            <button css={RegularButtonStyle} onClick={handleCancel}>Cancel</button>
                         </div>
-                    </div> 
-                </div>
-
-            )
-        } else {
-            return(<></>);
-        }
-
+                    </div>
+                </div> 
+            </div>
+        )
     }
 
     const fetchTestData = async () => {
@@ -177,8 +236,9 @@ export default function ListofTest(){
             <div css={ParentGridStyle}>
                 <HeaderComp headerTitle={VIEW_TEST_LIST_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
 
-                {showReAddForm && <RemakeTest/>}
+                {showReAddForm && ShowTestForm()}
                 <div css={wholeContentWrapperStyle}>
+                <button onClick={() => showFormHandler()}>Add Test</button>
                     <div>
                         <div css={tableContainer}>
                             <table css={tableHead}>
@@ -213,6 +273,9 @@ export default function ListofTest(){
                                                 </td>
                                                 <td css={actionColumnStyle}>
                                                     <div css={actionColumnsContentWrapperStyle}>
+                                                        <div onClick={() => showFormHandler(data, true)}>
+                                                            <FontAwesomeIcon icon={faPencil} css={editButtonStyle}/>
+                                                        </div>
                                                         <div onClick={() => handleActionsStatusClick(data.idTest, data.activeStatus)}>
                                                             {data.activeStatus === 1 ? 
                                                                 <FontAwesomeIcon icon={faCircleStop} css={stopButtonStyle}/> 
@@ -220,7 +283,7 @@ export default function ListofTest(){
                                                                 <FontAwesomeIcon icon={faCirclePlay} css={playButtonStyle}/>
                                                             }
                                                         </div>
-                                                        <div onClick={() => showFormHandler(data)}>
+                                                        <div onClick={() => showFormHandler(data, false)}>
                                                             <FontAwesomeIcon icon={faRepeat} css={repeatButtonStyle}/>
                                                         </div>
                                                     </div>

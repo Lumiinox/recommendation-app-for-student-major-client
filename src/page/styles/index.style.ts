@@ -142,7 +142,7 @@ export const ContentListStyle = css`
 export const RegularButtonStyle = css`
 	padding: 10px 0px;
 	min-width: 20vh;
-    margin: 10px 0;
+    margin: 10px 20px 5px 0;
 `;
 
 export const ProfileWrapperStyle = css`
@@ -229,4 +229,8 @@ export const homeCardIconStyle = css`
     font-size: 50px;
     margin-bottom: 20px;
     color: #7a7a7a;
+`;
+
+export const errorMsgStyle = css`
+    color: red;
 `;

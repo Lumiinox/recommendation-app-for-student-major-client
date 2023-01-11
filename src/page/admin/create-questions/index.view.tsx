@@ -150,7 +150,7 @@ export default function AdminCreateQuestion (){
 
               <div css={FormSectionStyle}>
                 <div css={FormTitleStle}>Question Type</div>
-                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory}/>
+                <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={setQuestionCategory} preSelectedIndex={-1}/>
               </div>
 
               <div css={FormSectionStyle}>
@@ -227,7 +227,7 @@ export default function AdminCreateQuestion (){
 
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
               <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
-              <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={HandleFilterDropdown} isFilterMode={true}/>
+              <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={HandleFilterDropdown} isFilterMode={true} preSelectedIndex={-1}/>
               {questionDataDisplay &&
                 questionDataDisplay.map((value, index) => {
                   return (
