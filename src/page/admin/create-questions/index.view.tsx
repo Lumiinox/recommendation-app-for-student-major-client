@@ -56,6 +56,7 @@ export default function AdminCreateQuestion (){
   const [displayCategoryQuestionForm, setDisplayCategoryQuestionForm] = useState(false);
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(-1)
   const [questionData, setQuestionData] = useState<Array<questionData>>([]);
   const [questionDataDisplay, setQuestionDataDisplay] = useState<Array<questionData>>([]);
   const [categoryNameArr, setCategoryNameArr] = useState<Array<string>>([]);
@@ -93,7 +94,7 @@ export default function AdminCreateQuestion (){
   const deleteQuestion = async (idQuestion: number) => {
     console.log("clicked");
     await apiDeleteQuestion(idQuestion);
-    updateQuestionData();
+    RefreshQuestionList();
   }
 
   const SubmitQuestion = async () => {
@@ -131,6 +132,7 @@ export default function AdminCreateQuestion (){
 
   const HandleFilterDropdown = (idCategoryFilter: number) => {
     console.log("THIS IS RUNNING")
+    setSelectedCategoryId(idCategoryFilter);
     if(idCategoryFilter !== 0){
       const tempFilteredQuestionData = questionData.filter(questionData => questionData.idCategory === idCategoryFilter);
       setQuestionDataDisplay(tempFilteredQuestionData);
@@ -213,6 +215,7 @@ export default function AdminCreateQuestion (){
   const RefreshQuestionList = async () => {
     const questionData = await apiGetAllQuestion();
     setQuestionData(questionData);
+    setTimeout(() => HandleFilterDropdown(selectedCategoryId), 1000);
   }
 
   return(
