@@ -33,6 +33,6 @@ export const CreateQuestionFormStyle = css`
 
 export const AnswerChoiceLabelStyle = css`
     display: grid;
-    grid-template-columns: 50px auto;
+    grid-template-columns: 50px 50px auto;
 `;
 

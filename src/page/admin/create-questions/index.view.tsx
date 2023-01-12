@@ -160,21 +160,23 @@ export default function AdminCreateQuestion (){
 
               <div css={FormSectionStyle}>
                 <div css={FormTitleStle}>Answer Choice</div>
-                <div css={AnswerChoiceLabelStyle}>
-                  <div css={FormLabelStyle}>A</div>
-                  <input css={FormInputTextStyle}  type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
-                  <div css={FormLabelStyle}>B</div>
-                  <input css={FormInputTextStyle}  type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
-                  <div css={FormLabelStyle}>C</div>
-                  <input css={FormInputTextStyle}  type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
-                  <div css={FormLabelStyle}>D</div>
-                  <input css={FormInputTextStyle}  type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
-                </div>
-              </div>
-
-              <div css={FormSectionStyle}>
-                <div css={FormTitleStle}>Correct Answer</div>
-                <input type="text" name="kunciJawaban" onChange={(e) => {setAnswer(e.target.value)}}></input>
+                    <div css={AnswerChoiceLabelStyle}>
+                      <input type="radio" value="1" onChange={(e) => setAnswer(e.target.value)} checked={answer === "1"}/>
+                      <div css={FormLabelStyle}>A</div>
+                      <input css={FormInputTextStyle}  type="text" name="pilihan1" onChange={(e) => {setChoice1(e.target.value)}}></input>
+                      
+                      <input type="radio" value="2" onChange={(e) => setAnswer(e.target.value)} checked={answer === "2"}/>
+                      <div css={FormLabelStyle}>B</div>
+                      <input css={FormInputTextStyle}  type="text" name="pilihan2" onChange={(e) => {setChoice2(e.target.value)}}></input>
+                      
+                      <input type="radio" value="3" onChange={(e) => setAnswer(e.target.value)} checked={answer === "3"}/>
+                      <div css={FormLabelStyle}>C</div>
+                      <input css={FormInputTextStyle}  type="text" name="pilihan3" onChange={(e) => {setChoice3(e.target.value)}}></input>
+                      
+                      <input type="radio" value="4" onChange={(e) => setAnswer(e.target.value)} checked={answer === "4"}/>
+                      <div css={FormLabelStyle}>D</div>
+                      <input css={FormInputTextStyle}  type="text" name="pilihan4" onChange={(e) => {setChoice4(e.target.value)}}></input>
+                    </div>
               </div>
 
               <button css={RegularButtonStyle} onClick={SubmitQuestion}>Submit</button>
