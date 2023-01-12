@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const DropDownSelectedStyle = css`
-    width: 200px;
+    min-width: 200px;
     background-color: #eee;
     border-radius: 30px;
     border: 0;
@@ -16,7 +16,6 @@ export const DropDownSelectedStyle = css`
 
 
 export const DropDownListContainer = css`
-    width: 20%;
     background-color: #eee;
     border-radius: 30px;
     border: 0;

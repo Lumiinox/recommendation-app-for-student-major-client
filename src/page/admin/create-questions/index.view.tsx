@@ -14,6 +14,7 @@ import {
   CreateQuestionContentWrapper,
   QuestionListWrapperStyle,
   AnswerChoiceLabelStyle,
+  CreateQuestionButtonStyle,
 } from './index.style';
 import { 
   FormInputTextStyle, 
@@ -233,8 +234,8 @@ export default function AdminCreateQuestion (){
           <div css={CreateQuestionContentWrapper}>
             <div css={QuestionListWrapperStyle}>
 
-              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
-              <button css={RegularButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
+              <button css={CreateQuestionButtonStyle} onClick={() => ShowFormHandler(1)}>Add Question</button>
+              <button css={CreateQuestionButtonStyle} onClick={() => ShowFormHandler(2)}>Add Category</button>
               <CustomDropDown dropdownName={categoryNameArr} dropdownId={categoryIdArr} onClickHandler={HandleFilterDropdown} isFilterMode={true} preSelectedIndex={-1}/>
               {questionDataDisplay &&
                 questionDataDisplay.map((value, index) => {

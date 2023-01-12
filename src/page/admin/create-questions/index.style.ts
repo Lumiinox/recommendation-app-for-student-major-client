@@ -36,3 +36,7 @@ export const AnswerChoiceLabelStyle = css`
     grid-template-columns: 50px 50px auto;
 `;
 
+export const CreateQuestionButtonStyle = css`
+	padding: 10px 0px;
+    margin: 10px 0 5px 0;
+`;

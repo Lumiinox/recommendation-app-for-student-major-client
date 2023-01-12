@@ -47,7 +47,7 @@ export default function AdminHome (){
         <div>
             <div css={ParentGridStyle}>
                 <div>
-                <HeaderComp headerTitle={ADMIN_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
+                    <HeaderComp headerTitle={ADMIN_HOME_TITLE} headerButtonMode={LOGOUT_MODE}/>
                 </div>
 
                 
