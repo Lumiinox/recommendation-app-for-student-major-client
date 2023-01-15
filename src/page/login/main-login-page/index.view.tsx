@@ -153,7 +153,7 @@ export default function MainLoginPage(){
                     {!emailCorrectState && <div css={errorMsgStyle}>*Please enter the correct email format</div>}
                     <input type="text" placeholder="Name" onChange={(e) => setNameRegistIn(e.target.value)}/>
                     <input type="password" placeholder="Password" onChange={(e) => setPassRegistIn(e.target.value)}/>
-                    {!passCorrectState && <div css={errorMsgStyle}>*Password must be at least 8 characters long and include numbers 0 - 9 and alphabetic characters</div>}
+                    {!passCorrectState && <div css={errorMsgStyle}>*Password must be at least 8 characters long, include numbers 0 - 9, uppercase and lowercase characters</div>}
                     <input type="password" placeholder="Confirm Password" onChange={(e) => setPassConfirm(e.target.value)}/>
                     {!passMatchState && <div css={errorMsgStyle}>*Password not match</div>}
                     {!emptyFieldsState && <div css={errorMsgStyle}>*Fields are empty</div>}
