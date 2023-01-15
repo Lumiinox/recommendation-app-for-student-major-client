@@ -140,17 +140,20 @@ export default function ListofTest(){
         console.log(numberOfQuestions);
         let isNumberOfQuestionCorrect = checkIfNumber(Number(numberOfQuestions));
         let isTestDuration = checkIfNumber(Number(numberOfQuestions));
+        console.log(isEditMode);
         if(isNumberOfQuestionCorrect && isTestDuration && questionCategory !== -1 && testName !== "" && testDuration !== "" && numberOfQuestions !== ""){
             switch(isEditMode){
                 case false: await apiAddTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions));
                             await fetchTestData();
                             setShowReAddForm(false);
+                            setIsEditMode(false);
                             clearErrorState();
                             clearInputState();
                             break;
                 case true:  await apiEditTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions), selectedIdTest);
                             await fetchTestData();
                             setShowReAddForm(false);
+                            setIsEditMode(false);
                             clearErrorState();
                             clearInputState();
                             break;
