@@ -102,7 +102,7 @@ export const QuestionViewComponent = ({
             </div>
             <div css={QuestionViewContentStyle}>
                 <div>
-                    <div css={TextMargin}><b>Question Type</b></div>
+                    <div css={TextMargin}><b>Question Category</b></div>
                     <div css={TextMargin}>{codeType}</div>
                 </div>
                 <div css={MgrnTop20px}>
