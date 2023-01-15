@@ -12,10 +12,14 @@ export const checkEmail = (email: string) => {
 }
 
 export const checkPassword = (password: string) => {
-    const res = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
-    const isAlphaNumeric = password.match(res);
+    const regex = new RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$/);
+    const isAlphaNumeric = regex.test(password);
     const correctLength = password.length > 8;
-    if(!isAlphaNumeric && correctLength){
+    console.log("isAlphaNumeric");
+    console.log(isAlphaNumeric);
+    console.log("isCorrectLength");
+    console.log(correctLength);
+    if(isAlphaNumeric && correctLength){
         return true;
     } else {
         return false;
