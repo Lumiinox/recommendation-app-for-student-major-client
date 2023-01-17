@@ -27,7 +27,7 @@ import {
 } from '../../styles/index.style';
 import { QuestionViewComponent } from '../../../component/QuestionView/index.view';
 import HeaderComp from '../../../component/HeaderComponent/index.view';
-import { CREATE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
+import { MANAGE_QUESTION_TITLE, HOME_MODE_ADMIN } from '../../constants/index.constants';
 import { CustomDropDown } from '../../../component/DropdownComponent/index.view';
 import { updateLastUrl } from '../../../functions';
 
@@ -223,7 +223,7 @@ export default function AdminCreateQuestion (){
       <div ref={divRef}>
         <div css={ParentGridStyle}>
           <div>
-            <HeaderComp headerTitle={CREATE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
+            <HeaderComp headerTitle={MANAGE_QUESTION_TITLE} headerButtonMode={HOME_MODE_ADMIN}/>
           </div>
 
 
