@@ -5,7 +5,7 @@ export const apiLoginStaff = async (
     emailInput: string,
     passwordInput: string
     ) => {
-    console.log("api called");
+    
     const response = await axios.post(`${HOST_NAME}/login_admin`, {
         email: emailInput,
         password: passwordInput,
@@ -24,12 +24,12 @@ export const apiLoginStudent = async (
   emailInput: string,
   passwordInput: string
 ) => {
-  console.log("api called");
+  
   const response = await axios.post(`${HOST_NAME}/login_student`, {
     email: emailInput,
     password: passwordInput,
   });
-  console.log(response.data);
+  
   document.cookie = '';
   if(response){
     sessionStorage.setItem('authToken', response.data.accessToken);
@@ -49,7 +49,7 @@ export const apiSubmitQuestion = async (
   choice_4: string,
   answer: string
 ) => {
-  console.log("test");
+  
   const response = await axios.post(`${HOST_NAME}/insert/question/`, {
     code_type: code_type,
     questionText: questionText,
@@ -67,7 +67,7 @@ export const apiSubmitQuestion = async (
 };
 
 export const apiAddQuestionCategory = async (categoryName: string) => {
-  console.log(categoryName);
+  
   const response = await axios.post(`${HOST_NAME}/new_question_category`, {
     nameCategory: categoryName,
   },{
@@ -96,9 +96,9 @@ export const apiRegisterStudent = async (
     emailStudentIn: string,
     passStudentIn: string
   ) => {
-    console.log(nameStudentIn);
-    console.log(emailStudentIn);
-    console.log(passStudentIn);
+    
+    
+    
     const response = await axios.post(`${HOST_NAME}/student_registration`, {
       nameStudent: nameStudentIn,
       emailStudent: emailStudentIn,
@@ -169,8 +169,8 @@ export const apiShowQuestion = async () => {
 };
 
 export const apiGetQuestionWithStats = async (tokenIn: string) => {
-  console.log("TOKEN IN API");
-  console.log(tokenIn);
+  
+  
   const response = await axios.get(`${HOST_NAME}/get/question_stat`, {
     headers: {
       "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
@@ -209,7 +209,7 @@ export const apiGetAllQuestion = async () => {
 };
 
 export const apiGetTestResultData = async () => {
-  console.log("api called");
+  
   const response = await axios.get(`${HOST_NAME}/get/test_result`,{
     headers: {
       "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
@@ -219,13 +219,13 @@ export const apiGetTestResultData = async () => {
 };
 
 export const apiGetStudentTestData = async (currentId: number) => {
-  console.log("api called");
+  
   const response = await axios.get(`${HOST_NAME}/get/test_result/${currentId}`,{
     headers: {
       "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,
     }
   });
-  console.log(response);
+  
   return response.data;
 };
 
@@ -293,8 +293,8 @@ export const apiGetTestData = async () => {
 }
 
 export const apiGetTestResultStudent = async (idStudent: number) => {
-  console.log("ID STUDENT")
-  console.log(idStudent);
+  
+  
   const response = await axios.get(`${HOST_NAME}/get/test_result/${idStudent}` ,{
     headers: {
       "Authorization": `Bearer ${sessionStorage.getItem('authToken')}`,

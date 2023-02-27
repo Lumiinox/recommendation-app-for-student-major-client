@@ -24,7 +24,7 @@ export default function ListOfTestResult(){
     useEffect(() => {
         const fetchData = async () => {
             const data = await apiGetTestResultData();
-            console.log(data);
+            
             setTestResultData(data);
         }
         fetchData();
@@ -37,7 +37,7 @@ export default function ListOfTestResult(){
     useEffect(() => {
         const fetchData = async () => {
           const questionCategoryData = await apiGetAllQuestionCategory();
-          console.log(questionCategoryData);
+          
           const categoryNameTemp = [];
           const categoryIdTemp = [];
           for (const i in questionCategoryData){

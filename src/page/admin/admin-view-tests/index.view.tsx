@@ -80,7 +80,7 @@ export default function ListofTest(){
     useEffect(() => {
         const fetchData = async () => {
           const questionCategoryData = await apiGetAllQuestionCategory();
-          console.log(questionCategoryData);
+          
           const categoryNameTemp = [];
           const categoryIdTemp = [];
           for (const i in questionCategoryData){
@@ -134,13 +134,13 @@ export default function ListofTest(){
         setQuestionCategory(-1);
     }
     const handleSubmit = async () => {
-        console.log(questionCategory);
-        console.log(testName);
-        console.log(testDuration);
-        console.log(numberOfQuestions);
+        
+        
+        
+        
         let isNumberOfQuestionCorrect = checkIfNumber(Number(numberOfQuestions));
         let isTestDuration = checkIfNumber(Number(numberOfQuestions));
-        console.log(isEditMode);
+        
         if(isNumberOfQuestionCorrect && isTestDuration && questionCategory !== -1 && testName !== "" && testDuration !== "" && numberOfQuestions !== ""){
             switch(isEditMode){
                 case false: await apiAddTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions));
@@ -149,6 +149,7 @@ export default function ListofTest(){
                             setIsEditMode(false);
                             clearErrorState();
                             clearInputState();
+                            alert("Test Added");
                             break;
                 case true:  await apiEditTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions), selectedIdTest);
                             await fetchTestData();
@@ -156,6 +157,7 @@ export default function ListofTest(){
                             setIsEditMode(false);
                             clearErrorState();
                             clearInputState();
+                            alert("Test Updated");
                             break;
             }
             if (!isNumberOfQuestionCorrect){
@@ -179,7 +181,7 @@ export default function ListofTest(){
     }
 
     const ShowTestForm = () => {
-        console.log("HI");
+        
         return(
             <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
                 <div>   
@@ -218,17 +220,19 @@ export default function ListofTest(){
 
     const fetchTestData = async () => {
         const data = await apiGetTestData();
-        console.log(data);
+        
         setTestListData(data);
     };
 
     const handleActionsStatusClick = async (idTest: number, status: number) => {
         if (status === 1){
-            console.log("Test Active change to Not Active");
+            
+            alert("Test Deactivated");
             await apiDeactivateTest(idTest);
         } 
         else if(status === 0) {
-            console.log("Test Not Active change to Active");
+            
+            alert("Test Activated");
             await apiReactivateTest(idTest);
         }
         fetchTestData();

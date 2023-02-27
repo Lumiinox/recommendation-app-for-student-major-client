@@ -38,17 +38,17 @@ export default function MainLoginPage(){
 
     useEffect(() => {
         const userData = sessionStorage.getItem('loginUser');
-        console.log("FROM LOCAL STORAGE");
-        console.log(userData);
+        
+        
         if(userData){
             const parsedUserData = JSON.parse(userData);
             updateProfileData(parsedUserData.name, parsedUserData.email, parsedUserData.status, parsedUserData.currentId);
-            console.log(parsedUserData);
+            
             if(parsedUserData.status === 1){
-                console.log("Admin data from storage");            
+                
                 navigate(parsedUserData.lastUrl);
             } else if (parsedUserData.status === 2){
-                console.log("Admin data from student");
+                
                 navigate(parsedUserData.lastUrl);
             }
         }
@@ -76,7 +76,7 @@ export default function MainLoginPage(){
                     break;
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
-                    console.log(data);
+                    
                     const studentDataToLocal = {
                         name: data?.nameStudent,
                         email: data?.emailStudent,
@@ -84,10 +84,10 @@ export default function MainLoginPage(){
                         currentId: data?.idStudent,
                         lastUrl: "student/home"
                     };
-                    console.log(studentDataToLocal);
+                    
                     if(data !== null){
-                        console.log("STUDENT DATA");
-                        console.log(data);
+                        
+                        
                         updateProfileData(data.nameStudent, data.nameEmail, data.status, data.idStudent);
                         sessionStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
                         navigate(studentDataToLocal.lastUrl);
@@ -98,13 +98,13 @@ export default function MainLoginPage(){
         }
 
         if (status === 1){
-            console.log("Hi Admin");
+            
         }
         else if (status === 2){
-            console.log("Hi Student");
+            
         }
         else{
-            console.log("Test")
+            
         }
     }
     
@@ -113,13 +113,13 @@ export default function MainLoginPage(){
         const isEmailCorrent =  (checkEmail(emailRegistIn));
         const isPasswordCorrect = (checkPassword(passRegistIn));
         const isPasswordMatch = (checkConfirmedPassword(passRegistIn, passConfirmIn))
-        console.log(isEmailCorrent);
-        console.log(isPasswordCorrect);
-        console.log(isPasswordMatch);
+        
+        
+        
         if(isEmailCorrent && isPasswordCorrect && isPasswordMatch){
-            console.log(nameRegistIn);
-            console.log(emailRegistIn);
-            console.log(passRegistIn);
+            
+            
+            
             if(!isAdminMode){
                 await apiRegisterStudent(nameRegistIn, emailRegistIn, passRegistIn);
                 setIsRegistrationFormActive(!isRegistrationFormActive)
@@ -144,7 +144,7 @@ export default function MainLoginPage(){
     }
 
     const registrationForm = () => {
-        console.log("Show Regist")
+        
         return(
             <div css={registrationWrapper}>
                 <h1 css={registrationTitle}>{!isAdminMode ? "Student Registration" : "Staff Registration"}</h1>

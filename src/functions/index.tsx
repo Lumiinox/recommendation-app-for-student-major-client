@@ -15,10 +15,10 @@ export const checkPassword = (password: string) => {
     const regex = new RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$/);
     const isAlphaNumeric = regex.test(password);
     const correctLength = password.length >= 8;
-    console.log("isAlphaNumeric");
-    console.log(isAlphaNumeric);
-    console.log("isCorrectLength");
-    console.log(correctLength);
+    
+    
+    
+    
     if(isAlphaNumeric && correctLength){
         return true;
     } else {

@@ -74,13 +74,13 @@ export default function StudentTest () {
     const currentId = useSelector((state: State) => state.userData.currentId);
 
     useEffect(() => {
-        console.log(firstRender);
-        console.log(currentId);
+        
+        
         if (!firstRender){
             setFirstRender(true);
             fetchData();
             fetchDataTestData(currentId);
-            console.log("You should only see this once")
+            
         }
     }, [currentId, firstRender])
 
@@ -111,7 +111,7 @@ export default function StudentTest () {
 
     const fetchData = async () => {
         const questionCategoryData = await apiGetAllQuestionCategory();
-        console.log(questionCategoryData);
+        
         const categoryNameTemp = [];
         const categoryIdTemp = [];
         for (const i in questionCategoryData){
@@ -123,8 +123,8 @@ export default function StudentTest () {
     }
 
     const fetchDataTestData = async (currentId: number) => {
-        console.log("testing");
-        console.log(currentId);
+        
+        
         const testResultData = await apiGetTestResultStudent(currentId);
         const testData = await apiGetActiveTest();
         const filteredTestData = [];
@@ -139,7 +139,7 @@ export default function StudentTest () {
                 filteredTestData.push(testData[i]);
             }
         }
-        console.log(filteredTestData);
+        
         setTestDataSetting(filteredTestData);
     }
 
@@ -154,7 +154,7 @@ export default function StudentTest () {
     const GetQuestion = async () =>{
         if(selectedTestData){
             const response = await apiGetQuestionRandom(selectedTestData.idCategory, selectedTestData.questionAmount)
-            console.log(response);
+            
             setQuestionsData(response);
             const initAnswerData = [] as Array<InitAnswerData>;
             for (let i = 0; i < response.length; i++){
@@ -163,7 +163,7 @@ export default function StudentTest () {
                     correctness: false
                 })
             }
-            console.log(initAnswerData)
+            
             setAnswerData(initAnswerData);
             setIsTestRunning(true);
         }
@@ -171,11 +171,11 @@ export default function StudentTest () {
 
     const answerDataHandler = (index: number, answer: number) => {
         const tempAnswerData = [...answerData];
-        console.log(answerData);
-        console.log(tempAnswerData);
+        
+        
         tempAnswerData[index].answer = answer;
         setAnswerData(tempAnswerData);
-        console.log(tempAnswerData);
+        
     }
 
     const SubmitHandler = async () => {
@@ -191,9 +191,9 @@ export default function StudentTest () {
                     tempAnswerData[i].correctness = false;
                 }
             }
-            console.log(tempAnswerData);
+            
             const scoreTemp = Math.round(counter * (100/answerData.length));
-            console.log(scoreTemp);
+            
     
             const dateTime = GetDateandTime();
             
@@ -209,7 +209,7 @@ export default function StudentTest () {
     const SubmitQuestionHistory = async (dateTime: string) => {
         let stringQuery = ""
         const response = await apiGetTestResultId(currentId, dateTime);
-        console.log(response);
+        
         const tempTestId = response[0].idTestResult;
         for (let i:number = 0; i < questionsData.length; i++){
             stringQuery = stringQuery + `(${(questionsData[i].idQuestion).toString()}, "${tempTestId}", "${answerData[i].answer}", "${answerData[i].correctness}")`
@@ -217,7 +217,7 @@ export default function StudentTest () {
                 stringQuery = stringQuery + ",";
             }
         }
-        console.log(stringQuery);
+        
         
         await apiPostQuestionHistory(stringQuery).then((res) => {
             alert("TestDone");

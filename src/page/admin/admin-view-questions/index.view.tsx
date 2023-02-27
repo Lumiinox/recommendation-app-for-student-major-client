@@ -23,9 +23,9 @@ export default function ViewQuestionsPage(){
     useEffect(() => {
         const fetchData = async () => {
             var authToken = document.cookie;
-            console.log(authToken);
+            
             const data = await apiGetQuestionWithStats(authToken);
-            console.log(data);
+            
             setQuestionWithStat(data);
         }
         fetchData();
@@ -38,7 +38,7 @@ export default function ViewQuestionsPage(){
     useEffect(() => {
       const fetchData = async () => {
         const questionCategoryData = await apiGetAllQuestionCategory();
-        console.log(questionCategoryData);
+        
         const categoryNameTemp = [];
         const categoryIdTemp = [];
         for (const i in questionCategoryData){

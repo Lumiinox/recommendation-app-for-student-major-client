@@ -17,8 +17,8 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
     const [displayedText, setDisplayedText] = useState('');
     useEffect(() => {
       if (props.preSelectedIndex && props.preSelectedIndex !== -1){
-        console.log(props.preSelectedIndex);
-        console.log(props.dropdownName[props.preSelectedIndex]);
+        
+        
         setDisplayedText(props.dropdownName[props.preSelectedIndex]);
         props.onClickHandler(props.dropdownId[props.preSelectedIndex]);
       }
@@ -35,13 +35,13 @@ export const CustomDropDown = (props: customDropDownTypes)  => {
     }, [props.isFilterMode, props.preSelectedIndex]);
 
     const dropDownClickHandler = (catName: string, catId: number) => {
-      console.log(catName);
+      
       setDisplayedText(catName);
       props.onClickHandler(catId);
       setDisplayDropDown(false);
-      console.log(catName);
-      console.log(catId);
-      console.log(displayedText);
+      
+      
+      
     }
 
     return(

@@ -28,10 +28,10 @@ export default function StudentTestResult () {
 
   useEffect(() =>{
     const fetchData = async () => {
-      console.log("TESTING");
-      console.log(currentId);
+      
+      
       const response = await apiGetStudentTestData(currentId);
-      console.log(response);
+      
       setTestResultData(response);
     }
     fetchData();

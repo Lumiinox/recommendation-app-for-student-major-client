@@ -93,29 +93,32 @@ export default function AdminCreateQuestion (){
   }
 
   const deleteQuestion = async (idQuestion: number) => {
-    console.log("clicked");
+    
     await apiDeleteQuestion(idQuestion);
     RefreshQuestionList();
+    alert("Question Deleted");
   }
 
   const SubmitQuestion = async () => {
-    console.log("test")
+    
     await apiSubmitQuestion(questionCategory, questionText, choice_1, choice_2, choice_3, choice_4, answer);
     ShowFormHandler(1);
     RefreshQuestionList();
+    alert("Question Submitted");
   }
 
   const SubmitCategory = async () => {
-    console.log(categoryName);
+    
     await apiAddQuestionCategory(categoryName);
     ShowFormHandler(2);
     updateQuestionCategory();
+    alert("New Category Created");
   }
 
   const ShowFormHandler = (type: number) => {
     const tempPageHeight = divRef.current?.clientHeight as number;
     const tempPageWidth = divRef.current?.clientWidth as number;
-    console.log(tempPageHeight);
+    
     if(tempPageHeight > window.innerHeight){
       setPageHeight(tempPageHeight + 50);
     } else {
@@ -132,12 +135,12 @@ export default function AdminCreateQuestion (){
   }
 
   const HandleFilterDropdown = (idCategoryFilter: number) => {
-    console.log("THIS IS RUNNING")
+    
     setSelectedCategoryId(idCategoryFilter);
     if(idCategoryFilter !== 0){
       const tempFilteredQuestionData = questionData.filter(questionData => questionData.idCategory === idCategoryFilter);
       setQuestionDataDisplay(tempFilteredQuestionData);
-      console.log(tempFilteredQuestionData);
+      
     }else{
       setQuestionDataDisplay([...questionData]);
     }
