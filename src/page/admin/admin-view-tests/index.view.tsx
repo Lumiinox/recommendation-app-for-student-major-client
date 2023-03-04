@@ -66,6 +66,7 @@ export default function ListofTest(){
     const [pageWidth, setPageWidth] = useState(0);
     const [selectedIdTest, setIdTest] = useState(0);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [isAddMode, setIsAddMode] = useState(false);
     const [isDurationError, setIsDurationError] = useState(false);
     const [isNumQuestionError, setIsNumQuestionError] = useState(false);
     const [isEmptyFieldsError, setIsEmptyFieldsError] = useState(false);
@@ -97,7 +98,7 @@ export default function ListofTest(){
         updateLastUrl(window.location.pathname);
     }, []);
 
-    const showFormHandler = (data?: TestListData, isEdit?: boolean) => {
+    const showFormHandler = (data?: TestListData, isEdit?: boolean, isAdd?: boolean) => {
         if(data){
             setTestName(data.nameTest);
             setNumberOfQuestions(String(data.questionAmount));
@@ -106,6 +107,10 @@ export default function ListofTest(){
             if(isEdit){
                 setIsEditMode(true);
                 setIdTest(data.idTest);
+            }
+            if(isAdd){
+                setIsAddMode(true);
+                setIsEditMode(false);
             }
         }
 
@@ -181,12 +186,21 @@ export default function ListofTest(){
     }
 
     const ShowTestForm = () => {
-        
+        var formTitle = '';
+        if(isEditMode){
+            formTitle = 'Edit Test';
+        } else if (isAddMode){
+            formTitle = 'Add Test';
+        } else {
+            formTitle = 'Dupliacate Test';
+        }
+        setIsAddMode(false);
+        setIsEditMode(false);
         return(
             <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
                 <div>   
                     <div css={formContainer}>
-                        <h2>{isEditMode ? "Edit Test" : "Duplicate Test"}</h2>
+                        <h2>{formTitle}</h2>
                         <div>
                             <div css={FormSectionStyle}>
                                 <div css={FormTitleStle}>Test Name</div>
@@ -248,7 +262,7 @@ export default function ListofTest(){
 
                 {showReAddForm && ShowTestForm()}
                 <div css={wholeContentWrapperStyle}>
-                <button onClick={() => showFormHandler()}>Add Test</button>
+                <button onClick={() => showFormHandler(undefined, false, true)}>Add Test</button>
                     <div>
                         <div css={tableContainer}>
                             <table css={tableHead}>
