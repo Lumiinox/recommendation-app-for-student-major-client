@@ -108,12 +108,11 @@ export default function ListofTest(){
                 setIsEditMode(true);
                 setIdTest(data.idTest);
             }
-            if(isAdd){
-                setIsAddMode(true);
-                setIsEditMode(false);
-            }
         }
-
+        if(isAdd){
+            setIsEditMode(false);
+            setIsAddMode(true);
+        }
         const tempPageHeight = divRef.current?.clientHeight as number;
         const tempPageWidth = divRef.current?.clientWidth as number;
         if(tempPageHeight > window.innerHeight){
@@ -192,10 +191,8 @@ export default function ListofTest(){
         } else if (isAddMode){
             formTitle = 'Add Test';
         } else {
-            formTitle = 'Dupliacate Test';
+            formTitle = 'Duplicate Test';
         }
-        setIsAddMode(false);
-        setIsEditMode(false);
         return(
             <div css={CreateQuestionFormWrapperStyle(pageHeight, pageWidth)}>
                 <div>   
