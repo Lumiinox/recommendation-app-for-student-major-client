@@ -71,6 +71,8 @@ export default function ListofTest(){
     const [isNumQuestionError, setIsNumQuestionError] = useState(false);
     const [isEmptyFieldsError, setIsEmptyFieldsError] = useState(false);
     const [isCategoryError, setIsCategoryError] = useState(false);
+    const [isDurZeroOrBellow, setIsDurZeroOrBellow] = useState(false);
+    const [isNumQuestionZeroOrBellow, setIsNumQuestionZeroOrBellow] = useState(false);
 
     const divRef = useRef<HTMLDivElement | null>(null);
     
@@ -129,6 +131,8 @@ export default function ListofTest(){
         setIsDurationError(false);
         setIsEmptyFieldsError(false);
         setIsNumQuestionError(false);
+        setIsDurZeroOrBellow(false);
+        setIsNumQuestionZeroOrBellow(false);
     }
 
     const clearInputState = () => {
@@ -138,14 +142,52 @@ export default function ListofTest(){
         setQuestionCategory(-1);
     }
     const handleSubmit = async () => {
+        let isNumberOfQuestionCorrect = numberOfQuestions === '0' ? true : checkIfNumber(numberOfQuestions);
+        let isTestDuration = testDuration === '0' ? true : checkIfNumber(testDuration);
+        let isLocalNumQuestError = false;
+        let isLocalCategoryError = false;
+        let isLocalDurError = false;
+        let isLocalEmptyFieldError = false;
+        if (testName === "" || testDuration === "" || numberOfQuestions === "") {
+            setIsEmptyFieldsError(true);
+            isLocalEmptyFieldError = true;
+        } else {
+            setIsEmptyFieldsError(false);
+        }
+        if (isNumberOfQuestionCorrect){
+            setIsNumQuestionError(false);
+            if(Number(numberOfQuestions) <= 0){
+                setIsNumQuestionZeroOrBellow(true);
+                isLocalNumQuestError = true;
+            }else {
+                setIsNumQuestionZeroOrBellow(false);
+            }
+        } else {
+            setIsNumQuestionError(true);
+            isLocalNumQuestError = true;
+        }
+        if (isTestDuration){
+            setIsDurationError(false);
+            
+            if(Number(testDuration) <= 0){
+                setIsDurZeroOrBellow(true);
+                isLocalDurError = true;
+            } else {
+                setIsDurZeroOrBellow(false);
+            }
+
+        } else {
+            setIsDurationError(true);
+            isLocalDurError = true;
+        }
+        if (questionCategory === -1){
+            setIsCategoryError(true);
+            isLocalCategoryError = true;
+        } else {
+            setIsCategoryError(false);
+        }
         
-        
-        
-        
-        let isNumberOfQuestionCorrect = checkIfNumber(Number(numberOfQuestions));
-        let isTestDuration = checkIfNumber(Number(numberOfQuestions));
-        
-        if(isNumberOfQuestionCorrect && isTestDuration && questionCategory !== -1 && testName !== "" && testDuration !== "" && numberOfQuestions !== ""){
+        if(!isLocalCategoryError && !isLocalDurError && !isLocalEmptyFieldError && !isLocalNumQuestError){
             switch(isEditMode){
                 case false: await apiAddTest(questionCategory, testName, Number(testDuration), Number(numberOfQuestions));
                             await fetchTestData();
@@ -163,18 +205,6 @@ export default function ListofTest(){
                             clearInputState();
                             alert("Test Updated");
                             break;
-            }
-            if (!isNumberOfQuestionCorrect){
-                setIsNumQuestionError(true);
-            }
-            if (!isTestDuration){
-                setIsDurationError(true);
-            }
-            if (!isCategoryError){
-                setIsCategoryError(true);
-            }
-            if (questionCategory === -1 && !testName && !testDuration && !numberOfQuestions){
-                setIsEmptyFieldsError(true);
             }
         } 
     }
@@ -212,11 +242,13 @@ export default function ListofTest(){
                                 <div css={FormTitleStle}>Test Duration (in minutes)</div>
                                 <input css={FormTextAreaStyle} name="testDuration" onChange={(e) => {setTestDuration(e.target.value)}} value={testDuration}></input>
                                 {isDurationError && <div css={errorMsgStyle}>*Numeric character only</div>}
+                                {isDurZeroOrBellow && <div css={errorMsgStyle}>*Must be above 0</div>}
                             </div>
                             <div css={FormSectionStyle}>
                                 <div css={FormTitleStle}>Number of Questions</div>
                                 <input css={FormTextAreaStyle} name="numberQuestion" onChange={(e) => {setNumberOfQuestions(e.target.value)}} value={numberOfQuestions}></input>
                                 {isNumQuestionError && <div css={errorMsgStyle}>*Numeric character only</div>}
+                                {isNumQuestionZeroOrBellow && <div css={errorMsgStyle}>*Must be above 0</div>}
                             </div>
                             {isEmptyFieldsError && <div css={errorMsgStyle}>*Fields cannot be empty</div>}
 
