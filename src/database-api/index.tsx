@@ -31,7 +31,7 @@ export const apiLoginStudent = async (
   });
   
   document.cookie = '';
-  if(response){
+  if(response.data){
     sessionStorage.setItem('authToken', response.data.accessToken);
     return response.data;
   }

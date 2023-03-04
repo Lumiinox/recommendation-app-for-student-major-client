@@ -66,6 +66,7 @@ export default function MainLoginPage(){
                         currentId: data?.idAdmin,
                         lastUrl: "admin/home"
                     };
+                    console.log(data);
                     if(data !== null){
                         updateProfileData(data.nameAdmin, data.emailAdmin, data.status, data.idAdmin);
                         sessionStorage.setItem('loginUser', JSON.stringify(adminDataToLocal));
@@ -76,7 +77,6 @@ export default function MainLoginPage(){
                     break;
 
             case 2: data = await apiLoginStudent(usernameIn, passwordIn);
-                    
                     const studentDataToLocal = {
                         name: data?.nameStudent,
                         email: data?.emailStudent,
@@ -84,10 +84,8 @@ export default function MainLoginPage(){
                         currentId: data?.idStudent,
                         lastUrl: "student/home"
                     };
-                    
+                    console.log(data);
                     if(data !== null){
-                        
-                        
                         updateProfileData(data.nameStudent, data.nameEmail, data.status, data.idStudent);
                         sessionStorage.setItem('loginUser', JSON.stringify(studentDataToLocal));
                         navigate(studentDataToLocal.lastUrl);
