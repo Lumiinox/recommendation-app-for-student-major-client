@@ -1,5 +1,5 @@
 //TITLE STRING CONSTANTS
-export const ADMIN_HOME_TITLE = "Hi, Admin";
+export const ADMIN_HOME_TITLE = "Hi, Staff";
 export const STUDENT_HOME_TITLE = "Hi, Student";
 export const BINUS_TITLE = "BINUS";
 export const TEST_TITLE = "Test";
